@@ -1,0 +1,24 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      contact: {
+        name: "API Documentation"
+        url: "https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html"
+      }
+      description: "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App."
+      servers: [
+        {
+          description: "Production server"
+          url: "https://api.parkendd.de"
+        }
+      ]
+      title: "Parkleitsystem API"
+      version: "1.0.0"
+    }
+  }
+}
+
+}

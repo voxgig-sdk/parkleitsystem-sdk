@@ -1,0 +1,320 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Parkleitsystem API",
+    "description": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Documentation",
+      "url": "https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.parkendd.de",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get all cities",
+        "description": "Returns a list of all cities with parking information available in the system",
+        "operationId": "getAllCities",
+        "responses": {
+          "200": {
+            "description": "Successful response with list of cities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "City identifier"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the city"
+                      },
+                      "coords": {
+                        "type": "object",
+                        "properties": {
+                          "lat": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Latitude coordinate"
+                          },
+                          "lng": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Longitude coordinate"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "Basel",
+                    "name": "Basel",
+                    "coords": {
+                      "lat": 47.5584,
+                      "lng": 7.5733
+                    }
+                  },
+                  {
+                    "id": "Zurich",
+                    "name": "Zürich",
+                    "coords": {
+                      "lat": 47.3769,
+                      "lng": 8.5417
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{city}": {
+      "get": {
+        "summary": "Get parking information for a specific city",
+        "description": "Returns real-time parking availability information for all parking garages in the specified city",
+        "operationId": "getCityParkingInfo",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "required": true,
+            "description": "Name of the city (Basel, Zurich, Bern, Luzern, St.Gallen, or Zug)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Basel",
+                "Zurich",
+                "Bern",
+                "Luzern",
+                "StGallen",
+                "Zug"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with parking information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "last_updated": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp of last data update"
+                    },
+                    "lots": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Unique identifier for the parking lot"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the parking garage"
+                          },
+                          "free": {
+                            "type": "integer",
+                            "description": "Number of available parking spaces"
+                          },
+                          "total": {
+                            "type": "integer",
+                            "description": "Total number of parking spaces"
+                          },
+                          "state": {
+                            "type": "string",
+                            "description": "Current state of the parking lot",
+                            "enum": [
+                              "open",
+                              "closed",
+                              "unknown"
+                            ]
+                          },
+                          "coords": {
+                            "type": "object",
+                            "properties": {
+                              "lat": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "Latitude coordinate"
+                              },
+                              "lng": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "Longitude coordinate"
+                              }
+                            }
+                          },
+                          "address": {
+                            "type": "string",
+                            "description": "Street address of the parking garage"
+                          },
+                          "lot_type": {
+                            "type": "string",
+                            "description": "Type of parking lot",
+                            "enum": [
+                              "Parkhaus",
+                              "Tiefgarage",
+                              "Parkplatz"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "last_updated": "2023-10-15T14:30:00Z",
+                  "lots": [
+                    {
+                      "id": "zurich_citygarage",
+                      "name": "City Parking",
+                      "free": 145,
+                      "total": 500,
+                      "state": "open",
+                      "coords": {
+                        "lat": 47.3769,
+                        "lng": 8.5417
+                      },
+                      "address": "Beethovenstrasse 33",
+                      "lot_type": "Parkhaus"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "City not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "City not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "City": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "City identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the city"
+          },
+          "coords": {
+            "$ref": "#/components/schemas/Coordinates"
+          }
+        }
+      },
+      "Coordinates": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "format": "double",
+            "description": "Latitude coordinate"
+          },
+          "lng": {
+            "type": "number",
+            "format": "double",
+            "description": "Longitude coordinate"
+          }
+        }
+      },
+      "ParkingLot": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the parking lot"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the parking garage"
+          },
+          "free": {
+            "type": "integer",
+            "description": "Number of available parking spaces"
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of parking spaces"
+          },
+          "state": {
+            "type": "string",
+            "description": "Current state of the parking lot",
+            "enum": [
+              "open",
+              "closed",
+              "unknown"
+            ]
+          },
+          "coords": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "address": {
+            "type": "string",
+            "description": "Street address of the parking garage"
+          },
+          "lot_type": {
+            "type": "string",
+            "description": "Type of parking lot"
+          }
+        }
+      },
+      "CityParkingInfo": {
+        "type": "object",
+        "properties": {
+          "last_updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of last data update"
+          },
+          "lots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParkingLot"
+            }
+          }
+        }
+      }
+    }
+  }
+}

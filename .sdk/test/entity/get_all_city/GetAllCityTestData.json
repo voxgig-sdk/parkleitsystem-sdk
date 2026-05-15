@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "get_all_city": {
+      "GET_ALL_CITY00": {
+        "coord": {},
+        "id": "GET_ALL_CITY00",
+        "name": "s20"
+      },
+      "GET_ALL_CITY01": {
+        "coord": {},
+        "id": "GET_ALL_CITY01",
+        "name": "s3e"
+      },
+      "GET_ALL_CITY02": {
+        "coord": {},
+        "id": "GET_ALL_CITY02",
+        "name": "s5c"
+      }
+    }
+  },
+  "new": {
+    "get_all_city": {
+      "get_all_city_ref01": {
+        "coord": {},
+        "name": "s7a"
+      }
+    }
+  }
+}

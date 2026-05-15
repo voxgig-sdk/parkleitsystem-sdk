@@ -1,0 +1,21 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 2
+  metrics: count: path: 2
+  metrics: count: method: 2
+
+  entity: get_all_city: {
+    path: "/": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: get_city_parking_info: {
+    path: "/{city}": {
+      rename: param: "city": *"id"
+      op: list: method: *GET
+    }
+  }
+
+}

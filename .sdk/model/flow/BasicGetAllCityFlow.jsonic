@@ -1,0 +1,22 @@
+# BasicGetAllCityFlow
+
+main: kit: flow: BasicGetAllCityFlow:
+{
+  entity: "get_all_city",
+  kind: "basic",
+  name: "BasicGetAllCityFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "get_all_city_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicGetAllCityFlow"
+}

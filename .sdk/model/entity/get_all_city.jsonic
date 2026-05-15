@@ -1,0 +1,49 @@
+# Entity: get_all_city
+
+main: kit: entity: get_all_city: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "coord"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "get_all_city"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/"
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

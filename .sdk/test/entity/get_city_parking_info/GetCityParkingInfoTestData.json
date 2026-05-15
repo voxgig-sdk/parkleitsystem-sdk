@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "get_city_parking_info": {
+      "GET_CITY_PARKING_INFO00": {
+        "address": "s50",
+        "coord": {},
+        "free": "s52",
+        "id": "GET_CITY_PARKING_INFO00",
+        "lot_type": "s54",
+        "name": "s55",
+        "state": "s56",
+        "total": "s57"
+      },
+      "GET_CITY_PARKING_INFO01": {
+        "address": "sa0",
+        "coord": {},
+        "free": "sa2",
+        "id": "GET_CITY_PARKING_INFO01",
+        "lot_type": "sa4",
+        "name": "sa5",
+        "state": "sa6",
+        "total": "sa7"
+      },
+      "GET_CITY_PARKING_INFO02": {
+        "address": "sf0",
+        "coord": {},
+        "free": "sf2",
+        "id": "GET_CITY_PARKING_INFO02",
+        "lot_type": "sf4",
+        "name": "sf5",
+        "state": "sf6",
+        "total": "sf7"
+      }
+    }
+  },
+  "new": {
+    "get_city_parking_info": {
+      "get_city_parking_info_ref01": {
+        "address": "s140",
+        "coord": {},
+        "free": "s142",
+        "lot_type": "s144",
+        "name": "s145",
+        "state": "s146",
+        "total": "s147"
+      }
+    }
+  }
+}

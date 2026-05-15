@@ -1,0 +1,26 @@
+# BasicGetCityParkingInfoFlow
+
+main: kit: flow: BasicGetCityParkingInfoFlow:
+{
+  entity: "get_city_parking_info",
+  kind: "basic",
+  name: "BasicGetCityParkingInfoFlow",
+  step: [
+    {
+      match: {
+        city: "city01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "get_city_parking_info_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicGetCityParkingInfoFlow"
+}
