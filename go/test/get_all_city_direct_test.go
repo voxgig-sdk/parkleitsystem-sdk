@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	sdk "github.com/voxgig-sdk/parkleitsystem-sdk"
-	"github.com/voxgig-sdk/parkleitsystem-sdk/core"
+	sdk "github.com/voxgig-sdk/parkleitsystem-sdk/go"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
 )
 
 func TestGetAllCityDirect(t *testing.T) {

@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/voxgig-sdk/parkleitsystem-sdk"
-	"github.com/voxgig-sdk/parkleitsystem-sdk/core"
+	sdk "github.com/voxgig-sdk/parkleitsystem-sdk/go"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/parkleitsystem-sdk/go/utility/struct"
 )
 
 func TestGetAllCityEntity(t *testing.T) {

@@ -1,10 +1,10 @@
 package voxgigparkleitsystemsdk
 
 import (
-	"github.com/voxgig-sdk/parkleitsystem-sdk/core"
-	"github.com/voxgig-sdk/parkleitsystem-sdk/entity"
-	"github.com/voxgig-sdk/parkleitsystem-sdk/feature"
-	_ "github.com/voxgig-sdk/parkleitsystem-sdk/utility"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/entity"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/feature"
+	_ "github.com/voxgig-sdk/parkleitsystem-sdk/go/utility"
 )
 
 // Type aliases preserve external API.

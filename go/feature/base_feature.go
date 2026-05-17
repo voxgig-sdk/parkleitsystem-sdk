@@ -1,7 +1,7 @@
 package feature
 
 import (
-	"github.com/voxgig-sdk/parkleitsystem-sdk/core"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
 )
 
 type BaseFeature struct {

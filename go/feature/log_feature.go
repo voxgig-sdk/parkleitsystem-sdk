@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/voxgig-sdk/parkleitsystem-sdk/core"
+	"github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
 )
 
 type LogFeature struct {

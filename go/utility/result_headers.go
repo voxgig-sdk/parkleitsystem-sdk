@@ -1,6 +1,6 @@
 package utility
 
-import "github.com/voxgig-sdk/parkleitsystem-sdk/core"
+import "github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
 
 func resultHeadersUtil(ctx *core.Context) *core.Result {
 	response := ctx.Response
