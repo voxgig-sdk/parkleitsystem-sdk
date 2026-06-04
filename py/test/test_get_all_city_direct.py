@@ -61,14 +61,12 @@ def _get_all_city_direct_setup(mockres):
     env = runner.env_override({
         "PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID": {},
         "PARKLEITSYSTEM_TEST_LIVE": "FALSE",
-        "PARKLEITSYSTEM_APIKEY": "NONE",
     })
 
     live = env.get("PARKLEITSYSTEM_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
-            "apikey": env.get("PARKLEITSYSTEM_APIKEY"),
         }
         client = ParkleitsystemSDK(merged_opts)
         return {

@@ -82,14 +82,12 @@ function get_city_parking_info_direct_setup($mockres)
     $env = Runner::env_override([
         "PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID" => [],
         "PARKLEITSYSTEM_TEST_LIVE" => "FALSE",
-        "PARKLEITSYSTEM_APIKEY" => "NONE",
     ]);
 
     $live = $env["PARKLEITSYSTEM_TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
-            "apikey" => $env["PARKLEITSYSTEM_APIKEY"],
         ];
         $client = new ParkleitsystemSDK($merged_opts);
         return [

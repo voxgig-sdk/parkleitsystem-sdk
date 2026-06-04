@@ -15,9 +15,6 @@ module ParkleitsystemConfig
       },
       "options" => {
         "base" => "https://api.parkendd.de",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },
