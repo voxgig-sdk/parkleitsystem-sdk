@@ -88,6 +88,7 @@ function get_city_parking_info_basic_setup($extra)
         "PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID" => $idmap,
         "PARKLEITSYSTEM_TEST_LIVE" => "FALSE",
         "PARKLEITSYSTEM_TEST_EXPLAIN" => "FALSE",
+        "PARKLEITSYSTEM_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -99,6 +100,7 @@ function get_city_parking_info_basic_setup($extra)
     if ($env["PARKLEITSYSTEM_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
+                "apikey" => $env["PARKLEITSYSTEM_APIKEY"],
             ],
             $extra ?? [],
         ]);

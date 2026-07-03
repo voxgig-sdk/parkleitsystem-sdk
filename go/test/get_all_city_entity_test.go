@@ -119,6 +119,7 @@ func get_all_cityBasicSetup(extra map[string]any) *entityTestSetup {
 		"PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID": idmap,
 		"PARKLEITSYSTEM_TEST_LIVE":      "FALSE",
 		"PARKLEITSYSTEM_TEST_EXPLAIN":   "FALSE",
+		"PARKLEITSYSTEM_APIKEY":         "NONE",
 	})
 
 	idmapResolved := core.ToMapAny(env["PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID"])
@@ -129,6 +130,7 @@ func get_all_cityBasicSetup(extra map[string]any) *entityTestSetup {
 	if env["PARKLEITSYSTEM_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
+				"apikey": env["PARKLEITSYSTEM_APIKEY"],
 			},
 			extra,
 		})

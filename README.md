@@ -1,20 +1,8 @@
 # Parkleitsystem SDK
 
-Real-time parking-garage occupancy for several Swiss and German cities, aggregated by the open-source ParkAPI project
+Parkleitsystem API client, generated from the OpenAPI spec.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
-
-## About Parkleitsystem API
-
-Parkleitsystem (ParkAPI / ParkenDD) is a community-run aggregator that scrapes municipal parking-guidance systems and re-publishes their data as a single JSON HTTP API at `https://api.parkendd.de`. The project originated with [Offenes Dresden](https://github.com/offenesdresden/ParkAPI) and powers the ParkenDD apps; this SDK targets the Swiss cities surfaced by the service (Basel, Zurich, Bern, Luzern, St. Gallen, Zug).
-
-What you get from the API:
-
-- A list of supported cities and metadata about each one
-- For a given city, the set of parking garages with their current free-space counts, total capacity, status, address and geographic coordinates
-- Lot type classification and the name of each facility
-
-The API is read-only and does not require authentication or an API key. Update frequency, accuracy and CORS behaviour depend on the upstream city feed — some sources are more reliable than others, and a few legacy cities have been deprecated over time.
 
 ## Try it
 
@@ -48,29 +36,31 @@ gem install parkleitsystem-sdk
 luarocks install parkleitsystem-sdk
 ```
 
-## 30-second quickstart
+## Quickstart
 
 ### TypeScript
 
 ```ts
 import { ParkleitsystemSDK } from 'parkleitsystem'
 
-const client = new ParkleitsystemSDK({})
+const client = new ParkleitsystemSDK({
+  apikey: process.env.PARKLEITSYSTEM_APIKEY,
+})
 
 // List all getallcitys
 const getallcitys = await client.GetAllCity().list()
+console.log(getallcitys.data)
 ```
 
-See the [TypeScript README](ts/README.md) for the
-full guide, or scroll down for the same example in other languages.
+See the [TypeScript README](ts/README.md) for the full guide.
 
-## What's in the box
+## Surfaces
 
-| Surface | Use it for | Path |
-| --- | --- | --- |
-| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
-| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
-| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+| Surface | Path |
+| --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | `go-cli/` |
+| **MCP server** | `go-mcp/` |
 
 ## Use it from an AI agent (MCP)
 
@@ -100,8 +90,8 @@ The API exposes 2 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **GetAllCity** | Lists every city currently exposed by the ParkAPI instance, typically served from the API root (`/`). | `/` |
-| **GetCityParkingInfo** | Returns the current parking-garage occupancy snapshot for a single city, served at a per-city path such as `/Basel` or `/Zuerich`. | `/{city}` |
+| **GetAllCity** |  | `/` |
+| **GetCityParkingInfo** |  | `/{city}` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -111,12 +101,16 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
+import os
 from parkleitsystem_sdk import ParkleitsystemSDK
 
-client = ParkleitsystemSDK({})
+client = ParkleitsystemSDK({
+    "apikey": os.environ.get("PARKLEITSYSTEM_APIKEY"),
+})
 
 # List all getallcitys
-getallcitys, err = client.GetAllCity(None).list(None, None)
+getallcitys, err = client.GetAllCity().list()
+print(getallcitys)
 ```
 
 ### PHP
@@ -125,10 +119,13 @@ getallcitys, err = client.GetAllCity(None).list(None, None)
 <?php
 require_once 'parkleitsystem_sdk.php';
 
-$client = new ParkleitsystemSDK([]);
+$client = new ParkleitsystemSDK([
+    "apikey" => getenv("PARKLEITSYSTEM_APIKEY"),
+]);
 
 // List all getallcitys
-[$getallcitys, $err] = $client->GetAllCity(null)->list(null, null);
+[$getallcitys, $err] = $client->GetAllCity()->list();
+print_r($getallcitys);
 ```
 
 ### Golang
@@ -136,10 +133,13 @@ $client = new ParkleitsystemSDK([]);
 ```go
 import sdk "github.com/voxgig-sdk/parkleitsystem-sdk/go"
 
-client := sdk.NewParkleitsystemSDK(map[string]any{})
+client := sdk.NewParkleitsystemSDK(map[string]any{
+    "apikey": os.Getenv("PARKLEITSYSTEM_APIKEY"),
+})
 
 // List all getallcitys
 getallcitys, err := client.GetAllCity(nil).List(nil, nil)
+fmt.Println(getallcitys)
 ```
 
 ### Ruby
@@ -147,10 +147,13 @@ getallcitys, err := client.GetAllCity(nil).List(nil, nil)
 ```ruby
 require_relative "Parkleitsystem_sdk"
 
-client = ParkleitsystemSDK.new({})
+client = ParkleitsystemSDK.new({
+  "apikey" => ENV["PARKLEITSYSTEM_APIKEY"],
+})
 
 # List all getallcitys
-getallcitys, err = client.GetAllCity(nil).list(nil, nil)
+getallcitys, err = client.GetAllCity().list
+puts getallcitys
 ```
 
 ### Lua
@@ -158,10 +161,13 @@ getallcitys, err = client.GetAllCity(nil).list(nil, nil)
 ```lua
 local sdk = require("parkleitsystem_sdk")
 
-local client = sdk.new({})
+local client = sdk.new({
+  apikey = os.getenv("PARKLEITSYSTEM_APIKEY"),
+})
 
 -- List all getallcitys
-local getallcitys, err = client:GetAllCity(nil):list(nil, nil)
+local getallcitys, err = client:GetAllCity():list()
+print(getallcitys)
 ```
 
 ## Unit testing in offline mode
@@ -180,25 +186,21 @@ const result = await client.GetAllCity().load({ id: 'test01' })
 ### Python
 
 ```python
-client = ParkleitsystemSDK.test(None, None)
-result, err = client.GetAllCity(None).load(
-    {"id": "test01"}, None
-)
+client = ParkleitsystemSDK.test()
+result, err = client.GetAllCity().load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
-$client = ParkleitsystemSDK::test(null, null);
-[$result, $err] = $client->GetAllCity(null)->load(
-    ["id" => "test01"], null
-);
+$client = ParkleitsystemSDK::test();
+[$result, $err] = $client->GetAllCity()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
-client := sdk.TestSDK(nil, nil)
+client := sdk.Test()
 result, err := client.GetAllCity(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
@@ -207,19 +209,15 @@ result, err := client.GetAllCity(nil).Load(
 ### Ruby
 
 ```ruby
-client = ParkleitsystemSDK.test(nil, nil)
-result, err = client.GetAllCity(nil).load(
-  { "id" => "test01" }, nil
-)
+client = ParkleitsystemSDK.test
+result, err = client.GetAllCity().load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:GetAllCity(nil):load(
-  { id = "test01" }, nil
-)
+local client = sdk.test()
+local result, err = client:GetAllCity():load({ id = "test01" })
 ```
 
 ## How it works
@@ -323,16 +321,6 @@ local result, err = client:direct({
 - [Golang](go/README.md)
 - [Ruby](rb/README.md)
 - [Lua](lua/README.md)
-
-## Using the Parkleitsystem API
-
-- Upstream: [https://api.parkendd.de](https://api.parkendd.de)
-- API docs: [https://github.com/offenesdresden/ParkAPI](https://github.com/offenesdresden/ParkAPI)
-
-- Upstream data is published by individual city parking operators; licences vary per city
-- Basel and Zurich data is available under Creative Commons CC0
-- Some cities (e.g. Nuremberg, Freiburg) carry custom open-data licences; check the source city before redistributing
-- ParkAPI itself is an open-source project; see the [offenesdresden/ParkAPI](https://github.com/offenesdresden/ParkAPI) repository for code and source-specific notes
 
 ---
 

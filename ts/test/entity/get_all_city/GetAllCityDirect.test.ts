@@ -79,12 +79,14 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID': {},
     'PARKLEITSYSTEM_TEST_LIVE': 'FALSE',
+    'PARKLEITSYSTEM_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.PARKLEITSYSTEM_TEST_LIVE
 
   if (live) {
     const client = new ParkleitsystemSDK({
+      apikey: env.PARKLEITSYSTEM_APIKEY,
     })
 
     let idmap: any = env['PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID']

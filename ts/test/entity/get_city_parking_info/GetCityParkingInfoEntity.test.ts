@@ -114,6 +114,7 @@ function basicSetup(extra?: any) {
     'PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID': idmap,
     'PARKLEITSYSTEM_TEST_LIVE': 'FALSE',
     'PARKLEITSYSTEM_TEST_EXPLAIN': 'FALSE',
+    'PARKLEITSYSTEM_APIKEY': 'NONE',
   })
 
   idmap = env['PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID']
@@ -123,6 +124,7 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new ParkleitsystemSDK(merge([
       {
+        apikey: env.PARKLEITSYSTEM_APIKEY,
       },
       extra
     ]))

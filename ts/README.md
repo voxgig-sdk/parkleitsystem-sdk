@@ -1,6 +1,11 @@
 # Parkleitsystem TypeScript SDK
 
-The TypeScript SDK for the Parkleitsystem API. Provides a type-safe, entity-oriented interface with full async/await support.
+
+
+The TypeScript SDK for the Parkleitsystem API — a type-safe, entity-oriented client with full async/await support.
+
+> Other languages, the CLI, and MCP server live alongside this one — see
+> the [top-level README](../README.md).
 
 
 ## Install
@@ -17,7 +22,9 @@ loading a specific record.
 ```ts
 import { ParkleitsystemSDK } from 'parkleitsystem'
 
-const client = new ParkleitsystemSDK({})
+const client = new ParkleitsystemSDK({
+  apikey: process.env.PARKLEITSYSTEM_APIKEY,
+})
 ```
 
 ### 2. List getallcitys
@@ -82,7 +89,7 @@ const result = await client.Planet().load({ id: 'test01' })
 You can also use the instance method:
 
 ```ts
-const client = new ParkleitsystemSDK()
+const client = new ParkleitsystemSDK({ apikey: '...' })
 const testClient = client.tester()
 ```
 
@@ -118,6 +125,7 @@ const logger = {
 }
 
 const client = new ParkleitsystemSDK({
+  apikey: '...',
   extend: [logger],
 })
 ```
@@ -128,6 +136,7 @@ Create a `.env.local` file at the project root:
 
 ```
 PARKLEITSYSTEM_TEST_LIVE=TRUE
+PARKLEITSYSTEM_APIKEY=<your-key>
 ```
 
 Then run:
@@ -145,6 +154,7 @@ cd ts && npm test
 
 ```ts
 new ParkleitsystemSDK(options?: {
+  apikey?: string
   base?: string
   prefix?: string
   suffix?: string
@@ -155,6 +165,7 @@ new ParkleitsystemSDK(options?: {
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |

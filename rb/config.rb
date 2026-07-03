@@ -15,6 +15,9 @@ module ParkleitsystemConfig
       },
       "options" => {
         "base" => "https://api.parkendd.de",
+        "auth" => {
+          "prefix" => "Bearer",
+        },
         "headers" => {
           "content-type" => "application/json",
         },
@@ -27,47 +30,47 @@ module ParkleitsystemConfig
         "get_all_city" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "coord",
               "req" => false,
               "type" => "`$OBJECT`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "name",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
           ],
           "name" => "get_all_city",
           "op" => {
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
+                  "args" => {},
                   "method" => "GET",
                   "orig" => "/",
+                  "parts" => [],
+                  "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
-                  "parts" => [],
-                  "args" => {},
-                  "select" => {},
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
           },
@@ -78,77 +81,79 @@ module ParkleitsystemConfig
         "get_city_parking_info" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "address",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "coord",
               "req" => false,
               "type" => "`$OBJECT`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "free",
               "req" => false,
               "type" => "`$INTEGER`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "lot_type",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "name",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 5,
             },
             {
+              "active" => true,
               "name" => "state",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 6,
             },
             {
+              "active" => true,
               "name" => "total",
               "req" => false,
               "type" => "`$INTEGER`",
-              "active" => true,
               "index$" => 7,
             },
           ],
           "name" => "get_city_parking_info",
           "op" => {
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "city",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -171,11 +176,9 @@ module ParkleitsystemConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
           },

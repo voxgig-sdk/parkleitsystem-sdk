@@ -17,28 +17,7 @@ main: {
       ]
       title: "Parkleitsystem API"
       version: "1.0.0"
-      tagline: "Real-time parking-garage occupancy for several Swiss and German cities, aggregated by the open-source ParkAPI project"
-      homepage: "https://api.parkendd.de"
-      docs_url: "https://github.com/offenesdresden/ParkAPI"
-      license_short: "Mixed open-data licences per city; Basel and Zurich are CC0"
-      license_md: `- Upstream data is published by individual city parking operators; licences vary per city
-- Basel and Zurich data is available under Creative Commons CC0
-- Some cities (e.g. Nuremberg, Freiburg) carry custom open-data licences; check the source city before redistributing
-- ParkAPI itself is an open-source project; see the [offenesdresden/ParkAPI](https://github.com/offenesdresden/ParkAPI) repository for code and source-specific notes`
-      about_md: `Parkleitsystem (ParkAPI / ParkenDD) is a community-run aggregator that scrapes municipal parking-guidance systems and re-publishes their data as a single JSON HTTP API at \`https://api.parkendd.de\`. The project originated with [Offenes Dresden](https://github.com/offenesdresden/ParkAPI) and powers the ParkenDD apps; this SDK targets the Swiss cities surfaced by the service (Basel, Zurich, Bern, Luzern, St. Gallen, Zug).
-
-What you get from the API:
-
-- A list of supported cities and metadata about each one
-- For a given city, the set of parking garages with their current free-space counts, total capacity, status, address and geographic coordinates
-- Lot type classification and the name of each facility
-
-The API is read-only and does not require authentication or an API key. Update frequency, accuracy and CORS behaviour depend on the upstream city feed — some sources are more reliable than others, and a few legacy cities have been deprecated over time.`
-      entity_desc: {
-        get_all_city: "Lists every city currently exposed by the ParkAPI instance, typically served from the API root (`/`)."
-        get_city_parking_info: "Returns the current parking-garage occupancy snapshot for a single city, served at a per-city path such as `/Basel` or `/Zuerich`."
-      }
-      auth: false
     }
   }
 }
+

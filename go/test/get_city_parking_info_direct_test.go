@@ -118,12 +118,14 @@ func get_city_parking_infoDirectSetup(mockres any) *get_city_parking_infoDirectS
 	env := envOverride(map[string]any{
 		"PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID": map[string]any{},
 		"PARKLEITSYSTEM_TEST_LIVE":    "FALSE",
+		"PARKLEITSYSTEM_APIKEY":       "NONE",
 	})
 
 	live := env["PARKLEITSYSTEM_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
+			"apikey": env["PARKLEITSYSTEM_APIKEY"],
 		}
 		client := sdk.NewParkleitsystemSDK(mergedOpts)
 

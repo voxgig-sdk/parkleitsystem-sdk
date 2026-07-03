@@ -94,6 +94,7 @@ function get_city_parking_info_basic_setup(extra)
     ["PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID"] = idmap,
     ["PARKLEITSYSTEM_TEST_LIVE"] = "FALSE",
     ["PARKLEITSYSTEM_TEST_EXPLAIN"] = "FALSE",
+    ["PARKLEITSYSTEM_APIKEY"] = "NONE",
   })
 
   local idmap_resolved = helpers.to_map(
@@ -105,6 +106,7 @@ function get_city_parking_info_basic_setup(extra)
   if env["PARKLEITSYSTEM_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
+        apikey = env["PARKLEITSYSTEM_APIKEY"],
       },
       extra or {},
     })

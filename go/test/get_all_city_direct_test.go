@@ -93,12 +93,14 @@ func get_all_cityDirectSetup(mockres any) *get_all_cityDirectSetupResult {
 	env := envOverride(map[string]any{
 		"PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID": map[string]any{},
 		"PARKLEITSYSTEM_TEST_LIVE":    "FALSE",
+		"PARKLEITSYSTEM_APIKEY":       "NONE",
 	})
 
 	live := env["PARKLEITSYSTEM_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
+			"apikey": env["PARKLEITSYSTEM_APIKEY"],
 		}
 		client := sdk.NewParkleitsystemSDK(mergedOpts)
 
