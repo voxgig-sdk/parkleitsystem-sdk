@@ -10,13 +10,13 @@ The Ruby SDK for the Parkleitsystem API — an entity-oriented client using idio
 
 ## Install
 ```bash
-gem install parkleitsystem-sdk
+gem install voxgig-sdk-parkleitsystem
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "parkleitsystem-sdk"
+gem "voxgig-sdk-parkleitsystem"
 ```
 
 Then run:

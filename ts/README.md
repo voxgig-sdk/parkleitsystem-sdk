@@ -10,7 +10,7 @@ The TypeScript SDK for the Parkleitsystem API — a type-safe, entity-oriented c
 
 ## Install
 ```bash
-npm install parkleitsystem
+npm install @voxgig-sdk/parkleitsystem
 ```
 ## Tutorial: your first API call
 

@@ -10,7 +10,7 @@ The Lua SDK for the Parkleitsystem API — an entity-oriented client using Lua c
 
 ## Install
 ```bash
-luarocks install parkleitsystem-sdk
+luarocks install voxgig-sdk-parkleitsystem
 ```
 
 If the module is not yet published, add the source directory to

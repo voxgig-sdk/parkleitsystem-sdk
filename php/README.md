@@ -10,7 +10,7 @@ The PHP SDK for the Parkleitsystem API — an entity-oriented client using PHP c
 
 ## Install
 ```bash
-composer require voxgig/parkleitsystem-sdk
+composer require voxgig-sdk/parkleitsystem
 ```
 
 

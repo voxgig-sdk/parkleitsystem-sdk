@@ -10,7 +10,7 @@ The Python SDK for the Parkleitsystem API — an entity-oriented client followin
 
 ## Install
 ```bash
-pip install parkleitsystem-sdk
+pip install voxgig-sdk-parkleitsystem
 ```
 
 Or install from source:
