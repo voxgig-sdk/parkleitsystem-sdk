@@ -50,8 +50,7 @@ class TestGetAllCityEntity:
         get_all_city_ref01_ent = client.GetAllCity(None)
         get_all_city_ref01_match = {}
 
-        get_all_city_ref01_list_result, err = get_all_city_ref01_ent.list(get_all_city_ref01_match, None)
-        assert err is None
+        get_all_city_ref01_list_result = get_all_city_ref01_ent.list(get_all_city_ref01_match, None)
         assert isinstance(get_all_city_ref01_list_result, list)
 
 
@@ -92,7 +91,6 @@ def _get_all_city_basic_setup(extra):
         "PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID": idmap,
         "PARKLEITSYSTEM_TEST_LIVE": "FALSE",
         "PARKLEITSYSTEM_TEST_EXPLAIN": "FALSE",
-        "PARKLEITSYSTEM_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -103,7 +101,6 @@ def _get_all_city_basic_setup(extra):
     if env.get("PARKLEITSYSTEM_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("PARKLEITSYSTEM_APIKEY"),
             },
             extra or {},
         ])

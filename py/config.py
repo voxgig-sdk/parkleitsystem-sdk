@@ -15,9 +15,6 @@ def make_config():
         },
         "options": {
             "base": "https://api.parkendd.de",
-            "auth": {
-                "prefix": "Bearer",
-            },
             "headers": {
         "content-type": "application/json",
       },
@@ -154,6 +151,7 @@ def make_config():
                       "orig": "city",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 0,
                     },
                   ],
                 },

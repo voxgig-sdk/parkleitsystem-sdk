@@ -14,9 +14,13 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  GetAllCity,
+  GetAllCityListMatch,
+} from '../ParkleitsystemTypes'
 
 // TODO: needs Entity superclass
-class GetAllCityEntity extends ParkleitsystemEntityBase {
+class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
 
   constructor(client: ParkleitsystemSDK, entopts: any) {
     super(client, entopts)
@@ -33,7 +37,7 @@ class GetAllCityEntity extends ParkleitsystemEntityBase {
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: GetAllCityListMatch, ctrl?: Control): Promise<GetAllCity[]> {
 
     const utility = this._utility
 
@@ -133,7 +137,9 @@ class GetAllCityEntity extends ParkleitsystemEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<GetAllCity[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

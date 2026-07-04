@@ -3,6 +3,8 @@
 import { GetAllCityEntity } from './entity/GetAllCityEntity'
 import { GetCityParkingInfoEntity } from './entity/GetCityParkingInfoEntity'
 
+export type * from './ParkleitsystemTypes'
+
 
 import { inspect } from 'node:util'
 
@@ -203,12 +205,28 @@ class ParkleitsystemSDK {
 
 
 
+  _get_all_city?: GetAllCityEntity
+
+  // Idiomatic facade: `client.get_all_city.list()` / `client.get_all_city.load({ id })`.
+  get get_all_city(): GetAllCityEntity {
+    return (this._get_all_city ??= new GetAllCityEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.get_all_city` instead. */
   GetAllCity(data?: any) {
     const self = this
     return new GetAllCityEntity(self,data)
   }
 
 
+  _get_city_parking_info?: GetCityParkingInfoEntity
+
+  // Idiomatic facade: `client.get_city_parking_info.list()` / `client.get_city_parking_info.load({ id })`.
+  get get_city_parking_info(): GetCityParkingInfoEntity {
+    return (this._get_city_parking_info ??= new GetCityParkingInfoEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.get_city_parking_info` instead. */
   GetCityParkingInfo(data?: any) {
     const self = this
     return new GetCityParkingInfoEntity(self,data)

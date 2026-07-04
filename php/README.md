@@ -9,9 +9,10 @@ The PHP SDK for the Parkleitsystem API — an entity-oriented client using PHP c
 
 
 ## Install
-```bash
-composer require voxgig-sdk/parkleitsystem
-```
+This package is not yet published to Packagist. Install it from the
+GitHub release tag (`php/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/parkleitsystem-sdk/releases](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases)
 
 
 ## Tutorial: your first API call
@@ -25,22 +26,22 @@ loading a specific record.
 <?php
 require_once 'parkleitsystem_sdk.php';
 
-$client = new ParkleitsystemSDK([
-    "apikey" => getenv("PARKLEITSYSTEM_APIKEY"),
-]);
+$client = new ParkleitsystemSDK();
 ```
 
 ### 2. List getallcitys
 
 ```php
-[$result, $err] = $client->GetAllCity()->list();
-if ($err) { throw new \Exception($err); }
-
-if (is_array($result)) {
-    foreach ($result as $item) {
-        $d = $item->data_get();
-        echo $d["id"] . " " . $d["name"] . "\n";
+try {
+    $result = $client->getallcity()->list();
+    if (is_array($result)) {
+        foreach ($result as $item) {
+            $d = $item->data_get();
+            echo $d["id"] . " " . $d["name"] . "\n";
+        }
     }
+} catch (\Exception $err) {
+    echo "Error: " . $err->getMessage();
 }
 ```
 
@@ -52,28 +53,31 @@ if (is_array($result)) {
 For endpoints not covered by entity methods:
 
 ```php
-[$result, $err] = $client->direct([
+// direct() is the raw-HTTP escape hatch: it returns a result array
+// (it does not throw). Branch on $result["ok"].
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
+} else {
+    echo "Error: " . $result["err"]->getMessage();
 }
 ```
 
 ### Prepare a request without sending it
 
 ```php
-[$fetchdef, $err] = $client->prepare([
+// prepare() throws on error and returns the fetch definition.
+$fetchdef = $client->prepare([
     "path" => "/api/resource/{id}",
     "method" => "DELETE",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 echo $fetchdef["url"];
 echo $fetchdef["method"];
@@ -87,7 +91,7 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = ParkleitsystemSDK::test();
 
-[$result, $err] = $client->Parkleitsystem()->load(["id" => "test01"]);
+$result = $client->getallcity()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -122,7 +126,6 @@ Create a `.env.local` file at the project root:
 
 ```
 PARKLEITSYSTEM_TEST_LIVE=TRUE
-PARKLEITSYSTEM_APIKEY=<your-key>
 ```
 
 Then run:
@@ -145,7 +148,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -192,8 +194,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `[$result, $err]`. The first value is an
-`array` with these keys:
+Entity operations return the bare result data (an `array` for single-entity
+ops, a `list` for `list`) and throw on error. Wrap calls in
+`try`/`catch` to handle failures.
+
+The `direct()` escape hatch never throws — it returns a result `array`
+you branch on via `$result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -242,7 +248,7 @@ API path: `/{city}`
 
 ### GetAllCity
 
-Create an instance: `const get_all_city = client.GetAllCity()`
+Create an instance: `const get_all_city = client.get_all_city`
 
 #### Operations
 
@@ -261,13 +267,13 @@ Create an instance: `const get_all_city = client.GetAllCity()`
 #### Example: List
 
 ```ts
-const get_all_citys = await client.GetAllCity().list()
+const get_all_citys = await client.get_all_city.list()
 ```
 
 
 ### GetCityParkingInfo
 
-Create an instance: `const get_city_parking_info = client.GetCityParkingInfo()`
+Create an instance: `const get_city_parking_info = client.get_city_parking_info`
 
 #### Operations
 
@@ -291,7 +297,7 @@ Create an instance: `const get_city_parking_info = client.GetCityParkingInfo()`
 #### Example: List
 
 ```ts
-const get_city_parking_infos = await client.GetCityParkingInfo().list()
+const get_city_parking_infos = await client.get_city_parking_info.list()
 ```
 
 
@@ -366,11 +372,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$moon = $client->Moon();
-[$result, $err] = $moon->load(["planet_id" => "earth", "id" => "luna"]);
+$getallcity = $client->getallcity();
+$getallcity->load(["id" => "example_id"]);
 
-// $moon->dataGet() now returns the loaded moon data
-// $moon->matchGet() returns the last match criteria
+// $getallcity->dataGet() now returns the loaded getallcity data
+// $getallcity->matchGet() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

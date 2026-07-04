@@ -245,11 +245,17 @@ func (sdk *ParkleitsystemSDK) Direct(fetchargs map[string]any) (map[string]any, 
 }
 
 
+// GetAllCity returns a GetAllCity entity bound to this client.
+// Idiomatic usage: client.GetAllCity(nil).List(nil, nil) or
+// client.GetAllCity(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *ParkleitsystemSDK) GetAllCity(data map[string]any) ParkleitsystemEntity {
 	return NewGetAllCityEntityFunc(sdk, data)
 }
 
 
+// GetCityParkingInfo returns a GetCityParkingInfo entity bound to this client.
+// Idiomatic usage: client.GetCityParkingInfo(nil).List(nil, nil) or
+// client.GetCityParkingInfo(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *ParkleitsystemSDK) GetCityParkingInfo(data map[string]any) ParkleitsystemEntity {
 	return NewGetCityParkingInfoEntityFunc(sdk, data)
 }

@@ -18,7 +18,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `object` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -122,7 +121,7 @@ Alias for `ParkleitsystemSDK.test()`.
 ## GetAllCityEntity
 
 ```ts
-const get_all_city = client.GetAllCity()
+const get_all_city = client.get_all_city
 ```
 
 ### Fields
@@ -140,7 +139,7 @@ const get_all_city = client.GetAllCity()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.GetAllCity().list()
+const results = await client.get_all_city.list()
 ```
 
 ### Common Methods
@@ -174,7 +173,7 @@ Return a copy of the entity options.
 ## GetCityParkingInfoEntity
 
 ```ts
-const get_city_parking_info = client.GetCityParkingInfo()
+const get_city_parking_info = client.get_city_parking_info
 ```
 
 ### Fields
@@ -197,7 +196,7 @@ const get_city_parking_info = client.GetCityParkingInfo()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.GetCityParkingInfo().list()
+const results = await client.get_city_parking_info.list()
 ```
 
 ### Common Methods

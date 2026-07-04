@@ -81,6 +81,10 @@ end
 
 
 
+---@param reqmatch GetCityParkingInfoListMatch
+---@param ctrl? table
+---@return GetCityParkingInfo[]
+---@return string? err
 function GetCityParkingInfoEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

@@ -244,12 +244,38 @@ end
 
 
 
+-- Idiomatic facade: client:get_all_city():list() / client:get_all_city():load({ id = ... })
+function ParkleitsystemSDK:get_all_city(data)
+  local EntityMod = require("entity.get_all_city_entity")
+  if data == nil then
+    if self._get_all_city == nil then
+      self._get_all_city = EntityMod.new(self, nil)
+    end
+    return self._get_all_city
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:get_all_city() instead.
 function ParkleitsystemSDK:GetAllCity(data)
   local EntityMod = require("entity.get_all_city_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:get_city_parking_info():list() / client:get_city_parking_info():load({ id = ... })
+function ParkleitsystemSDK:get_city_parking_info(data)
+  local EntityMod = require("entity.get_city_parking_info_entity")
+  if data == nil then
+    if self._get_city_parking_info == nil then
+      self._get_city_parking_info = EntityMod.new(self, nil)
+    end
+    return self._get_city_parking_info
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:get_city_parking_info() instead.
 function ParkleitsystemSDK:GetCityParkingInfo(data)
   local EntityMod = require("entity.get_city_parking_info_entity")
   return EntityMod.new(self, data)

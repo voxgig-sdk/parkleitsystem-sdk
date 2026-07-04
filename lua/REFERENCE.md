@@ -19,7 +19,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `table` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -88,7 +87,7 @@ same parameters as `direct()`.
 ## GetAllCityEntity
 
 ```lua
-local get_all_city = client:GetAllCity(nil)
+local get_all_city = client:get_all_city(nil)
 ```
 
 ### Fields
@@ -106,7 +105,7 @@ local get_all_city = client:GetAllCity(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:GetAllCity():list()
+local results, err = client:get_all_city():list()
 ```
 
 ### Common Methods
@@ -142,7 +141,7 @@ Return the entity name.
 ## GetCityParkingInfoEntity
 
 ```lua
-local get_city_parking_info = client:GetCityParkingInfo(nil)
+local get_city_parking_info = client:get_city_parking_info(nil)
 ```
 
 ### Fields
@@ -165,7 +164,7 @@ local get_city_parking_info = client:GetCityParkingInfo(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:GetCityParkingInfo():list()
+local results, err = client:get_city_parking_info():list()
 ```
 
 ### Common Methods

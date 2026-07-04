@@ -45,8 +45,7 @@ class GetCityParkingInfoEntityTest < Minitest::Test
       "city" => setup[:idmap]["city01"],
     }
 
-    get_city_parking_info_ref01_list_result, err = get_city_parking_info_ref01_ent.list(get_city_parking_info_ref01_match, nil)
-    assert_nil err
+    get_city_parking_info_ref01_list_result = get_city_parking_info_ref01_ent.list(get_city_parking_info_ref01_match, nil)
     assert get_city_parking_info_ref01_list_result.is_a?(Array)
 
   end
@@ -85,7 +84,6 @@ def get_city_parking_info_basic_setup(extra)
     "PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID" => idmap,
     "PARKLEITSYSTEM_TEST_LIVE" => "FALSE",
     "PARKLEITSYSTEM_TEST_EXPLAIN" => "FALSE",
-    "PARKLEITSYSTEM_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -97,7 +95,6 @@ def get_city_parking_info_basic_setup(extra)
   if env["PARKLEITSYSTEM_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["PARKLEITSYSTEM_APIKEY"],
       },
       extra || {},
     ])

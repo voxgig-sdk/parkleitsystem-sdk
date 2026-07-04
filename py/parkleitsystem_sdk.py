@@ -144,16 +144,23 @@ class ParkleitsystemSDK:
 
         _, err = utility.prepare_auth(ctx)
         if err is not None:
-            return None, err
+            raise err
 
-        return utility.make_fetch_def(ctx)
+        fetchdef, err = utility.make_fetch_def(ctx)
+        if err is not None:
+            raise err
+
+        return fetchdef
 
     def direct(self, fetchargs=None):
         utility = self._utility
 
-        fetchdef, err = self.prepare(fetchargs)
-        if err is not None:
-            return {"ok": False, "err": err}, None
+        try:
+            fetchdef = self.prepare(fetchargs)
+        except Exception as err:
+            # direct() is the raw-HTTP escape hatch: it never raises, it
+            # returns a result object callers branch on via result["ok"].
+            return {"ok": False, "err": err}
 
         if fetchargs is None:
             fetchargs = {}
@@ -170,13 +177,13 @@ class ParkleitsystemSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}, None
+            return {"ok": False, "err": fetch_err}
 
         if fetched is None:
             return {
                 "ok": False,
                 "err": ctx.make_error("direct_no_response", "response: undefined"),
-            }, None
+            }
 
         if isinstance(fetched, dict):
             status = helpers.to_int(vs.getprop(fetched, "status"))
@@ -205,20 +212,42 @@ class ParkleitsystemSDK:
                 "status": status,
                 "headers": headers,
                 "data": json_data,
-            }, None
+            }
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
-        }, None
+        }
 
+
+    @property
+    def get_all_city(self):
+        """Idiomatic facade: client.get_all_city.list() / client.get_all_city.load({"id": ...})."""
+        from entity.get_all_city_entity import GetAllCityEntity
+        cached = getattr(self, "_get_all_city", None)
+        if cached is None:
+            cached = GetAllCityEntity(self, None)
+            self._get_all_city = cached
+        return cached
 
     def GetAllCity(self, data=None):
+        # Deprecated: use client.get_all_city instead.
         from entity.get_all_city_entity import GetAllCityEntity
         return GetAllCityEntity(self, data)
 
 
+    @property
+    def get_city_parking_info(self):
+        """Idiomatic facade: client.get_city_parking_info.list() / client.get_city_parking_info.load({"id": ...})."""
+        from entity.get_city_parking_info_entity import GetCityParkingInfoEntity
+        cached = getattr(self, "_get_city_parking_info", None)
+        if cached is None:
+            cached = GetCityParkingInfoEntity(self, None)
+            self._get_city_parking_info = cached
+        return cached
+
     def GetCityParkingInfo(self, data=None):
+        # Deprecated: use client.get_city_parking_info instead.
         from entity.get_city_parking_info_entity import GetCityParkingInfoEntity
         return GetCityParkingInfoEntity(self, data)
 

@@ -45,6 +45,7 @@ class GetAllCityEntity
     end
   end
 
+  # @return [GetAllCity, Hash] the current GetAllCity data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class GetAllCityEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of GetAllCity fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
@@ -65,6 +67,11 @@ class GetAllCityEntity
   
 
   
+  # List GetAllCity items matching the given filter.
+  #
+  # @param reqmatch [GetAllCityListMatch, Hash, nil] match filter (any subset of GetAllCity fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<GetAllCity>, Array] the matching GetAllCity items; raises ParkleitsystemError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

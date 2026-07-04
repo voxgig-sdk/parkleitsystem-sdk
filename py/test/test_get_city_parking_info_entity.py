@@ -52,8 +52,7 @@ class TestGetCityParkingInfoEntity:
             "city": setup["idmap"]["city01"],
         }
 
-        get_city_parking_info_ref01_list_result, err = get_city_parking_info_ref01_ent.list(get_city_parking_info_ref01_match, None)
-        assert err is None
+        get_city_parking_info_ref01_list_result = get_city_parking_info_ref01_ent.list(get_city_parking_info_ref01_match, None)
         assert isinstance(get_city_parking_info_ref01_list_result, list)
 
 
@@ -94,7 +93,6 @@ def _get_city_parking_info_basic_setup(extra):
         "PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID": idmap,
         "PARKLEITSYSTEM_TEST_LIVE": "FALSE",
         "PARKLEITSYSTEM_TEST_EXPLAIN": "FALSE",
-        "PARKLEITSYSTEM_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -105,7 +103,6 @@ def _get_city_parking_info_basic_setup(extra):
     if env.get("PARKLEITSYSTEM_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("PARKLEITSYSTEM_APIKEY"),
             },
             extra or {},
         ])

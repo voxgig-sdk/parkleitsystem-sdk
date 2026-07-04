@@ -63,14 +63,12 @@ function get_all_city_direct_setup(mockres)
   local env = runner.env_override({
     ["PARKLEITSYSTEM_TEST_GET_ALL_CITY_ENTID"] = {},
     ["PARKLEITSYSTEM_TEST_LIVE"] = "FALSE",
-    ["PARKLEITSYSTEM_APIKEY"] = "NONE",
   })
 
   local live = env["PARKLEITSYSTEM_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {
-      apikey = env["PARKLEITSYSTEM_APIKEY"],
     }
     local client = sdk.new(merged_opts)
     return {
