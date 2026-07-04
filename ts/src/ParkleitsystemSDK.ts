@@ -205,28 +205,14 @@ class ParkleitsystemSDK {
 
 
 
-  _get_all_city?: GetAllCityEntity
-
-  // Idiomatic facade: `client.get_all_city.list()` / `client.get_all_city.load({ id })`.
-  get get_all_city(): GetAllCityEntity {
-    return (this._get_all_city ??= new GetAllCityEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.get_all_city` instead. */
+  // Entity access: `client.GetAllCity().list()` / `client.GetAllCity().load({ id })`.
   GetAllCity(data?: any) {
     const self = this
     return new GetAllCityEntity(self,data)
   }
 
 
-  _get_city_parking_info?: GetCityParkingInfoEntity
-
-  // Idiomatic facade: `client.get_city_parking_info.list()` / `client.get_city_parking_info.load({ id })`.
-  get get_city_parking_info(): GetCityParkingInfoEntity {
-    return (this._get_city_parking_info ??= new GetCityParkingInfoEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.get_city_parking_info` instead. */
+  // Entity access: `client.GetCityParkingInfo().list()` / `client.GetCityParkingInfo().load({ id })`.
   GetCityParkingInfo(data?: any) {
     const self = this
     return new GetCityParkingInfoEntity(self,data)

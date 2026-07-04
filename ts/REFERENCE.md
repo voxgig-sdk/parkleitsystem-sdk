@@ -121,7 +121,7 @@ Alias for `ParkleitsystemSDK.test()`.
 ## GetAllCityEntity
 
 ```ts
-const get_all_city = client.get_all_city
+const get_all_city = client.GetAllCity()
 ```
 
 ### Fields
@@ -139,7 +139,7 @@ const get_all_city = client.get_all_city
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.get_all_city.list()
+const results = await client.GetAllCity().list()
 ```
 
 ### Common Methods
@@ -173,7 +173,7 @@ Return a copy of the entity options.
 ## GetCityParkingInfoEntity
 
 ```ts
-const get_city_parking_info = client.get_city_parking_info
+const get_city_parking_info = client.GetCityParkingInfo()
 ```
 
 ### Fields
@@ -196,7 +196,7 @@ const get_city_parking_info = client.get_city_parking_info
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.get_city_parking_info.list()
+const results = await client.GetCityParkingInfo().list()
 ```
 
 ### Common Methods

@@ -244,8 +244,9 @@ end
 
 
 
--- Idiomatic facade: client:get_all_city():list() / client:get_all_city():load({ id = ... })
-function ParkleitsystemSDK:get_all_city(data)
+-- Idiomatic facade: client:GetAllCity():list() / client:GetAllCity():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function ParkleitsystemSDK:GetAllCity(data)
   local EntityMod = require("entity.get_all_city_entity")
   if data == nil then
     if self._get_all_city == nil then
@@ -256,15 +257,10 @@ function ParkleitsystemSDK:get_all_city(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:get_all_city() instead.
-function ParkleitsystemSDK:GetAllCity(data)
-  local EntityMod = require("entity.get_all_city_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:get_city_parking_info():list() / client:get_city_parking_info():load({ id = ... })
-function ParkleitsystemSDK:get_city_parking_info(data)
+-- Idiomatic facade: client:GetCityParkingInfo():list() / client:GetCityParkingInfo():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function ParkleitsystemSDK:GetCityParkingInfo(data)
   local EntityMod = require("entity.get_city_parking_info_entity")
   if data == nil then
     if self._get_city_parking_info == nil then
@@ -272,12 +268,6 @@ function ParkleitsystemSDK:get_city_parking_info(data)
     end
     return self._get_city_parking_info
   end
-  return EntityMod.new(self, data)
-end
-
--- Deprecated: use client:get_city_parking_info() instead.
-function ParkleitsystemSDK:GetCityParkingInfo(data)
-  local EntityMod = require("entity.get_city_parking_info_entity")
   return EntityMod.new(self, data)
 end
 

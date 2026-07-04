@@ -87,7 +87,7 @@ same parameters as `direct()`.
 ## GetAllCityEntity
 
 ```lua
-local get_all_city = client:get_all_city(nil)
+local get_all_city = client:GetAllCity(nil)
 ```
 
 ### Fields
@@ -105,7 +105,7 @@ local get_all_city = client:get_all_city(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:get_all_city():list()
+local results, err = client:GetAllCity():list()
 ```
 
 ### Common Methods
@@ -141,7 +141,7 @@ Return the entity name.
 ## GetCityParkingInfoEntity
 
 ```lua
-local get_city_parking_info = client:get_city_parking_info(nil)
+local get_city_parking_info = client:GetCityParkingInfo(nil)
 ```
 
 ### Fields
@@ -164,7 +164,7 @@ local get_city_parking_info = client:get_city_parking_info(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:get_city_parking_info():list()
+local results, err = client:GetCityParkingInfo():list()
 ```
 
 ### Common Methods

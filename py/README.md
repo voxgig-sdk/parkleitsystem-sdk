@@ -31,14 +31,16 @@ from parkleitsystem_sdk import ParkleitsystemSDK
 client = ParkleitsystemSDK()
 ```
 
-### 2. List getallcitys
+### 2. List getallcity records
+
+`list()` returns a `list` of records (each a `dict`) and raises on
+error — iterate it directly.
 
 ```python
 try:
-    result = client.getallcity.list()
-    for item in result:
-        d = item.data_get()
-        print(d["id"], d["name"])
+    getallcitys = client.GetAllCity().list({})
+    for getallcity in getallcitys:
+        print(getallcity)
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -86,8 +88,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = ParkleitsystemSDK.test()
 
-result = client.getallcity.load({"id": "test01"})
-# result contains mock response data
+# Entity ops return the bare record and raise on error.
+getallcity = client.GetAllCity().load({"id": "test01"})
+# getallcity contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -240,7 +243,7 @@ API path: `/{city}`
 
 ### GetAllCity
 
-Create an instance: `const get_all_city = client.get_all_city`
+Create an instance: `get_all_city = client.GetAllCity()`
 
 #### Operations
 
@@ -258,14 +261,14 @@ Create an instance: `const get_all_city = client.get_all_city`
 
 #### Example: List
 
-```ts
-const get_all_citys = await client.get_all_city.list()
+```python
+get_all_citys = client.GetAllCity().list({})
 ```
 
 
 ### GetCityParkingInfo
 
-Create an instance: `const get_city_parking_info = client.get_city_parking_info`
+Create an instance: `get_city_parking_info = client.GetCityParkingInfo()`
 
 #### Operations
 
@@ -288,8 +291,8 @@ Create an instance: `const get_city_parking_info = client.get_city_parking_info`
 
 #### Example: List
 
-```ts
-const get_city_parking_infos = await client.get_city_parking_info.list()
+```python
+get_city_parking_infos = client.GetCityParkingInfo().list({})
 ```
 
 
@@ -363,7 +366,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-getallcity = client.getallcity
+getallcity = client.GetAllCity()
 getallcity.load({"id": "example_id"})
 
 # getallcity.data_get() now returns the loaded getallcity data

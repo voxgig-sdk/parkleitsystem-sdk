@@ -208,26 +208,14 @@ class ParkleitsystemSDK
   end
 
 
-  # Idiomatic facade: client.get_all_city.list / client.get_all_city.load({ "id" => ... })
-  def get_all_city
-    require_relative 'entity/get_all_city_entity'
-    @get_all_city ||= GetAllCityEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.get_all_city instead.
+  # Canonical facade: client.GetAllCity.list / client.GetAllCity.load({ "id" => ... })
   def GetAllCity(data = nil)
     require_relative 'entity/get_all_city_entity'
     GetAllCityEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.get_city_parking_info.list / client.get_city_parking_info.load({ "id" => ... })
-  def get_city_parking_info
-    require_relative 'entity/get_city_parking_info_entity'
-    @get_city_parking_info ||= GetCityParkingInfoEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.get_city_parking_info instead.
+  # Canonical facade: client.GetCityParkingInfo.list / client.GetCityParkingInfo.load({ "id" => ... })
   def GetCityParkingInfo(data = nil)
     require_relative 'entity/get_city_parking_info_entity'
     GetCityParkingInfoEntity.new(self, data)

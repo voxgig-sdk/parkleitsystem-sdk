@@ -84,7 +84,7 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 ## GetAllCityEntity
 
 ```python
-get_all_city = client.get_all_city
+get_all_city = client.GetAllCity()
 ```
 
 ### Fields
@@ -102,7 +102,9 @@ get_all_city = client.get_all_city
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.get_all_city.list({})
+results = client.GetAllCity().list({})
+for get_all_city in results:
+    print(get_all_city)
 ```
 
 ### Common Methods
@@ -137,7 +139,7 @@ Return the entity name.
 ## GetCityParkingInfoEntity
 
 ```python
-get_city_parking_info = client.get_city_parking_info
+get_city_parking_info = client.GetCityParkingInfo()
 ```
 
 ### Fields
@@ -160,7 +162,9 @@ get_city_parking_info = client.get_city_parking_info
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.get_city_parking_info.list({})
+results = client.GetCityParkingInfo().list({})
+for get_city_parking_info in results:
+    print(get_city_parking_info)
 ```
 
 ### Common Methods

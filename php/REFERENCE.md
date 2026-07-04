@@ -89,7 +89,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## GetAllCityEntity
 
 ```php
-$get_all_city = $client->get_all_city();
+$get_all_city = $client->GetAllCity();
 ```
 
 ### Fields
@@ -107,7 +107,7 @@ $get_all_city = $client->get_all_city();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->get_all_city()->list([]);
+$results = $client->GetAllCity()->list([]);
 ```
 
 ### Common Methods
@@ -143,7 +143,7 @@ Return the entity name.
 ## GetCityParkingInfoEntity
 
 ```php
-$get_city_parking_info = $client->get_city_parking_info();
+$get_city_parking_info = $client->GetCityParkingInfo();
 ```
 
 ### Fields
@@ -166,7 +166,7 @@ $get_city_parking_info = $client->get_city_parking_info();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->get_city_parking_info()->list([]);
+$results = $client->GetCityParkingInfo()->list([]);
 ```
 
 ### Common Methods

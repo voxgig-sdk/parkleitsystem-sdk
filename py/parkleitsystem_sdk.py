@@ -220,41 +220,21 @@ class ParkleitsystemSDK:
         }
 
 
-    @property
-    def get_all_city(self):
-        """Idiomatic facade: client.get_all_city.list() / client.get_all_city.load({"id": ...})."""
-        from entity.get_all_city_entity import GetAllCityEntity
-        cached = getattr(self, "_get_all_city", None)
-        if cached is None:
-            cached = GetAllCityEntity(self, None)
-            self._get_all_city = cached
-        return cached
-
-    def GetAllCity(self, data=None):
-        # Deprecated: use client.get_all_city instead.
+    def GetAllCity(self, data=None) -> "GetAllCityEntity":
+        """Entity factory: client.GetAllCity().list({}) / client.GetAllCity().load({"id": ...})."""
         from entity.get_all_city_entity import GetAllCityEntity
         return GetAllCityEntity(self, data)
 
 
-    @property
-    def get_city_parking_info(self):
-        """Idiomatic facade: client.get_city_parking_info.list() / client.get_city_parking_info.load({"id": ...})."""
-        from entity.get_city_parking_info_entity import GetCityParkingInfoEntity
-        cached = getattr(self, "_get_city_parking_info", None)
-        if cached is None:
-            cached = GetCityParkingInfoEntity(self, None)
-            self._get_city_parking_info = cached
-        return cached
-
-    def GetCityParkingInfo(self, data=None):
-        # Deprecated: use client.get_city_parking_info instead.
+    def GetCityParkingInfo(self, data=None) -> "GetCityParkingInfoEntity":
+        """Entity factory: client.GetCityParkingInfo().list({}) / client.GetCityParkingInfo().load({"id": ...})."""
         from entity.get_city_parking_info_entity import GetCityParkingInfoEntity
         return GetCityParkingInfoEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "ParkleitsystemSDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -274,3 +254,10 @@ class ParkleitsystemSDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.get_all_city_entity import GetAllCityEntity
+    from entity.get_city_parking_info_entity import GetCityParkingInfoEntity

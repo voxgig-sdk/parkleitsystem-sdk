@@ -26,9 +26,11 @@ import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem'
 
 const client = new ParkleitsystemSDK()
 
-// List all getallcitys
-const getallcitys = await client.getallcity.list()
-console.log(getallcitys.data)
+// List all getallcitys (returns GetAllCity[])
+const getallcitys = await client.GetAllCity().list()
+for (const getallcity of getallcitys) {
+  console.log(getallcity)
+}
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -84,9 +86,10 @@ from parkleitsystem_sdk import ParkleitsystemSDK
 
 client = ParkleitsystemSDK()
 
-# List all getallcitys
-getallcitys = client.getallcity.list()
-print(getallcitys)
+# List all getallcitys (returns a list, raises on error)
+getallcitys = client.GetAllCity().list({})
+for getallcity in getallcitys:
+    print(getallcity)
 ```
 
 ### PHP
@@ -97,8 +100,8 @@ require_once 'parkleitsystem_sdk.php';
 
 $client = new ParkleitsystemSDK();
 
-// List all getallcitys (throws on error)
-$getallcitys = $client->getallcity()->list();
+// List all getallcitys (returns an array; throws on error)
+$getallcitys = $client->GetAllCity()->list();
 print_r($getallcitys);
 ```
 
@@ -121,8 +124,8 @@ require_relative "Parkleitsystem_sdk"
 
 client = ParkleitsystemSDK.new
 
-# List all getallcitys
-getallcitys = client.getallcity.list
+# List all getallcitys (returns an Array; raises on error)
+getallcitys = client.GetAllCity.list
 puts getallcitys
 ```
 
@@ -134,7 +137,7 @@ local sdk = require("parkleitsystem_sdk")
 local client = sdk.new()
 
 -- List all getallcitys
-local getallcitys, err = client:getallcity():list()
+local getallcitys, err = client:GetAllCity():list()
 print(getallcitys)
 ```
 
@@ -147,22 +150,27 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = ParkleitsystemSDK.test()
-const result = await client.getallcity.load({ id: 'test01' })
-// result.ok === true, result.data contains mock data
+const getallcity = await client.GetAllCity().load({ id: 'test01' })
+// getallcity is a bare GetAllCity populated with mock data
+console.log(getallcity)
 ```
 
 ### Python
 
 ```python
 client = ParkleitsystemSDK.test()
-result = client.getallcity.load({"id": "test01"})
+getallcity = client.GetAllCity().load({"id": "test01"})
+print(getallcity)
 ```
 
 ### PHP
 
 ```php
-$client = ParkleitsystemSDK::test();
-$result = $client->getallcity()->load(["id" => "test01"]);
+// Seed fixture data so offline calls resolve without a live server.
+$client = ParkleitsystemSDK::test([
+    "entity" => ["getallcity" => ["test01" => ["id" => "test01"]]],
+]);
+$getallcity = $client->GetAllCity()->load(["id" => "test01"]);
 ```
 
 ### Golang
@@ -177,15 +185,18 @@ result, err := client.GetAllCity(nil).Load(
 ### Ruby
 
 ```ruby
-client = ParkleitsystemSDK.test
-result = client.getallcity.load({ "id" => "test01" })
+# Seed fixture data so offline calls resolve without a live server.
+client = ParkleitsystemSDK.test({
+  "entity" => { "getallcity" => { "test01" => { "id" => "test01" } } },
+})
+getallcity = client.GetAllCity.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:getallcity():load({ id = "test01" })
+local result, err = client:GetAllCity():load({ id = "test01" })
 ```
 
 ## How it works
@@ -233,6 +244,9 @@ const result = await client.direct({
   method: 'GET',
   params: { id: 'example' },
 })
+if (result instanceof Error) {
+  throw result
+}
 console.log(result.data)
 ```
 

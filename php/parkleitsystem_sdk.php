@@ -233,10 +233,10 @@ class ParkleitsystemSDK
 
     private $_get_all_city = null;
 
-    // Idiomatic facade: $client->get_all_city()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias GetAllCity() (PHP method
-    // names are case-insensitive).
-    public function get_all_city($data = null)
+    // Canonical facade: $client->GetAllCity()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->get_all_city()
+    // resolves here too.
+    public function GetAllCity($data = null)
     {
         require_once __DIR__ . '/entity/get_all_city_entity.php';
         if ($data === null) {
@@ -251,10 +251,10 @@ class ParkleitsystemSDK
 
     private $_get_city_parking_info = null;
 
-    // Idiomatic facade: $client->get_city_parking_info()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias GetCityParkingInfo() (PHP method
-    // names are case-insensitive).
-    public function get_city_parking_info($data = null)
+    // Canonical facade: $client->GetCityParkingInfo()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->get_city_parking_info()
+    // resolves here too.
+    public function GetCityParkingInfo($data = null)
     {
         require_once __DIR__ . '/entity/get_city_parking_info_entity.php';
         if ($data === null) {

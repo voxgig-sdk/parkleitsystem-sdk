@@ -28,16 +28,14 @@ require_relative "Parkleitsystem_sdk"
 client = ParkleitsystemSDK.new
 ```
 
-### 2. List getallcitys
+### 2. List getallcity records
 
 ```ruby
 begin
-  result = client.getallcity.list
-  if result.is_a?(Array)
-    result.each do |item|
-      d = item.data_get
-      puts "#{d["id"]} #{d["name"]}"
-    end
+  # list returns an Array of GetAllCity records — iterate directly.
+  getallcitys = client.GetAllCity.list
+  getallcitys.each do |item|
+    puts "#{item["id"]} #{item["name"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -85,13 +83,17 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = ParkleitsystemSDK.test
+client = ParkleitsystemSDK.test({
+  "entity" => { "getallcity" => { "test01" => { "id" => "test01" } } },
+})
 
-result = client.getallcity.load({ "id" => "test01" })
-# result contains mock response data
+# load returns the bare mock record (raises on error).
+getallcity = client.GetAllCity.load({ "id" => "test01" })
+puts getallcity
 ```
 
 ### Use a custom fetch function
@@ -243,7 +245,7 @@ API path: `/{city}`
 
 ### GetAllCity
 
-Create an instance: `const get_all_city = client.get_all_city`
+Create an instance: `get_all_city = client.GetAllCity`
 
 #### Operations
 
@@ -261,14 +263,15 @@ Create an instance: `const get_all_city = client.get_all_city`
 
 #### Example: List
 
-```ts
-const get_all_citys = await client.get_all_city.list()
+```ruby
+# list returns an Array of GetAllCity records (raises on error).
+get_all_citys = client.GetAllCity.list
 ```
 
 
 ### GetCityParkingInfo
 
-Create an instance: `const get_city_parking_info = client.get_city_parking_info`
+Create an instance: `get_city_parking_info = client.GetCityParkingInfo`
 
 #### Operations
 
@@ -291,8 +294,9 @@ Create an instance: `const get_city_parking_info = client.get_city_parking_info`
 
 #### Example: List
 
-```ts
-const get_city_parking_infos = await client.get_city_parking_info.list()
+```ruby
+# list returns an Array of GetCityParkingInfo records (raises on error).
+get_city_parking_infos = client.GetCityParkingInfo.list
 ```
 
 
@@ -367,7 +371,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-getallcity = client.getallcity
+getallcity = client.GetAllCity
 getallcity.load({ "id" => "example_id" })
 
 # getallcity.data_get now returns the loaded getallcity data

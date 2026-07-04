@@ -29,18 +29,16 @@ require_once 'parkleitsystem_sdk.php';
 $client = new ParkleitsystemSDK();
 ```
 
-### 2. List getallcitys
+### 2. List getallcity records
 
 ```php
 try {
-    $result = $client->getallcity()->list();
-    if (is_array($result)) {
-        foreach ($result as $item) {
-            $d = $item->data_get();
-            echo $d["id"] . " " . $d["name"] . "\n";
-        }
+    // list() returns an array of GetAllCity records — iterate directly.
+    $getallcitys = $client->GetAllCity()->list();
+    foreach ($getallcitys as $item) {
+        echo $item["id"] . " " . $item["name"] . "\n";
     }
-} catch (\Exception $err) {
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -86,13 +84,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = ParkleitsystemSDK::test();
+$client = ParkleitsystemSDK::test([
+    "entity" => ["getallcity" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->getallcity()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$getallcity = $client->GetAllCity()->load(["id" => "test01"]);
+print_r($getallcity);
 ```
 
 ### Use a custom fetch function
@@ -248,7 +250,7 @@ API path: `/{city}`
 
 ### GetAllCity
 
-Create an instance: `const get_all_city = client.get_all_city`
+Create an instance: `$get_all_city = $client->GetAllCity();`
 
 #### Operations
 
@@ -266,14 +268,15 @@ Create an instance: `const get_all_city = client.get_all_city`
 
 #### Example: List
 
-```ts
-const get_all_citys = await client.get_all_city.list()
+```php
+// list() returns an array of GetAllCity records (throws on error).
+$get_all_citys = $client->GetAllCity()->list();
 ```
 
 
 ### GetCityParkingInfo
 
-Create an instance: `const get_city_parking_info = client.get_city_parking_info`
+Create an instance: `$get_city_parking_info = $client->GetCityParkingInfo();`
 
 #### Operations
 
@@ -296,8 +299,9 @@ Create an instance: `const get_city_parking_info = client.get_city_parking_info`
 
 #### Example: List
 
-```ts
-const get_city_parking_infos = await client.get_city_parking_info.list()
+```php
+// list() returns an array of GetCityParkingInfo records (throws on error).
+$get_city_parking_infos = $client->GetCityParkingInfo()->list();
 ```
 
 
@@ -372,7 +376,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$getallcity = $client->getallcity();
+$getallcity = $client->GetAllCity();
 $getallcity->load(["id" => "example_id"]);
 
 // $getallcity->dataGet() now returns the loaded getallcity data

@@ -90,7 +90,7 @@ same parameters as `direct()`. Raises on error.
 ## GetAllCityEntity
 
 ```ruby
-get_all_city = client.get_all_city
+get_all_city = client.GetAllCity
 ```
 
 ### Fields
@@ -108,7 +108,7 @@ get_all_city = client.get_all_city
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.get_all_city.list(nil)
+results = client.GetAllCity.list(nil)
 ```
 
 ### Common Methods
@@ -144,7 +144,7 @@ Return the entity name.
 ## GetCityParkingInfoEntity
 
 ```ruby
-get_city_parking_info = client.get_city_parking_info
+get_city_parking_info = client.GetCityParkingInfo
 ```
 
 ### Fields
@@ -167,7 +167,7 @@ get_city_parking_info = client.get_city_parking_info
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.get_city_parking_info.list(nil)
+results = client.GetCityParkingInfo.list(nil)
 ```
 
 ### Common Methods
