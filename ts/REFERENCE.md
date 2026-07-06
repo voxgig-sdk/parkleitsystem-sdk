@@ -128,9 +128,9 @@ const get_all_city = client.GetAllCity()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | ``$OBJECT`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
+| `coord` | `Record<string, any>` | No |  |
+| `id` | `string` | No |  |
+| `name` | `string` | No |  |
 
 ### Operations
 
@@ -180,14 +180,14 @@ const get_city_parking_info = client.GetCityParkingInfo()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | ``$STRING`` | No |  |
-| `coord` | ``$OBJECT`` | No |  |
-| `free` | ``$INTEGER`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `lot_type` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `state` | ``$STRING`` | No |  |
-| `total` | ``$INTEGER`` | No |  |
+| `address` | `string` | No |  |
+| `coord` | `Record<string, any>` | No |  |
+| `free` | `number` | No |  |
+| `id` | `string` | No |  |
+| `lot_type` | `string` | No |  |
+| `name` | `string` | No |  |
+| `state` | `string` | No |  |
+| `total` | `number` | No |  |
 
 ### Operations
 

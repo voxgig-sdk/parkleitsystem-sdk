@@ -25,7 +25,7 @@ GetAllCity = Struct.new(
   keyword_init: true
 )
 
-# Match filter for GetAllCity#list (any subset of GetAllCity fields).
+# Request payload for GetAllCity#list.
 #
 # @!attribute [rw] coord
 #   @return [Hash, nil]

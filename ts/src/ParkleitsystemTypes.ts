@@ -11,7 +11,11 @@ export interface GetAllCity {
   name?: string
 }
 
-export type GetAllCityListMatch = Partial<GetAllCity>
+export interface GetAllCityListMatch {
+  coord?: Record<string, any>
+  id?: string
+  name?: string
+}
 
 export interface GetCityParkingInfo {
   address?: string

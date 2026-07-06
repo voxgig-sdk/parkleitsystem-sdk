@@ -221,13 +221,13 @@ class ParkleitsystemSDK:
 
 
     def GetAllCity(self, data=None) -> "GetAllCityEntity":
-        """Entity factory: client.GetAllCity().list({}) / client.GetAllCity().load({"id": ...})."""
+        """Entity factory: client.GetAllCity().list() / client.GetAllCity().load({"id": ...})."""
         from entity.get_all_city_entity import GetAllCityEntity
         return GetAllCityEntity(self, data)
 
 
     def GetCityParkingInfo(self, data=None) -> "GetCityParkingInfoEntity":
-        """Entity factory: client.GetCityParkingInfo().list({}) / client.GetCityParkingInfo().load({"id": ...})."""
+        """Entity factory: client.GetCityParkingInfo().list() / client.GetCityParkingInfo().load({"id": ...})."""
         from entity.get_city_parking_info_entity import GetCityParkingInfoEntity
         return GetCityParkingInfoEntity(self, data)
 

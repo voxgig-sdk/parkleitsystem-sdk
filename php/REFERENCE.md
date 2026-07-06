@@ -49,11 +49,11 @@ Create a new `GetAllCityEntity` instance. Pass `null` for no initial data.
 
 Create a new `GetCityParkingInfoEntity` instance. Pass `null` for no initial data.
 
-#### `optionsMap(): array`
+#### `options_map(): array`
 
 Return a deep copy of the current SDK options.
 
-#### `getUtility(): ProjectNameUtility`
+#### `get_utility(): ParkleitsystemUtility`
 
 Return a copy of the SDK utility object.
 
@@ -96,35 +96,35 @@ $get_all_city = $client->GetAllCity();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | ``$OBJECT`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
+| `coord` | `array` | No |  |
+| `id` | `string` | No |  |
+| `name` | `string` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->GetAllCity()->list([]);
+$results = $client->GetAllCity()->list();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -133,7 +133,7 @@ Set the entity match criteria.
 Create a new `GetAllCityEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -150,40 +150,40 @@ $get_city_parking_info = $client->GetCityParkingInfo();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | ``$STRING`` | No |  |
-| `coord` | ``$OBJECT`` | No |  |
-| `free` | ``$INTEGER`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `lot_type` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `state` | ``$STRING`` | No |  |
-| `total` | ``$INTEGER`` | No |  |
+| `address` | `string` | No |  |
+| `coord` | `array` | No |  |
+| `free` | `int` | No |  |
+| `id` | `string` | No |  |
+| `lot_type` | `string` | No |  |
+| `name` | `string` | No |  |
+| `state` | `string` | No |  |
+| `total` | `int` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->GetCityParkingInfo()->list([]);
+$results = $client->GetCityParkingInfo()->list();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -192,7 +192,7 @@ Set the entity match criteria.
 Create a new `GetCityParkingInfoEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 

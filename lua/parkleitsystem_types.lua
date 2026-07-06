@@ -12,6 +12,9 @@
 ---@field name? string
 
 ---@class GetAllCityListMatch
+---@field coord? table
+---@field id? string
+---@field name? string
 
 ---@class GetCityParkingInfo
 ---@field address? string

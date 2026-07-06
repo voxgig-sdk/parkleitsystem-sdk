@@ -20,7 +20,7 @@ class GetAllCity
     public ?string $name = null;
 }
 
-/** Match filter for GetAllCity#list (any subset of GetAllCity fields). */
+/** Request payload for GetAllCity#list. */
 class GetAllCityListMatch
 {
     public ?array $coord = null;

@@ -8,7 +8,7 @@ Complete API reference for the Parkleitsystem Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'parkleitsystem_sdk'
+require_relative 'Parkleitsystem_sdk'
 
 client = ParkleitsystemSDK.new(options)
 ```
@@ -97,18 +97,18 @@ get_all_city = client.GetAllCity
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | ``$OBJECT`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
+| `coord` | `Hash` | No |  |
+| `id` | `String` | No |  |
+| `name` | `String` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.GetAllCity.list(nil)
+results = client.GetAllCity.list
 ```
 
 ### Common Methods
@@ -151,23 +151,23 @@ get_city_parking_info = client.GetCityParkingInfo
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | ``$STRING`` | No |  |
-| `coord` | ``$OBJECT`` | No |  |
-| `free` | ``$INTEGER`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `lot_type` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `state` | ``$STRING`` | No |  |
-| `total` | ``$INTEGER`` | No |  |
+| `address` | `String` | No |  |
+| `coord` | `Hash` | No |  |
+| `free` | `Integer` | No |  |
+| `id` | `String` | No |  |
+| `lot_type` | `String` | No |  |
+| `name` | `String` | No |  |
+| `state` | `String` | No |  |
+| `total` | `Integer` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.GetCityParkingInfo.list(nil)
+results = client.GetCityParkingInfo.list
 ```
 
 ### Common Methods

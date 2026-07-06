@@ -94,9 +94,9 @@ local get_all_city = client:GetAllCity(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | ``$OBJECT`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
+| `coord` | `table` | No |  |
+| `id` | `string` | No |  |
+| `name` | `string` | No |  |
 
 ### Operations
 
@@ -148,14 +148,14 @@ local get_city_parking_info = client:GetCityParkingInfo(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | ``$STRING`` | No |  |
-| `coord` | ``$OBJECT`` | No |  |
-| `free` | ``$INTEGER`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `lot_type` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `state` | ``$STRING`` | No |  |
-| `total` | ``$INTEGER`` | No |  |
+| `address` | `string` | No |  |
+| `coord` | `table` | No |  |
+| `free` | `number` | No |  |
+| `id` | `string` | No |  |
+| `lot_type` | `string` | No |  |
+| `name` | `string` | No |  |
+| `state` | `string` | No |  |
+| `total` | `number` | No |  |
 
 ### Operations
 

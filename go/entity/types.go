@@ -15,8 +15,7 @@ type GetAllCity struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// GetAllCityListMatch mirrors the get_all_city fields as an all-optional match
-// filter (Go analog of Partial<GetAllCity>).
+// GetAllCityListMatch is the typed request payload for GetAllCity.ListTyped.
 type GetAllCityListMatch struct {
 	Coord *map[string]any `json:"coord,omitempty"`
 	Id *string `json:"id,omitempty"`

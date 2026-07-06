@@ -91,18 +91,18 @@ get_all_city = client.GetAllCity()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | ``$OBJECT`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
+| `coord` | `dict` | No |  |
+| `id` | `str` | No |  |
+| `name` | `str` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.GetAllCity().list({})
+results = client.GetAllCity().list()
 for get_all_city in results:
     print(get_all_city)
 ```
@@ -146,23 +146,23 @@ get_city_parking_info = client.GetCityParkingInfo()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | ``$STRING`` | No |  |
-| `coord` | ``$OBJECT`` | No |  |
-| `free` | ``$INTEGER`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `lot_type` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `state` | ``$STRING`` | No |  |
-| `total` | ``$INTEGER`` | No |  |
+| `address` | `str` | No |  |
+| `coord` | `dict` | No |  |
+| `free` | `int` | No |  |
+| `id` | `str` | No |  |
+| `lot_type` | `str` | No |  |
+| `name` | `str` | No |  |
+| `state` | `str` | No |  |
+| `total` | `int` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.GetCityParkingInfo().list({})
+results = client.GetCityParkingInfo().list()
 for get_city_parking_info in results:
     print(get_city_parking_info)
 ```
