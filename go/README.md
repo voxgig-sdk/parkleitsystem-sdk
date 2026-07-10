@@ -50,12 +50,12 @@ import (
 func main() {
     client := sdk.New()
 
-    // List getallcity records — the value is the array of records itself.
-    getallcitys, err := client.GetAllCity(nil).List(nil, nil)
+    // List getAllCity records — the value is the array of records itself.
+    getAllCitys, err := client.GetAllCity(nil).List(nil, nil)
     if err != nil {
         panic(err)
     }
-    for _, item := range getallcitys.([]any) {
+    for _, item := range getAllCitys.([]any) {
         fmt.Println(item)
     }
 }
@@ -137,13 +137,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-getallcity, err := client.GetAllCity(nil).List(
+getAllCity, err := client.GetAllCity(nil).List(
     nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(getallcity) // the returned mock data
+fmt.Println(getAllCity) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -248,9 +248,9 @@ Check `err` first, then use the value directly (or the typed
 `...Typed` variants, which return the entity's model struct and a typed
 slice):
 
-    getallcity, err := client.GetAllCity(nil).List(map[string]any{/* fields */}, nil)
+    getAllCity, err := client.GetAllCity(nil).List(map[string]any{/* fields */}, nil)
     if err != nil { /* handle */ }
-    // getallcity is the returned record
+    // getAllCity is the returned record
 
 Only `Direct()` returns a response envelope — a `map[string]any` with
 `"ok"`, `"status"`, `"headers"`, and `"data"` keys.
@@ -293,7 +293,7 @@ API path: `/{city}`
 
 ### GetAllCity
 
-Create an instance: `get_all_city := client.GetAllCity(nil)`
+Create an instance: `getAllCity := client.GetAllCity(nil)`
 
 #### Operations
 
@@ -312,17 +312,17 @@ Create an instance: `get_all_city := client.GetAllCity(nil)`
 #### Example: List
 
 ```go
-get_all_citys, err := client.GetAllCity(nil).List(nil, nil)
+getAllCitys, err := client.GetAllCity(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(get_all_citys) // the array of records
+fmt.Println(getAllCitys) // the array of records
 ```
 
 
 ### GetCityParkingInfo
 
-Create an instance: `get_city_parking_info := client.GetCityParkingInfo(nil)`
+Create an instance: `getCityParkingInfo := client.GetCityParkingInfo(nil)`
 
 #### Operations
 
@@ -346,11 +346,11 @@ Create an instance: `get_city_parking_info := client.GetCityParkingInfo(nil)`
 #### Example: List
 
 ```go
-get_city_parking_infos, err := client.GetCityParkingInfo(nil).List(nil, nil)
+getCityParkingInfos, err := client.GetCityParkingInfo(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(get_city_parking_infos) // the array of records
+fmt.Println(getCityParkingInfos) // the array of records
 ```
 
 

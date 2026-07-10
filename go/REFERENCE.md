@@ -94,7 +94,8 @@ same parameters as `Direct()`.
 ## GetAllCityEntity
 
 ```go
-get_all_city := client.GetAllCity(nil)
+getAllCity := client.GetAllCity(nil)
+fmt.Println(getAllCity.GetName()) // "get_all_city"
 ```
 
 ### Fields
@@ -113,6 +114,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.GetAllCity(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 ### Common Methods
@@ -142,7 +147,8 @@ Return the entity name.
 ## GetCityParkingInfoEntity
 
 ```go
-get_city_parking_info := client.GetCityParkingInfo(nil)
+getCityParkingInfo := client.GetCityParkingInfo(nil)
+fmt.Println(getCityParkingInfo.GetName()) // "get_city_parking_info"
 ```
 
 ### Fields
@@ -166,6 +172,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.GetCityParkingInfo(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 ### Common Methods

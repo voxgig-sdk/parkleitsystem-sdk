@@ -6,9 +6,6 @@
     },
     "kit": {
       "config": {
-        "auth": {
-          "prefix": "Bearer"
-        },
         "docs_order": [
           "ts",
           "py",
@@ -339,14 +336,17 @@
           "url": "https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html"
         },
         "description": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App.",
+        "meta_source": "https://www.freepublicapis.com",
         "servers": [
           {
             "description": "Production server",
             "url": "https://api.parkendd.de"
           }
         ],
+        "summary": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug.",
         "title": "Parkleitsystem API",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "website": "https://parkendd.de"
       },
       "option": {},
       "target": {
@@ -399,6 +399,9 @@
           },
           "name": "go-cli",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
@@ -449,6 +452,9 @@
           },
           "name": "go-mcp",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },

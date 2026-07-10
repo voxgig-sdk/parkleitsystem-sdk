@@ -16,9 +16,9 @@ main: {
           url: "https://api.parkendd.de"
         }
       ]
+      summary: "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug."
       title: "Parkleitsystem API"
       version: "1.0.0"
+      website: "https://parkendd.de"
     }
   }
-}
-
