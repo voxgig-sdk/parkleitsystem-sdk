@@ -27,7 +27,20 @@ func main() {
 }
 
 func run(args []string, in io.Reader, out, errOut io.Writer) int {
-	client := sdk.NewParkleitsystemSDK(nil)
+	// Configure from the environment: PARKLEITSYSTEM_APIKEY carries the API key and
+	// PARKLEITSYSTEM_BASE optionally overrides the API base URL (e.g. production).
+	// Both injectable by a secrets vault. Unset -> nil config defaults.
+	var opts map[string]any
+	if apikey := os.Getenv("PARKLEITSYSTEM_APIKEY"); apikey != "" {
+		opts = map[string]any{"apikey": apikey}
+	}
+	if base := os.Getenv("PARKLEITSYSTEM_BASE"); base != "" {
+		if opts == nil {
+			opts = map[string]any{}
+		}
+		opts["base"] = base
+	}
+	client := sdk.NewParkleitsystemSDK(opts)
 
 	r, err := eng.NewRegistry()
 	if err != nil {
