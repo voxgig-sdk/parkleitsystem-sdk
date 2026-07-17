@@ -1,4 +1,4 @@
--- ProjectName SDK exists test
+-- Parkleitsystem SDK exists test
 
 local sdk = require("parkleitsystem_sdk")
 
