@@ -91,7 +91,7 @@ get_all_city = client.GetAllCity()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | `dict` | No |  |
+| `coords` | `dict` | No |  |
 | `id` | `str` | No |  |
 | `name` | `str` | No |  |
 
@@ -147,7 +147,7 @@ get_city_parking_info = client.GetCityParkingInfo()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `address` | `str` | No |  |
-| `coord` | `dict` | No |  |
+| `coords` | `dict` | No |  |
 | `free` | `int` | No |  |
 | `id` | `str` | No |  |
 | `lot_type` | `str` | No |  |
@@ -162,7 +162,7 @@ get_city_parking_info = client.GetCityParkingInfo()
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.GetCityParkingInfo().list()
+results = client.GetCityParkingInfo().list({"id": "example"})
 for get_city_parking_info in results:
     print(get_city_parking_info)
 ```

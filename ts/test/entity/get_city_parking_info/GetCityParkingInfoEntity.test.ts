@@ -64,7 +64,7 @@ describe('GetCityParkingInfoEntity', async () => {
     const get_city_parking_info_ref01_match: any = {}
     get_city_parking_info_ref01_match['city'] = setup.idmap['city01']
 
-    const get_city_parking_info_ref01_list = await get_city_parking_info_ref01_ent.list(get_city_parking_info_ref01_match)
+    const get_city_parking_info_ref01_list = (await get_city_parking_info_ref01_ent.list(get_city_parking_info_ref01_match)).map((e: any) => e.data())
 
 
   })

@@ -94,7 +94,7 @@ local get_all_city = client:GetAllCity(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | `table` | No |  |
+| `coords` | `table` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 
@@ -149,7 +149,7 @@ local get_city_parking_info = client:GetCityParkingInfo(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `address` | `string` | No |  |
-| `coord` | `table` | No |  |
+| `coords` | `table` | No |  |
 | `free` | `number` | No |  |
 | `id` | `string` | No |  |
 | `lot_type` | `string` | No |  |

@@ -37,7 +37,7 @@ begin
   # list returns an Array of GetAllCity records — iterate directly.
   getallcitys = client.GetAllCity.list
   getallcitys.each do |item|
-    puts "#{item["id"]} #{item["coord"]}"
+    puts "#{item["id"]} #{item["coords"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -119,7 +119,8 @@ Create a mock client for unit testing — no server required:
 ```ruby
 client = ParkleitsystemSDK.test
 
-# Entity ops return the bare mock record (raises on error).
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
 getallcity = client.GetAllCity.list()
 puts getallcity
 ```
@@ -237,7 +238,7 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `coord` |  |
+| `coords` |  |
 | `id` |  |
 | `name` |  |
 
@@ -250,7 +251,7 @@ API path: `/`
 | Field | Description |
 | --- | --- |
 | `address` |  |
-| `coord` |  |
+| `coords` |  |
 | `free` |  |
 | `id` |  |
 | `lot_type` |  |
@@ -281,7 +282,7 @@ Create an instance: `get_all_city = client.GetAllCity`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coord` | `Hash` |  |
+| `coords` | `Hash` |  |
 | `id` | `String` |  |
 | `name` | `String` |  |
 
@@ -308,7 +309,7 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo`
 | Field | Type | Description |
 | --- | --- | --- |
 | `address` | `String` |  |
-| `coord` | `Hash` |  |
+| `coords` | `Hash` |  |
 | `free` | `Integer` |  |
 | `id` | `String` |  |
 | `lot_type` | `String` |  |

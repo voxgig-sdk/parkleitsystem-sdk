@@ -38,9 +38,18 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = ParkleitsystemSDK.test()
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = ParkleitsystemSDK.test({
+  entity: {
+    get_all_city: {
+      test01: { id: 'test01' },
+    },
+  },
+})
 const getallcitys = await client.GetAllCity().list()
-// getallcitys is an array of bare GetAllCity records populated with mock data
+// getallcitys is an array of GetAllCity entities, populated with mock data
+// — call getallcitys[0].data() for the record itself
 console.log(getallcitys)
 ```
 
@@ -110,7 +119,7 @@ import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem'
 
 const client = new ParkleitsystemSDK()
 
-// List all getallcitys (returns GetAllCity[])
+// List all getallcitys (returns GetAllCityEntity[] — .data() for the record)
 const getallcitys = await client.GetAllCity().list()
 for (const getallcity of getallcitys) {
   console.log(getallcity)
@@ -344,6 +353,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html](https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html)
 

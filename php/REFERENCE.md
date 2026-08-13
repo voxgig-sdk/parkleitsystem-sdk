@@ -96,7 +96,7 @@ $get_all_city = $client->GetAllCity();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | `array` | No |  |
+| `coords` | `array` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 
@@ -151,7 +151,7 @@ $get_city_parking_info = $client->GetCityParkingInfo();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `address` | `string` | No |  |
-| `coord` | `array` | No |  |
+| `coords` | `array` | No |  |
 | `free` | `int` | No |  |
 | `id` | `string` | No |  |
 | `lot_type` | `string` | No |  |

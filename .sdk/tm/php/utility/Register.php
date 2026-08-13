@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -59,6 +60,8 @@ ParkleitsystemUtility::setRegistrar(function (ParkleitsystemUtility $u): void {
     $u->prepare_params = [ParkleitsystemPrepareParams::class, 'call'];
     $u->prepare_path = [ParkleitsystemPreparePath::class, 'call'];
     $u->prepare_query = [ParkleitsystemPrepareQuery::class, 'call'];
+    $u->graphql_body = [ParkleitsystemGraphql::class, 'body'];
+    $u->graphql_errors = [ParkleitsystemGraphql::class, 'errors'];
     $u->result_basic = [ParkleitsystemResultBasic::class, 'call'];
     $u->result_body = [ParkleitsystemResultBody::class, 'call'];
     $u->result_headers = [ParkleitsystemResultHeaders::class, 'call'];

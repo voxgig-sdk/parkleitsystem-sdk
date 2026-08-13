@@ -28,7 +28,7 @@ module ParkleitsystemConfig
           "fields" => [
             {
               "active" => true,
-              "name" => "coord",
+              "name" => "coords",
               "req" => false,
               "type" => "`$OBJECT`",
               "index$" => 0,
@@ -57,6 +57,7 @@ module ParkleitsystemConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "GET",
                   "orig" => "/",
                   "parts" => [],
@@ -86,7 +87,7 @@ module ParkleitsystemConfig
             },
             {
               "active" => true,
-              "name" => "coord",
+              "name" => "coords",
               "req" => false,
               "type" => "`$OBJECT`",
               "index$" => 1,
@@ -155,6 +156,7 @@ module ParkleitsystemConfig
                       },
                     ],
                   },
+                  "kind" => "http",
                   "method" => "GET",
                   "orig" => "/{city}",
                   "parts" => [
@@ -172,7 +174,7 @@ module ParkleitsystemConfig
                   },
                   "transform" => {
                     "req" => "`reqdata`",
-                    "res" => "`body`",
+                    "res" => "`body.lots`",
                   },
                   "index$" => 0,
                 },

@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ ParkleitsystemUtility.registrar = ->(u) {
   u.prepare_params = ParkleitsystemUtilities::PrepareParams
   u.prepare_path = ParkleitsystemUtilities::PreparePath
   u.prepare_query = ParkleitsystemUtilities::PrepareQuery
+  u.graphql_body = ParkleitsystemUtilities::GraphqlBody
+  u.graphql_errors = ParkleitsystemUtilities::GraphqlErrors
   u.result_basic = ParkleitsystemUtilities::ResultBasic
   u.result_body = ParkleitsystemUtilities::ResultBody
   u.result_headers = ParkleitsystemUtilities::ResultHeaders

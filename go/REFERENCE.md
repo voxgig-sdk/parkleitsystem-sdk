@@ -102,7 +102,7 @@ fmt.Println(getAllCity.GetName()) // "get_all_city"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | `map[string]any` | No |  |
+| `coords` | `map[string]any` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 
@@ -156,7 +156,7 @@ fmt.Println(getCityParkingInfo.GetName()) // "get_city_parking_info"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `address` | `string` | No |  |
-| `coord` | `map[string]any` | No |  |
+| `coords` | `map[string]any` | No |  |
 | `free` | `int` | No |  |
 | `id` | `string` | No |  |
 | `lot_type` | `string` | No |  |

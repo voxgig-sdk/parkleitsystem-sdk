@@ -27,7 +27,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "coord",
+            ["name"] = "coords",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
             ["index$"] = 0,
@@ -56,6 +56,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/",
                 ["parts"] = {},
@@ -85,7 +86,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "coord",
+            ["name"] = "coords",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
             ["index$"] = 1,
@@ -154,6 +155,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/{city}",
                 ["parts"] = {
@@ -171,7 +173,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.lots`",
                 },
                 ["index$"] = 0,
               },

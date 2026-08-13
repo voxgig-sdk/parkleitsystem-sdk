@@ -6,20 +6,20 @@
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 
 export interface GetAllCity {
-  coord?: Record<string, any>
+  coords?: Record<string, any>
   id?: string
   name?: string
 }
 
 export interface GetAllCityListMatch {
-  coord?: Record<string, any>
+  coords?: Record<string, any>
   id?: string
   name?: string
 }
 
 export interface GetCityParkingInfo {
   address?: string
-  coord?: Record<string, any>
+  coords?: Record<string, any>
   free?: number
   id?: string
   lot_type?: string

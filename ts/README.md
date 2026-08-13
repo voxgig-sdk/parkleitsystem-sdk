@@ -35,7 +35,9 @@ const client = new ParkleitsystemSDK()
 
 ### 2. List getallcity records
 
-`list()` resolves to an array of GetAllCity objects — iterate it directly:
+`list()` resolves to an array of GetAllCity ENTITIES — every operation
+resolves to entities, not raw records. Iterate them directly, and call
+`.data()` on one for the record it holds:
 
 ```ts
 const getallcitys = await client.GetAllCity().list()
@@ -120,7 +122,8 @@ Create a mock client for unit testing — no server required:
 const client = ParkleitsystemSDK.test()
 
 const getallcity = await client.GetAllCity().list()
-// getallcity is a bare entity populated with mock response data
+// getallcity is the entity, populated with mock response data
+// — call getallcity.data() for the record itself
 console.log(getallcity)
 ```
 
@@ -285,7 +288,7 @@ The `prepare()` method returns:
 
 | Field | Description |
 | --- | --- |
-| `coord` |  |
+| `coords` |  |
 | `id` |  |
 | `name` |  |
 
@@ -298,7 +301,7 @@ API path: `/`
 | Field | Description |
 | --- | --- |
 | `address` |  |
-| `coord` |  |
+| `coords` |  |
 | `free` |  |
 | `id` |  |
 | `lot_type` |  |
@@ -329,7 +332,7 @@ Create an instance: `const get_all_city = client.GetAllCity()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coord` | `Record<string, any>` |  |
+| `coords` | `Record<string, any>` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 
@@ -355,7 +358,7 @@ Create an instance: `const get_city_parking_info = client.GetCityParkingInfo()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `address` | `string` |  |
-| `coord` | `Record<string, any>` |  |
+| `coords` | `Record<string, any>` |  |
 | `free` | `number` |  |
 | `id` | `string` |  |
 | `lot_type` | `string` |  |
@@ -366,7 +369,7 @@ Create an instance: `const get_city_parking_info = client.GetCityParkingInfo()`
 #### Example: List
 
 ```ts
-const get_city_parking_infos = await client.GetCityParkingInfo().list()
+const get_city_parking_infos = await client.GetCityParkingInfo().list({ id: "example" })
 ```
 
 

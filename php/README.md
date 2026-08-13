@@ -38,7 +38,7 @@ try {
     // list() returns an array of GetAllCity records — iterate directly.
     $getallcitys = $client->GetAllCity()->list();
     foreach ($getallcitys as $item) {
-        echo $item["id"] . " " . $item["coord"] . "\n";
+        echo $item["id"] . " " . $item["coords"] . "\n";
     }
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
@@ -125,7 +125,8 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = ParkleitsystemSDK::test();
 
-// Entity ops return the bare mock record (throws on error).
+// Entity ops return the ENTITY (throws on error);
+// call data_get() for the mock record.
 $getallcity = $client->GetAllCity()->list();
 print_r($getallcity);
 ```
@@ -225,7 +226,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (an `array` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
 ops, a `list` for `list`) and throw on error. Wrap calls in
 `try`/`catch` to handle failures.
 
@@ -247,7 +248,7 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `coord` |  |
+| `coords` |  |
 | `id` |  |
 | `name` |  |
 
@@ -260,7 +261,7 @@ API path: `/`
 | Field | Description |
 | --- | --- |
 | `address` |  |
-| `coord` |  |
+| `coords` |  |
 | `free` |  |
 | `id` |  |
 | `lot_type` |  |
@@ -291,7 +292,7 @@ Create an instance: `$get_all_city = $client->GetAllCity();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coord` | `array` |  |
+| `coords` | `array` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 
@@ -318,7 +319,7 @@ Create an instance: `$get_city_parking_info = $client->GetCityParkingInfo();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `address` | `string` |  |
-| `coord` | `array` |  |
+| `coords` | `array` |  |
 | `free` | `int` |  |
 | `id` | `string` |  |
 | `lot_type` | `string` |  |

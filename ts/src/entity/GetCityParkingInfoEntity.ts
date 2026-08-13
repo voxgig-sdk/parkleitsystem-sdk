@@ -37,7 +37,7 @@ class GetCityParkingInfoEntity extends ParkleitsystemEntityBase<GetCityParkingIn
 
 
 
-  async list(this: any, reqmatch?: GetCityParkingInfoListMatch, ctrl?: Control): Promise<GetCityParkingInfo[]> {
+  async list(this: any, reqmatch?: GetCityParkingInfoListMatch, ctrl?: Control): Promise<GetCityParkingInfoEntity[]> {
 
     const utility = this._utility
 

@@ -37,7 +37,7 @@ class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
 
 
 
-  async list(this: any, reqmatch?: GetAllCityListMatch, ctrl?: Control): Promise<GetAllCity[]> {
+  async list(this: any, reqmatch?: GetAllCityListMatch, ctrl?: Control): Promise<GetAllCityEntity[]> {
 
     const utility = this._utility
 

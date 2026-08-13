@@ -63,7 +63,7 @@ describe('GetAllCityEntity', async () => {
     const get_all_city_ref01_ent = client.GetAllCity()
     const get_all_city_ref01_match: any = {}
 
-    const get_all_city_ref01_list = await get_all_city_ref01_ent.list(get_all_city_ref01_match)
+    const get_all_city_ref01_list = (await get_all_city_ref01_ent.list(get_all_city_ref01_match)).map((e: any) => e.data())
 
 
   })

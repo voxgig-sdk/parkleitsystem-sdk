@@ -15,7 +15,7 @@ declare(strict_types=1);
 /** GetAllCity entity data model. */
 class GetAllCity
 {
-    public ?array $coord = null;
+    public ?array $coords = null;
     public ?string $id = null;
     public ?string $name = null;
 }
@@ -23,7 +23,7 @@ class GetAllCity
 /** Request payload for GetAllCity#list. */
 class GetAllCityListMatch
 {
-    public ?array $coord = null;
+    public ?array $coords = null;
     public ?string $id = null;
     public ?string $name = null;
 }
@@ -32,7 +32,7 @@ class GetAllCityListMatch
 class GetCityParkingInfo
 {
     public ?string $address = null;
-    public ?array $coord = null;
+    public ?array $coords = null;
     public ?int $free = null;
     public ?string $id = null;
     public ?string $lot_type = null;

@@ -33,7 +33,7 @@ class ParkleitsystemConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'coord',
+              'name' => 'coords',
               'req' => false,
               'type' => '`$OBJECT`',
               'index$' => 0,
@@ -62,6 +62,7 @@ class ParkleitsystemConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/',
                   'parts' => [],
@@ -91,7 +92,7 @@ class ParkleitsystemConfig
             ],
             [
               'active' => true,
-              'name' => 'coord',
+              'name' => 'coords',
               'req' => false,
               'type' => '`$OBJECT`',
               'index$' => 1,
@@ -160,6 +161,7 @@ class ParkleitsystemConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/{city}',
                   'parts' => [
@@ -177,7 +179,7 @@ class ParkleitsystemConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.lots`',
                   ],
                   'index$' => 0,
                 ],

@@ -124,7 +124,8 @@ Create a mock client for unit testing — no server required:
 ```python
 client = ParkleitsystemSDK.test()
 
-# Entity ops return the bare record and raise on error.
+# Entity ops return the ENTITY and raises on error;
+# call data_get() for the record.
 getallcity = client.GetAllCity().list()
 # getallcity contains the mock response record
 ```
@@ -221,7 +222,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (a `dict` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
 ops, a `list` for `list`) and raise on error. Wrap calls in
 `try`/`except` to handle failures.
 
@@ -243,7 +244,7 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `coord` |  |
+| `coords` |  |
 | `id` |  |
 | `name` |  |
 
@@ -256,7 +257,7 @@ API path: `/`
 | Field | Description |
 | --- | --- |
 | `address` |  |
-| `coord` |  |
+| `coords` |  |
 | `free` |  |
 | `id` |  |
 | `lot_type` |  |
@@ -287,7 +288,7 @@ Create an instance: `get_all_city = client.GetAllCity()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coord` | `dict` |  |
+| `coords` | `dict` |  |
 | `id` | `str` |  |
 | `name` | `str` |  |
 
@@ -313,7 +314,7 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `address` | `str` |  |
-| `coord` | `dict` |  |
+| `coords` | `dict` |  |
 | `free` | `int` |  |
 | `id` | `str` |  |
 | `lot_type` | `str` |  |
@@ -324,7 +325,7 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo()`
 #### Example: List
 
 ```python
-get_city_parking_infos = client.GetCityParkingInfo().list()
+get_city_parking_infos = client.GetCityParkingInfo().list({"id": "example"})
 ```
 
 

@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from parkleitsystem_sdk.utility.voxgig_struct import voxgig_struct as vs
 from parkleitsystem_sdk import ParkleitsystemSDK
-from core import helpers
+from parkleitsystem_sdk.core import helpers
 from test import runner
 
 

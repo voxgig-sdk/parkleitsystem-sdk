@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import ParkleitsystemControl
-from core.error import ParkleitsystemError
-from core.result import ParkleitsystemResult
-from core.spec import ParkleitsystemSpec
+from parkleitsystem_sdk.config import make_config
+from parkleitsystem_sdk.features import _make_feature
+from parkleitsystem_sdk.core.control import ParkleitsystemControl
+from parkleitsystem_sdk.core.error import ParkleitsystemError
+from parkleitsystem_sdk.core.result import ParkleitsystemResult
+from parkleitsystem_sdk.core.spec import ParkleitsystemSpec
 
 
 # True when this SDK was generated with the named feature.

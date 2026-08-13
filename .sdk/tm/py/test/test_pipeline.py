@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import ParkleitsystemSDK
-from core.error import ParkleitsystemError
-from core.result import ParkleitsystemResult
-from core.response import ParkleitsystemResponse
-from core.spec import ParkleitsystemSpec
-from feature.base_feature import ParkleitsystemBaseFeature
+from projectname_sdk.core.error import ParkleitsystemError
+from projectname_sdk.core.result import ParkleitsystemResult
+from projectname_sdk.core.response import ParkleitsystemResponse
+from projectname_sdk.core.spec import ParkleitsystemSpec
+from projectname_sdk.feature.base_feature import ParkleitsystemBaseFeature
 
 
 def _client():

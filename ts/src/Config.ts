@@ -21,7 +21,7 @@ class Config {
 
 
   main = {
-    name: 'ProjectName',
+    name: 'Parkleitsystem',
   }
 
 
@@ -59,7 +59,7 @@ class Config {
       "fields": [
         {
           "active": true,
-          "name": "coord",
+          "name": "coords",
           "req": false,
           "type": "`$OBJECT`",
           "index$": 0
@@ -88,6 +88,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "GET",
               "orig": "/",
               "parts": [],
@@ -117,7 +118,7 @@ class Config {
         },
         {
           "active": true,
-          "name": "coord",
+          "name": "coords",
           "req": false,
           "type": "`$OBJECT`",
           "index$": 1
@@ -186,6 +187,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/{city}",
               "parts": [
@@ -203,7 +205,7 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.lots`"
               },
               "index$": 0
             }

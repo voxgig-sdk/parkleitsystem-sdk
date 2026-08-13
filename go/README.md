@@ -261,7 +261,7 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
-| `"coord"` |  |
+| `"coords"` |  |
 | `"id"` |  |
 | `"name"` |  |
 
@@ -274,7 +274,7 @@ API path: `/`
 | Field | Description |
 | --- | --- |
 | `"address"` |  |
-| `"coord"` |  |
+| `"coords"` |  |
 | `"free"` |  |
 | `"id"` |  |
 | `"lot_type"` |  |
@@ -305,7 +305,7 @@ Create an instance: `getAllCity := client.GetAllCity(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coord` | `map[string]any` |  |
+| `coords` | `map[string]any` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 
@@ -335,7 +335,7 @@ Create an instance: `getCityParkingInfo := client.GetCityParkingInfo(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `address` | `string` |  |
-| `coord` | `map[string]any` |  |
+| `coords` | `map[string]any` |  |
 | `free` | `int` |  |
 | `id` | `string` |  |
 | `lot_type` | `string` |  |

@@ -97,7 +97,7 @@ get_all_city = client.GetAllCity
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | `Hash` | No |  |
+| `coords` | `Hash` | No |  |
 | `id` | `String` | No |  |
 | `name` | `String` | No |  |
 
@@ -152,7 +152,7 @@ get_city_parking_info = client.GetCityParkingInfo
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `address` | `String` | No |  |
-| `coord` | `Hash` | No |  |
+| `coords` | `Hash` | No |  |
 | `free` | `Integer` | No |  |
 | `id` | `String` | No |  |
 | `lot_type` | `String` | No |  |

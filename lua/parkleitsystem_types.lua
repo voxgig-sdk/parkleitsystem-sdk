@@ -7,18 +7,18 @@
 -- edit by hand.
 
 ---@class GetAllCity
----@field coord? table
+---@field coords? table
 ---@field id? string
 ---@field name? string
 
 ---@class GetAllCityListMatch
----@field coord? table
+---@field coords? table
 ---@field id? string
 ---@field name? string
 
 ---@class GetCityParkingInfo
 ---@field address? string
----@field coord? table
+---@field coords? table
 ---@field free? number
 ---@field id? string
 ---@field lot_type? string

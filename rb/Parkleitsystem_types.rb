@@ -10,7 +10,7 @@
 
 # GetAllCity entity data model.
 #
-# @!attribute [rw] coord
+# @!attribute [rw] coords
 #   @return [Hash, nil]
 #
 # @!attribute [rw] id
@@ -19,7 +19,7 @@
 # @!attribute [rw] name
 #   @return [String, nil]
 GetAllCity = Struct.new(
-  :coord,
+  :coords,
   :id,
   :name,
   keyword_init: true
@@ -27,7 +27,7 @@ GetAllCity = Struct.new(
 
 # Request payload for GetAllCity#list.
 #
-# @!attribute [rw] coord
+# @!attribute [rw] coords
 #   @return [Hash, nil]
 #
 # @!attribute [rw] id
@@ -36,7 +36,7 @@ GetAllCity = Struct.new(
 # @!attribute [rw] name
 #   @return [String, nil]
 GetAllCityListMatch = Struct.new(
-  :coord,
+  :coords,
   :id,
   :name,
   keyword_init: true
@@ -47,7 +47,7 @@ GetAllCityListMatch = Struct.new(
 # @!attribute [rw] address
 #   @return [String, nil]
 #
-# @!attribute [rw] coord
+# @!attribute [rw] coords
 #   @return [Hash, nil]
 #
 # @!attribute [rw] free
@@ -69,7 +69,7 @@ GetAllCityListMatch = Struct.new(
 #   @return [Integer, nil]
 GetCityParkingInfo = Struct.new(
   :address,
-  :coord,
+  :coords,
   :free,
   :id,
   :lot_type,

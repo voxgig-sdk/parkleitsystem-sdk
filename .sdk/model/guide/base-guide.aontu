@@ -15,6 +15,7 @@ guide: {
     path: "/{city}": {
       rename: param: "city": *"id"
       op: list: method: *GET
+      op: list: transform: res: *("`body.lots`")|top
     }
   }
 

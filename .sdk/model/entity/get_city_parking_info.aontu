@@ -11,7 +11,7 @@ main: kit: entity: get_city_parking_info: {
       type: "`$STRING`"
     }
     {
-      name: "coord"
+      name: "coords"
       req: false
       type: "`$OBJECT`"
     }
@@ -86,7 +86,7 @@ main: kit: entity: get_city_parking_info: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.lots`"
           }
         }
       ]

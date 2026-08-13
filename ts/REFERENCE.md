@@ -128,7 +128,7 @@ const get_all_city = client.GetAllCity()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coord` | `Record<string, any>` | No |  |
+| `coords` | `Record<string, any>` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 
@@ -181,7 +181,7 @@ const get_city_parking_info = client.GetCityParkingInfo()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `address` | `string` | No |  |
-| `coord` | `Record<string, any>` | No |  |
+| `coords` | `Record<string, any>` | No |  |
 | `free` | `number` | No |  |
 | `id` | `string` | No |  |
 | `lot_type` | `string` | No |  |
@@ -196,7 +196,7 @@ const get_city_parking_info = client.GetCityParkingInfo()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.GetCityParkingInfo().list()
+const results = await client.GetCityParkingInfo().list({ id: "example" })
 ```
 
 ### Common Methods

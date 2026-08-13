@@ -219,9 +219,9 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local get_all_city, err = client:GetAllCity():load()
+    local get_all_city, err = client:GetAllCity():list()
     if err then error(err) end
-    -- get_all_city is the loaded record
+    -- get_all_city is the record list
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -232,7 +232,7 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
-| `coord` |  |
+| `coords` |  |
 | `id` |  |
 | `name` |  |
 
@@ -245,7 +245,7 @@ API path: `/`
 | Field | Description |
 | --- | --- |
 | `address` |  |
-| `coord` |  |
+| `coords` |  |
 | `free` |  |
 | `id` |  |
 | `lot_type` |  |
@@ -276,7 +276,7 @@ Create an instance: `local get_all_city = client:GetAllCity(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coord` | `table` |  |
+| `coords` | `table` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 
@@ -302,7 +302,7 @@ Create an instance: `local get_city_parking_info = client:GetCityParkingInfo(nil
 | Field | Type | Description |
 | --- | --- | --- |
 | `address` | `string` |  |
-| `coord` | `table` |  |
+| `coords` | `table` |  |
 | `free` | `number` |  |
 | `id` | `string` |  |
 | `lot_type` | `string` |  |
