@@ -40,7 +40,7 @@ class ParkleitsystemSDK
         $utility = new ParkleitsystemUtility();
         $this->_utility = $utility;
 
-        $config = ParkleitsystemConfig::make_config();
+        $config = ParkleitsystemConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

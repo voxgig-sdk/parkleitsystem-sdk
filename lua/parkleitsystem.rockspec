@@ -23,6 +23,7 @@ build = {
   modules = {
     ["parkleitsystem_sdk"] = "parkleitsystem_sdk.lua",
     ["config"] = "config.lua",
+    ["config_shared"] = "config_shared.lua",
     ["features"] = "features.lua",
   }
 }

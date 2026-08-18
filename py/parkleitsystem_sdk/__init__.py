@@ -23,8 +23,8 @@ class ParkleitsystemSDK:
         utility = ParkleitsystemUtility()
         self._utility = utility
 
-        from parkleitsystem_sdk.config import make_config
-        config = make_config()
+        from parkleitsystem_sdk.config import shared_config
+        config = shared_config()
 
         self._rootctx = utility.make_context({
             "client": self,

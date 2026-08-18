@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from parkleitsystem_sdk.config import make_config
+from parkleitsystem_sdk.config import shared_config
 from parkleitsystem_sdk.features import _make_feature
 from parkleitsystem_sdk.core.control import ParkleitsystemControl
 from parkleitsystem_sdk.core.error import ParkleitsystemError
@@ -24,7 +24,7 @@ from parkleitsystem_sdk.core.spec import ParkleitsystemSpec
 
 # True when this SDK was generated with the named feature.
 def has_feature(name):
-    feature = make_config().get("feature")
+    feature = shared_config().get("feature")
     return isinstance(feature, dict) and feature.get(name) is not None
 
 

@@ -28,7 +28,7 @@ class ParkleitsystemSDK
     utility = ParkleitsystemUtility.new
     @_utility = utility
 
-    config = ParkleitsystemConfig.make_config
+    config = ParkleitsystemConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,
