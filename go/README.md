@@ -6,7 +6,7 @@ The Golang SDK for the Parkleitsystem API — an entity-oriented client using st
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.GetAllCity(nil)` — each with the same small set of operations (`List`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -262,8 +262,8 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | Field | Description |
 | --- | --- |
 | `"coords"` |  |
-| `"id"` |  |
-| `"name"` |  |
+| `"id"` | City identifier |
+| `"name"` | Name of the city |
 
 Operations: List.
 
@@ -273,14 +273,14 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `"address"` |  |
+| `"address"` | Street address of the parking garage |
 | `"coords"` |  |
-| `"free"` |  |
-| `"id"` |  |
-| `"lot_type"` |  |
-| `"name"` |  |
-| `"state"` |  |
-| `"total"` |  |
+| `"free"` | Number of available parking spaces |
+| `"id"` | Unique identifier for the parking lot |
+| `"lot_type"` | Type of parking lot |
+| `"name"` | Name of the parking garage |
+| `"state"` | Current state of the parking lot |
+| `"total"` | Total number of parking spaces |
 
 Operations: List.
 
@@ -306,8 +306,8 @@ Create an instance: `getAllCity := client.GetAllCity(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `coords` | `map[string]any` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
+| `id` | `string` | City identifier |
+| `name` | `string` | Name of the city |
 
 #### Example: List
 
@@ -334,14 +334,14 @@ Create an instance: `getCityParkingInfo := client.GetCityParkingInfo(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `string` |  |
+| `address` | `string` | Street address of the parking garage |
 | `coords` | `map[string]any` |  |
-| `free` | `int` |  |
-| `id` | `string` |  |
-| `lot_type` | `string` |  |
-| `name` | `string` |  |
-| `state` | `string` |  |
-| `total` | `int` |  |
+| `free` | `int` | Number of available parking spaces |
+| `id` | `string` | Unique identifier for the parking lot |
+| `lot_type` | `string` | Type of parking lot |
+| `name` | `string` | Name of the parking garage |
+| `state` | `string` | Current state of the parking lot |
+| `total` | `int` | Total number of parking spaces |
 
 #### Example: List
 

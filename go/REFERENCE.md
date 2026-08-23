@@ -103,8 +103,8 @@ fmt.Println(getAllCity.GetName()) // "get_all_city"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `coords` | `map[string]any` | No |  |
-| `id` | `string` | No |  |
-| `name` | `string` | No |  |
+| `id` | `string` | No | City identifier |
+| `name` | `string` | No | Name of the city |
 
 ### Operations
 
@@ -155,14 +155,14 @@ fmt.Println(getCityParkingInfo.GetName()) // "get_city_parking_info"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `string` | No |  |
+| `address` | `string` | No | Street address of the parking garage |
 | `coords` | `map[string]any` | No |  |
-| `free` | `int` | No |  |
-| `id` | `string` | No |  |
-| `lot_type` | `string` | No |  |
-| `name` | `string` | No |  |
-| `state` | `string` | No |  |
-| `total` | `int` | No |  |
+| `free` | `int` | No | Number of available parking spaces |
+| `id` | `string` | No | Unique identifier for the parking lot |
+| `lot_type` | `string` | No | Type of parking lot |
+| `name` | `string` | No | Name of the parking garage |
+| `state` | `string` | No | Current state of the parking lot |
+| `total` | `int` | No | Total number of parking spaces |
 
 ### Operations
 

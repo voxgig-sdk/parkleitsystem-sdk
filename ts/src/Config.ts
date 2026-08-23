@@ -19,9 +19,20 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
     name: 'Parkleitsystem',
+        slug: "parkleitsystem",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
@@ -63,10 +74,12 @@ class Config {
         },
         {
           "name": "id",
+          "short": "City identifier",
           "type": "`$STRING`"
         },
         {
           "name": "name",
+          "short": "Name of the city",
           "type": "`$STRING`"
         }
       ],
@@ -99,6 +112,7 @@ class Config {
       "fields": [
         {
           "name": "address",
+          "short": "Street address of the parking garage",
           "type": "`$STRING`"
         },
         {
@@ -107,26 +121,32 @@ class Config {
         },
         {
           "name": "free",
+          "short": "Number of available parking spaces",
           "type": "`$INTEGER`"
         },
         {
           "name": "id",
+          "short": "Unique identifier for the parking lot",
           "type": "`$STRING`"
         },
         {
           "name": "lot_type",
+          "short": "Type of parking lot",
           "type": "`$STRING`"
         },
         {
           "name": "name",
+          "short": "Name of the parking garage",
           "type": "`$STRING`"
         },
         {
           "name": "state",
+          "short": "Current state of the parking lot",
           "type": "`$STRING`"
         },
         {
           "name": "total",
+          "short": "Total number of parking spaces",
           "type": "`$INTEGER`"
         }
       ],

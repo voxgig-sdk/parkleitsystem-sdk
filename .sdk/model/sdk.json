@@ -42,12 +42,14 @@
               "active": true,
               "name": "id",
               "req": false,
+              "short": "City identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Name of the city",
               "type": "`$STRING`"
             }
           ],
@@ -91,6 +93,7 @@
               "active": true,
               "name": "address",
               "req": false,
+              "short": "Street address of the parking garage",
               "type": "`$STRING`"
             },
             {
@@ -103,36 +106,42 @@
               "active": true,
               "name": "free",
               "req": false,
+              "short": "Number of available parking spaces",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Unique identifier for the parking lot",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "lot_type",
               "req": false,
+              "short": "Type of parking lot",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Name of the parking garage",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "state",
               "req": false,
+              "short": "Current state of the parking lot",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "total",
               "req": false,
+              "short": "Total number of parking spaces",
               "type": "`$INTEGER`"
             }
           ],

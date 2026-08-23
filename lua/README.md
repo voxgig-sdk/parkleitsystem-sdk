@@ -233,8 +233,8 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | Field | Description |
 | --- | --- |
 | `coords` |  |
-| `id` |  |
-| `name` |  |
+| `id` | City identifier |
+| `name` | Name of the city |
 
 Operations: List.
 
@@ -244,14 +244,14 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` |  |
+| `address` | Street address of the parking garage |
 | `coords` |  |
-| `free` |  |
-| `id` |  |
-| `lot_type` |  |
-| `name` |  |
-| `state` |  |
-| `total` |  |
+| `free` | Number of available parking spaces |
+| `id` | Unique identifier for the parking lot |
+| `lot_type` | Type of parking lot |
+| `name` | Name of the parking garage |
+| `state` | Current state of the parking lot |
+| `total` | Total number of parking spaces |
 
 Operations: List.
 
@@ -277,8 +277,8 @@ Create an instance: `local get_all_city = client:GetAllCity(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `coords` | `table` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
+| `id` | `string` | City identifier |
+| `name` | `string` | Name of the city |
 
 #### Example: List
 
@@ -301,14 +301,14 @@ Create an instance: `local get_city_parking_info = client:GetCityParkingInfo(nil
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `string` |  |
+| `address` | `string` | Street address of the parking garage |
 | `coords` | `table` |  |
-| `free` | `number` |  |
-| `id` | `string` |  |
-| `lot_type` | `string` |  |
-| `name` | `string` |  |
-| `state` | `string` |  |
-| `total` | `number` |  |
+| `free` | `number` | Number of available parking spaces |
+| `id` | `string` | Unique identifier for the parking lot |
+| `lot_type` | `string` | Type of parking lot |
+| `name` | `string` | Name of the parking garage |
+| `state` | `string` | Current state of the parking lot |
+| `total` | `number` | Total number of parking spaces |
 
 #### Example: List
 

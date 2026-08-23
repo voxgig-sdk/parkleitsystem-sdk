@@ -11,6 +11,9 @@ func MakeConfig() map[string]any {
 	return map[string]any{
 		"main": map[string]any{
 			"name": "Parkleitsystem",
+			"slug": "parkleitsystem",
+			"version": "0.0.1",
+			"target": "go",
 		},
 		"feature": map[string]any{
 			"test": map[string]any{
@@ -38,10 +41,12 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "id",
+						"short": "City identifier",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "name",
+						"short": "Name of the city",
 						"type": "`$STRING`",
 					},
 				},
@@ -74,6 +79,7 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "address",
+						"short": "Street address of the parking garage",
 						"type": "`$STRING`",
 					},
 					map[string]any{
@@ -82,26 +88,32 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "free",
+						"short": "Number of available parking spaces",
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "id",
+						"short": "Unique identifier for the parking lot",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "lot_type",
+						"short": "Type of parking lot",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "name",
+						"short": "Name of the parking garage",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "state",
+						"short": "Current state of the parking lot",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "total",
+						"short": "Total number of parking spaces",
 						"type": "`$INTEGER`",
 					},
 				},

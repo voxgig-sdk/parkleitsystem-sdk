@@ -19,6 +19,9 @@ module ParkleitsystemConfig
     {
       "main" => {
         "name" => "Parkleitsystem",
+        "slug" => "parkleitsystem",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
@@ -46,10 +49,12 @@ module ParkleitsystemConfig
             },
             {
               "name" => "id",
+              "short" => "City identifier",
               "type" => "`$STRING`",
             },
             {
               "name" => "name",
+              "short" => "Name of the city",
               "type" => "`$STRING`",
             },
           ],
@@ -82,6 +87,7 @@ module ParkleitsystemConfig
           "fields" => [
             {
               "name" => "address",
+              "short" => "Street address of the parking garage",
               "type" => "`$STRING`",
             },
             {
@@ -90,26 +96,32 @@ module ParkleitsystemConfig
             },
             {
               "name" => "free",
+              "short" => "Number of available parking spaces",
               "type" => "`$INTEGER`",
             },
             {
               "name" => "id",
+              "short" => "Unique identifier for the parking lot",
               "type" => "`$STRING`",
             },
             {
               "name" => "lot_type",
+              "short" => "Type of parking lot",
               "type" => "`$STRING`",
             },
             {
               "name" => "name",
+              "short" => "Name of the parking garage",
               "type" => "`$STRING`",
             },
             {
               "name" => "state",
+              "short" => "Current state of the parking lot",
               "type" => "`$STRING`",
             },
             {
               "name" => "total",
+              "short" => "Total number of parking spaces",
               "type" => "`$INTEGER`",
             },
           ],

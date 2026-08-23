@@ -13,11 +13,13 @@ main: kit: entity: get_all_city: {
     {
       name: "id"
       req: false
+      short: "City identifier"
       type: "`$STRING`"
     }
     {
       name: "name"
       req: false
+      short: "Name of the city"
       type: "`$STRING`"
     }
   ]

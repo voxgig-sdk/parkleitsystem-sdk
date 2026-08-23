@@ -92,8 +92,8 @@ get_all_city = client.GetAllCity()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `coords` | `dict` | No |  |
-| `id` | `str` | No |  |
-| `name` | `str` | No |  |
+| `id` | `str` | No | City identifier |
+| `name` | `str` | No | Name of the city |
 
 ### Operations
 
@@ -146,14 +146,14 @@ get_city_parking_info = client.GetCityParkingInfo()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `str` | No |  |
+| `address` | `str` | No | Street address of the parking garage |
 | `coords` | `dict` | No |  |
-| `free` | `int` | No |  |
-| `id` | `str` | No |  |
-| `lot_type` | `str` | No |  |
-| `name` | `str` | No |  |
-| `state` | `str` | No |  |
-| `total` | `int` | No |  |
+| `free` | `int` | No | Number of available parking spaces |
+| `id` | `str` | No | Unique identifier for the parking lot |
+| `lot_type` | `str` | No | Type of parking lot |
+| `name` | `str` | No | Name of the parking garage |
+| `state` | `str` | No | Current state of the parking lot |
+| `total` | `int` | No | Total number of parking spaces |
 
 ### Operations
 

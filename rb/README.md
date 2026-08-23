@@ -239,8 +239,8 @@ returns a result `Hash` with these keys:
 | Field | Description |
 | --- | --- |
 | `coords` |  |
-| `id` |  |
-| `name` |  |
+| `id` | City identifier |
+| `name` | Name of the city |
 
 Operations: List.
 
@@ -250,14 +250,14 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` |  |
+| `address` | Street address of the parking garage |
 | `coords` |  |
-| `free` |  |
-| `id` |  |
-| `lot_type` |  |
-| `name` |  |
-| `state` |  |
-| `total` |  |
+| `free` | Number of available parking spaces |
+| `id` | Unique identifier for the parking lot |
+| `lot_type` | Type of parking lot |
+| `name` | Name of the parking garage |
+| `state` | Current state of the parking lot |
+| `total` | Total number of parking spaces |
 
 Operations: List.
 
@@ -283,8 +283,8 @@ Create an instance: `get_all_city = client.GetAllCity`
 | Field | Type | Description |
 | --- | --- | --- |
 | `coords` | `Hash` |  |
-| `id` | `String` |  |
-| `name` | `String` |  |
+| `id` | `String` | City identifier |
+| `name` | `String` | Name of the city |
 
 #### Example: List
 
@@ -308,14 +308,14 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `String` |  |
+| `address` | `String` | Street address of the parking garage |
 | `coords` | `Hash` |  |
-| `free` | `Integer` |  |
-| `id` | `String` |  |
-| `lot_type` | `String` |  |
-| `name` | `String` |  |
-| `state` | `String` |  |
-| `total` | `Integer` |  |
+| `free` | `Integer` | Number of available parking spaces |
+| `id` | `String` | Unique identifier for the parking lot |
+| `lot_type` | `String` | Type of parking lot |
+| `name` | `String` | Name of the parking garage |
+| `state` | `String` | Current state of the parking lot |
+| `total` | `Integer` | Total number of parking spaces |
 
 #### Example: List
 

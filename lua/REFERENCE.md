@@ -95,8 +95,8 @@ local get_all_city = client:GetAllCity(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `coords` | `table` | No |  |
-| `id` | `string` | No |  |
-| `name` | `string` | No |  |
+| `id` | `string` | No | City identifier |
+| `name` | `string` | No | Name of the city |
 
 ### Operations
 
@@ -148,14 +148,14 @@ local get_city_parking_info = client:GetCityParkingInfo(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `string` | No |  |
+| `address` | `string` | No | Street address of the parking garage |
 | `coords` | `table` | No |  |
-| `free` | `number` | No |  |
-| `id` | `string` | No |  |
-| `lot_type` | `string` | No |  |
-| `name` | `string` | No |  |
-| `state` | `string` | No |  |
-| `total` | `number` | No |  |
+| `free` | `number` | No | Number of available parking spaces |
+| `id` | `string` | No | Unique identifier for the parking lot |
+| `lot_type` | `string` | No | Type of parking lot |
+| `name` | `string` | No | Name of the parking garage |
+| `state` | `string` | No | Current state of the parking lot |
+| `total` | `number` | No | Total number of parking spaces |
 
 ### Operations
 

@@ -245,8 +245,8 @@ On error, `ok` is `False` and `err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `coords` |  |
-| `id` |  |
-| `name` |  |
+| `id` | City identifier |
+| `name` | Name of the city |
 
 Operations: List.
 
@@ -256,14 +256,14 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` |  |
+| `address` | Street address of the parking garage |
 | `coords` |  |
-| `free` |  |
-| `id` |  |
-| `lot_type` |  |
-| `name` |  |
-| `state` |  |
-| `total` |  |
+| `free` | Number of available parking spaces |
+| `id` | Unique identifier for the parking lot |
+| `lot_type` | Type of parking lot |
+| `name` | Name of the parking garage |
+| `state` | Current state of the parking lot |
+| `total` | Total number of parking spaces |
 
 Operations: List.
 
@@ -289,8 +289,8 @@ Create an instance: `get_all_city = client.GetAllCity()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `coords` | `dict` |  |
-| `id` | `str` |  |
-| `name` | `str` |  |
+| `id` | `str` | City identifier |
+| `name` | `str` | Name of the city |
 
 #### Example: List
 
@@ -313,14 +313,14 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `str` |  |
+| `address` | `str` | Street address of the parking garage |
 | `coords` | `dict` |  |
-| `free` | `int` |  |
-| `id` | `str` |  |
-| `lot_type` | `str` |  |
-| `name` | `str` |  |
-| `state` | `str` |  |
-| `total` | `int` |  |
+| `free` | `int` | Number of available parking spaces |
+| `id` | `str` | Unique identifier for the parking lot |
+| `lot_type` | `str` | Type of parking lot |
+| `name` | `str` | Name of the parking garage |
+| `state` | `str` | Current state of the parking lot |
+| `total` | `int` | Total number of parking spaces |
 
 #### Example: List
 
