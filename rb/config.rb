@@ -59,6 +59,10 @@ module ParkleitsystemConfig
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "get_all_city",
           "op" => {
             "list" => {
@@ -70,12 +74,13 @@ module ParkleitsystemConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/",
-                  "parts" => [],
+                  "segments" => [],
                   "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [],
                 },
               ],
             },
@@ -126,6 +131,10 @@ module ParkleitsystemConfig
               "type" => "`$INTEGER`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "get_city_parking_info",
           "op" => {
             "list" => {
@@ -147,14 +156,16 @@ module ParkleitsystemConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/{city}",
-                  "parts" => [
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "city" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -164,6 +175,9 @@ module ParkleitsystemConfig
                     "req" => "`reqdata`",
                     "res" => "`body.lots`",
                   },
+                  "parts" => [
+                    "{id}",
+                  ],
                 },
               ],
             },

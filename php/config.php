@@ -73,6 +73,10 @@ class ParkleitsystemConfig
               'type' => '`$STRING`',
             ],
           ],
+          'id' => [
+            'field' => 'id',
+            'name' => 'id',
+          ],
           'name' => 'get_all_city',
           'op' => [
             'list' => [
@@ -84,12 +88,13 @@ class ParkleitsystemConfig
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/',
-                  'parts' => [],
+                  'segments' => [],
                   'select' => [],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
+                  'parts' => [],
                 ],
               ],
             ],
@@ -140,6 +145,10 @@ class ParkleitsystemConfig
               'type' => '`$INTEGER`',
             ],
           ],
+          'id' => [
+            'field' => 'id',
+            'name' => 'id',
+          ],
           'name' => 'get_city_parking_info',
           'op' => [
             'list' => [
@@ -161,12 +170,14 @@ class ParkleitsystemConfig
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/{city}',
-                  'parts' => [
-                    '{id}',
-                  ],
                   'rename' => [
                     'param' => [
                       'city' => 'id',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'var' => 'id',
                     ],
                   ],
                   'select' => [
@@ -177,6 +188,9 @@ class ParkleitsystemConfig
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.lots`',
+                  ],
+                  'parts' => [
+                    '{id}',
                   ],
                 ],
               ],

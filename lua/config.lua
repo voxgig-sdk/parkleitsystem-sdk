@@ -47,6 +47,10 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
         },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
         ["name"] = "get_all_city",
         ["op"] = {
           ["list"] = {
@@ -58,12 +62,13 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/",
-                ["parts"] = {},
+                ["segments"] = {},
                 ["select"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
+                ["parts"] = {},
               },
             },
           },
@@ -114,6 +119,10 @@ local function make_config()
             ["type"] = "`$INTEGER`",
           },
         },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
         ["name"] = "get_city_parking_info",
         ["op"] = {
           ["list"] = {
@@ -135,12 +144,14 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/{city}",
-                ["parts"] = {
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["city"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -151,6 +162,9 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.lots`",
+                },
+                ["parts"] = {
+                  "{id}",
                 },
               },
             },

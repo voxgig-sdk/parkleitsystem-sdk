@@ -78,14 +78,16 @@ main: kit: entity: get_city_parking_info: {
           }
           method: "GET"
           orig: "/{city}"
-          parts: [
-            "{id}"
-          ]
           rename: {
             param: {
               city: "id"
             }
           }
+          segments: [
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
