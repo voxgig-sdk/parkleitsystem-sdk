@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem'
+import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem-sdk'
 
 const client = new ParkleitsystemSDK()
 ```
@@ -455,7 +455,7 @@ parkleitsystem/
 Import the SDK from the package root:
 
 ```ts
-import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem'
+import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem-sdk'
 ```
 
 ### Entity state

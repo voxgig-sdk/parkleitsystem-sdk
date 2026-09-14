@@ -105,7 +105,7 @@ local results, err = client:GetAllCity():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
+| TypeScript | `@voxgig-sdk/parkleitsystem-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
 | Python | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
 | PHP | `voxgig-sdk/parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/parkleitsystem-sdk/go` | `go get github.com/voxgig-sdk/parkleitsystem-sdk/go@latest` |
@@ -119,7 +119,7 @@ local results, err = client:GetAllCity():list()
 ### TypeScript
 
 ```ts
-import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem'
+import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem-sdk'
 
 const client = new ParkleitsystemSDK()
 
