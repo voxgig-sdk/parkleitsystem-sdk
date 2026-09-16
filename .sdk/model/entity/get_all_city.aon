@@ -35,6 +35,12 @@ main: kit: entity: get_all_city: {
       name: "list"
       points: [
         {
+          contract: {
+            id: "GET /"
+            json: "{\"operationId\":\"getAllCities\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"example\":[{\"coords\":{\"lat\":47.5584,\"lng\":7.5733},\"id\":\"Basel\",\"name\":\"Basel\"},{\"coords\":{\"lat\":47.3769,\"lng\":8.5417},\"id\":\"Zurich\",\"name\":\"Zürich\"}],\"schema\":{\"items\":{\"properties\":{\"coords\":{\"properties\":{\"lat\":{\"description\":\"Latitude coordinate\",\"format\":\"double\",\"type\":\"number\"},\"lng\":{\"description\":\"Longitude coordinate\",\"format\":\"double\",\"type\":\"number\"}},\"type\":\"object\"},\"id\":{\"description\":\"City identifier\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the city\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}}},\"description\":\"Successful response with list of cities\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/"
           transform: {

@@ -1,12 +1,18 @@
 # Parkleitsystem SDK feature factory
 
 from parkleitsystem_sdk.feature.base_feature import ParkleitsystemBaseFeature
+from parkleitsystem_sdk.feature.ratelimit_feature import ParkleitsystemRatelimitFeature
+from parkleitsystem_sdk.feature.retry_feature import ParkleitsystemRetryFeature
 from parkleitsystem_sdk.feature.test_feature import ParkleitsystemTestFeature
+from parkleitsystem_sdk.feature.timeout_feature import ParkleitsystemTimeoutFeature
 
 
 _FEATURES = {
     "base": lambda: ParkleitsystemBaseFeature(),
+    "ratelimit": lambda: ParkleitsystemRatelimitFeature(),
+    "retry": lambda: ParkleitsystemRetryFeature(),
     "test": lambda: ParkleitsystemTestFeature(),
+    "timeout": lambda: ParkleitsystemTimeoutFeature(),
 }
 
 

@@ -4,32 +4,32 @@
       "GET_CITY_PARKING_INFO00": {
         "address": "s50",
         "coords": {},
-        "free": "s52",
+        "free": 82,
         "id": "GET_CITY_PARKING_INFO00",
         "lot_type": "s54",
         "name": "s55",
         "state": "s56",
-        "total": "s57"
+        "total": 87
       },
       "GET_CITY_PARKING_INFO01": {
         "address": "sa0",
         "coords": {},
-        "free": "sa2",
+        "free": 162,
         "id": "GET_CITY_PARKING_INFO01",
         "lot_type": "sa4",
         "name": "sa5",
         "state": "sa6",
-        "total": "sa7"
+        "total": 167
       },
       "GET_CITY_PARKING_INFO02": {
         "address": "sf0",
         "coords": {},
-        "free": "sf2",
+        "free": 242,
         "id": "GET_CITY_PARKING_INFO02",
         "lot_type": "sf4",
         "name": "sf5",
         "state": "sf6",
-        "total": "sf7"
+        "total": 247
       }
     }
   },
@@ -38,11 +38,157 @@
       "get_city_parking_info_ref01": {
         "address": "s140",
         "coords": {},
-        "free": "s142",
+        "free": 322,
         "lot_type": "s144",
         "name": "s145",
         "state": "s146",
-        "total": "s147"
+        "total": 327
+      }
+    }
+  },
+  "requests": {
+    "GET /{city}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getCityParkingInfo",
+        "parameters": [
+          {
+            "description": "Name of the city (Basel, Zurich, Bern, Luzern, St.Gallen, or Zug)",
+            "in": "path",
+            "name": "city",
+            "required": true,
+            "schema": {
+              "enum": [
+                "Basel",
+                "Zurich",
+                "Bern",
+                "Luzern",
+                "StGallen",
+                "Zug"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "last_updated": "2023-10-15T14:30:00Z",
+                  "lots": [
+                    {
+                      "address": "Beethovenstrasse 33",
+                      "coords": {
+                        "lat": 47.3769,
+                        "lng": 8.5417
+                      },
+                      "free": 145,
+                      "id": "zurich_citygarage",
+                      "lot_type": "Parkhaus",
+                      "name": "City Parking",
+                      "state": "open",
+                      "total": 500
+                    }
+                  ]
+                },
+                "schema": {
+                  "properties": {
+                    "last_updated": {
+                      "description": "Timestamp of last data update",
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "lots": {
+                      "items": {
+                        "properties": {
+                          "address": {
+                            "description": "Street address of the parking garage",
+                            "type": "string"
+                          },
+                          "coords": {
+                            "properties": {
+                              "lat": {
+                                "description": "Latitude coordinate",
+                                "format": "double",
+                                "type": "number"
+                              },
+                              "lng": {
+                                "description": "Longitude coordinate",
+                                "format": "double",
+                                "type": "number"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "free": {
+                            "description": "Number of available parking spaces",
+                            "type": "integer"
+                          },
+                          "id": {
+                            "description": "Unique identifier for the parking lot",
+                            "type": "string"
+                          },
+                          "lot_type": {
+                            "description": "Type of parking lot",
+                            "enum": [
+                              "Parkhaus",
+                              "Tiefgarage",
+                              "Parkplatz"
+                            ],
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "Name of the parking garage",
+                            "type": "string"
+                          },
+                          "state": {
+                            "description": "Current state of the parking lot",
+                            "enum": [
+                              "open",
+                              "closed",
+                              "unknown"
+                            ],
+                            "type": "string"
+                          },
+                          "total": {
+                            "description": "Total number of parking spaces",
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response with parking information"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "City not found"
+                },
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "description": "Error message",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "City not found"
+          }
+        },
+        "securitySource": "unspecified"
       }
     }
   }

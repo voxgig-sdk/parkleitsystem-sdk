@@ -5,6 +5,8 @@ import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
 import { ParkleitsystemSDK, BaseFeature, stdutil } from '../../..'
@@ -47,16 +49,13 @@ describe('GetCityParkingInfoEntity', async () => {
 
     const live = 'TRUE' === process.env.PARKLEITSYSTEM_TEST_LIVE
     for (const op of ['list']) {
-      if (maybeSkipControl(t, 'entityOp', 'get_city_parking_info.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'get_city_parking_info.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":[{"active":true,"name":"address","req":false,"short":"Street address of the parking garage","type":"`$STRING`","index$":0},{"active":true,"name":"coords","req":false,"type":"`$OBJECT`","index$":1},{"active":true,"name":"free","req":false,"short":"Number of available parking spaces","type":"`$INTEGER`","index$":2},{"active":true,"name":"id","req":false,"short":"Unique identifier for the parking lot","type":"`$STRING`","index$":3},{"active":true,"name":"lot_type","req":false,"short":"Type of parking lot","type":"`$STRING`","index$":4},{"active":true,"name":"name","req":false,"short":"Name of the parking garage","type":"`$STRING`","index$":5},{"active":true,"name":"state","req":false,"short":"Current state of the parking lot","type":"`$STRING`","index$":6},{"active":true,"name":"total","req":false,"short":"Total number of parking spaces","type":"`$INTEGER`","index$":7}],"id":{"field":"id","name":"id"},"name":"get_city_parking_info","op":{"list":{"input":"data","name":"list","points":[{"active":true,"args":{"params":[{"active":true,"kind":"param","name":"id","orig":"city","reqd":true,"type":"`$STRING`","index$":0}]},"contract":{"id":"GET /{city}","json":"{\"operationId\":\"getCityParkingInfo\",\"parameters\":[{\"description\":\"Name of the city (Basel, Zurich, Bern, Luzern, St.Gallen, or Zug)\",\"in\":\"path\",\"name\":\"city\",\"required\":true,\"schema\":{\"enum\":[\"Basel\",\"Zurich\",\"Bern\",\"Luzern\",\"StGallen\",\"Zug\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"example\":{\"last_updated\":\"2023-10-15T14:30:00Z\",\"lots\":[{\"address\":\"Beethovenstrasse 33\",\"coords\":{\"lat\":47.3769,\"lng\":8.5417},\"free\":145,\"id\":\"zurich_citygarage\",\"lot_type\":\"Parkhaus\",\"name\":\"City Parking\",\"state\":\"open\",\"total\":500}]},\"schema\":{\"properties\":{\"last_updated\":{\"description\":\"Timestamp of last data update\",\"format\":\"date-time\",\"type\":\"string\"},\"lots\":{\"items\":{\"properties\":{\"address\":{\"description\":\"Street address of the parking garage\",\"type\":\"string\"},\"coords\":{\"properties\":{\"lat\":{\"description\":\"Latitude coordinate\",\"format\":\"double\",\"type\":\"number\"},\"lng\":{\"description\":\"Longitude coordinate\",\"format\":\"double\",\"type\":\"number\"}},\"type\":\"object\"},\"free\":{\"description\":\"Number of available parking spaces\",\"type\":\"integer\"},\"id\":{\"description\":\"Unique identifier for the parking lot\",\"type\":\"string\"},\"lot_type\":{\"description\":\"Type of parking lot\",\"enum\":[\"Parkhaus\",\"Tiefgarage\",\"Parkplatz\"],\"type\":\"string\"},\"name\":{\"description\":\"Name of the parking garage\",\"type\":\"string\"},\"state\":{\"description\":\"Current state of the parking lot\",\"enum\":[\"open\",\"closed\",\"unknown\"],\"type\":\"string\"},\"total\":{\"description\":\"Total number of parking spaces\",\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response with parking information\"},\"404\":{\"content\":{\"application/json\":{\"example\":{\"error\":\"City not found\"},\"schema\":{\"properties\":{\"error\":{\"description\":\"Error message\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"City not found\"}},\"securitySource\":\"unspecified\"}","source":"openapi3","version":1},"kind":"http","method":"GET","orig":"/{city}","rename":{"param":{"city":"id"}},"segments":[{"var":"id"}],"select":{"exist":["id"]},"transform":{"req":"`reqdata`","res":"`body.lots`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"get_city_parking_info","name__orig":"get_city_parking_info","Name":"GetCityParkingInfo","name_":"get_city_parking_info","name-":"get-city-parking-info","NAME":"GET_CITY_PARKING_INFO","index$":1}, {"active":true,"entity":"get_city_parking_info","key$":"BasicGetCityParkingInfoFlow","kind":"basic","name":"BasicGetCityParkingInfoFlow","param":{},"step":[{"active":true,"data":{},"input":{},"match":{"city":"city01"},"op":"list","spec":[],"valid":[{"apply":"ItemExists","def":{"ref":"get_city_parking_info_ref01"}}],"index$":0}]}, 'GetCityParkingInfo')
     }
     const client = setup.client
     const struct = setup.struct
@@ -110,13 +109,6 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID': idmap,
     'PARKLEITSYSTEM_TEST_LIVE': 'FALSE',
@@ -127,7 +119,13 @@ function basicSetup(extra?: any) {
 
   const live = 'TRUE' === env.PARKLEITSYSTEM_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new ParkleitsystemSDK(merge([
       // FIRST, so the generated fields below win: sdk-test-control.json's
       // test.client.options adds to the live client, it does not redirect it.
@@ -139,7 +137,8 @@ function basicSetup(extra?: any) {
       // argument at all - so a bare 'extra' silently discarded the apikey
       // and server values above and handed the SDK undefined. Harmless
       // while there was nothing in that object; not harmless now.
-      extra || {}
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -152,7 +151,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.PARKLEITSYSTEM_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 
