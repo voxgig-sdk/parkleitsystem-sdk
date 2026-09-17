@@ -127,12 +127,12 @@ class Config {
 
     entity: {
       
-      get_all_city: {
-      },
-
-      get_city_parking_info: {
-      },
-
+        get_all_city: {
+        },
+  
+        get_city_parking_info: {
+        },
+  
     }
   }
 

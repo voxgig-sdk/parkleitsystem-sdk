@@ -105,12 +105,12 @@ local results, err = client:GetAllCity():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/parkleitsystem-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
-| Python | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
-| PHP | `voxgig-sdk/parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
+| TypeScript | `@voxgig-sdk/parkleitsystem-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags) |
+| Python | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags) |
+| PHP | `voxgig-sdk/parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/parkleitsystem-sdk/go` | `go get github.com/voxgig-sdk/parkleitsystem-sdk/go@latest` |
-| Ruby | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
-| Lua | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases) |
+| Ruby | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags) |
+| Lua | `voxgig-sdk-parkleitsystem` | publish pending — [install from git tag](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/parkleitsystem-sdk/go-cli` | `go install github.com/voxgig-sdk/parkleitsystem-sdk/go-cli/cmd/parkleitsystem@latest` |
 | Go MCP server | `github.com/voxgig-sdk/parkleitsystem-sdk/go-mcp` | `go get github.com/voxgig-sdk/parkleitsystem-sdk/go-mcp@latest` |
 

@@ -1,4 +1,4 @@
 # Flows
 
-@"BasicGetAllCityFlow.aon"
-@"BasicGetCityParkingInfoFlow.aon"
+@"./BasicGetAllCityFlow.aon"
+@"./BasicGetCityParkingInfoFlow.aon"
