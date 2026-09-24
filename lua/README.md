@@ -43,7 +43,7 @@ local getallcitys, err = client:GetAllCity():list()
 if err then error(err) end
 
 for _, item in ipairs(getallcitys) do
-  print(item["id"], item["name"])
+  print(item["id"])
 end
 ```
 

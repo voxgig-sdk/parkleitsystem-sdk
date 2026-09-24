@@ -1,0 +1,25 @@
+# Generated from the API definition and overwritten on every build: do not
+# edit this file. Put customizations in the guide entry file, which includes
+# this one and overrides its defaults:
+#   guide.aontu
+
+guide: {
+  metrics: count: entity: 2
+  metrics: count: path: 2
+  metrics: count: method: 2
+
+  entity: get_all_city: {
+    path: "/": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: get_city_parking_info: {
+    path: "/{city}": {
+      rename: param: "city": *"id"
+      op: list: method: *GET
+      op: list: transform: res: *("`body.lots`")|top
+    }
+  }
+
+}

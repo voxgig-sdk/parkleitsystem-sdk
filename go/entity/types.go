@@ -1,7 +1,7 @@
 // Typed models for the Parkleitsystem SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
@@ -14,9 +14,6 @@ import (
 
 // GetAllCity is the typed data model for the get_all_city entity.
 type GetAllCity struct {
-	Coords *map[string]any `json:"coords,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
 }
 
 // GetAllCityListMatch is the typed request payload for GetAllCity.ListTyped.
@@ -28,14 +25,6 @@ type GetAllCityListMatch struct {
 
 // GetCityParkingInfo is the typed data model for the get_city_parking_info entity.
 type GetCityParkingInfo struct {
-	Address *string `json:"address,omitempty"`
-	Coords *map[string]any `json:"coords,omitempty"`
-	Free *int `json:"free,omitempty"`
-	Id *string `json:"id,omitempty"`
-	LotType *string `json:"lot_type,omitempty"`
-	Name *string `json:"name,omitempty"`
-	State *string `json:"state,omitempty"`
-	Total *int `json:"total,omitempty"`
 }
 
 // GetCityParkingInfoListMatch is the typed request payload for GetCityParkingInfo.ListTyped.

@@ -114,17 +114,20 @@ class ParkleitsystemConfig
           'fields' => [
             [
               'name' => 'coords',
+              'title' => 'Coords',
               'type' => '`$OBJECT`',
             ],
             [
               'name' => 'id',
-              'short' => 'City identifier',
+              'title' => 'Id',
               'type' => '`$STRING`',
+              'short' => 'City identifier',
             ],
             [
               'name' => 'name',
-              'short' => 'Name of the city',
+              'title' => 'Name',
               'type' => '`$STRING`',
+              'short' => 'Name of the city',
             ],
           ],
           'id' => [
@@ -138,17 +141,18 @@ class ParkleitsystemConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/',
                   'segments' => [],
-                  'select' => [],
+                  'parts' => [],
+                  'rename' => [],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [],
+                  'args' => [],
+                  'select' => [],
                 ],
               ],
             ],
@@ -161,42 +165,50 @@ class ParkleitsystemConfig
           'fields' => [
             [
               'name' => 'address',
-              'short' => 'Street address of the parking garage',
+              'title' => 'Address',
               'type' => '`$STRING`',
+              'short' => 'Street address of the parking garage',
             ],
             [
               'name' => 'coords',
+              'title' => 'Coords',
               'type' => '`$OBJECT`',
             ],
             [
               'name' => 'free',
-              'short' => 'Number of available parking spaces',
+              'title' => 'Free',
               'type' => '`$INTEGER`',
+              'short' => 'Number of available parking spaces',
             ],
             [
               'name' => 'id',
-              'short' => 'Unique identifier for the parking lot',
+              'title' => 'Id',
               'type' => '`$STRING`',
+              'short' => 'Unique identifier for the parking lot',
             ],
             [
               'name' => 'lot_type',
-              'short' => 'Type of parking lot',
+              'title' => 'Lot Type',
               'type' => '`$STRING`',
+              'short' => 'Type of parking lot',
             ],
             [
               'name' => 'name',
-              'short' => 'Name of the parking garage',
+              'title' => 'Name',
               'type' => '`$STRING`',
+              'short' => 'Name of the parking garage',
             ],
             [
               'name' => 'state',
-              'short' => 'Current state of the parking lot',
+              'title' => 'State',
               'type' => '`$STRING`',
+              'short' => 'Current state of the parking lot',
             ],
             [
               'name' => 'total',
-              'short' => 'Total number of parking spaces',
+              'title' => 'Total',
               'type' => '`$INTEGER`',
+              'short' => 'Total number of parking spaces',
             ],
           ],
           'id' => [
@@ -210,41 +222,41 @@ class ParkleitsystemConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'city',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/{city}',
-                  'rename' => [
-                    'param' => [
-                      'city' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
+                  'parts' => [
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'city' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.lots`',
                   ],
-                  'parts' => [
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'city',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                    ],
                   ],
                 ],
               ],

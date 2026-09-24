@@ -16,12 +16,6 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS: Record<string, any[]> = {
   
 }
@@ -32,7 +26,6 @@ class Config {
   makeFeature(this: any, fn: string) {
     const fc = FEATURE_CLASS[fn]
     const fi = new fc()
-    // TODO: errors etc
     return fi
   }
 
@@ -142,17 +135,20 @@ class Config {
       "fields": [
         {
           "name": "coords",
+          "title": "Coords",
           "type": "`$OBJECT`"
         },
         {
           "name": "id",
-          "short": "City identifier",
-          "type": "`$STRING`"
+          "title": "Id",
+          "type": "`$STRING`",
+          "short": "City identifier"
         },
         {
           "name": "name",
-          "short": "Name of the city",
-          "type": "`$STRING`"
+          "title": "Name",
+          "type": "`$STRING`",
+          "short": "Name of the city"
         }
       ],
       "id": {
@@ -166,17 +162,18 @@ class Config {
           "name": "list",
           "points": [
             {
-              "args": {},
               "kind": "http",
               "method": "GET",
               "orig": "/",
               "segments": [],
-              "select": {},
+              "parts": [],
+              "rename": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "parts": []
+              "args": {},
+              "select": {}
             }
           ]
         }
@@ -189,42 +186,50 @@ class Config {
       "fields": [
         {
           "name": "address",
-          "short": "Street address of the parking garage",
-          "type": "`$STRING`"
+          "title": "Address",
+          "type": "`$STRING`",
+          "short": "Street address of the parking garage"
         },
         {
           "name": "coords",
+          "title": "Coords",
           "type": "`$OBJECT`"
         },
         {
           "name": "free",
-          "short": "Number of available parking spaces",
-          "type": "`$INTEGER`"
+          "title": "Free",
+          "type": "`$INTEGER`",
+          "short": "Number of available parking spaces"
         },
         {
           "name": "id",
-          "short": "Unique identifier for the parking lot",
-          "type": "`$STRING`"
+          "title": "Id",
+          "type": "`$STRING`",
+          "short": "Unique identifier for the parking lot"
         },
         {
           "name": "lot_type",
-          "short": "Type of parking lot",
-          "type": "`$STRING`"
+          "title": "Lot Type",
+          "type": "`$STRING`",
+          "short": "Type of parking lot"
         },
         {
           "name": "name",
-          "short": "Name of the parking garage",
-          "type": "`$STRING`"
+          "title": "Name",
+          "type": "`$STRING`",
+          "short": "Name of the parking garage"
         },
         {
           "name": "state",
-          "short": "Current state of the parking lot",
-          "type": "`$STRING`"
+          "title": "State",
+          "type": "`$STRING`",
+          "short": "Current state of the parking lot"
         },
         {
           "name": "total",
-          "short": "Total number of parking spaces",
-          "type": "`$INTEGER`"
+          "title": "Total",
+          "type": "`$INTEGER`",
+          "short": "Total number of parking spaces"
         }
       ],
       "id": {
@@ -238,42 +243,42 @@ class Config {
           "name": "list",
           "points": [
             {
-              "args": {
-                "params": [
-                  {
-                    "kind": "param",
-                    "name": "id",
-                    "orig": "city",
-                    "reqd": true,
-                    "type": "`$STRING`"
-                  }
-                ]
-              },
               "kind": "http",
               "method": "GET",
               "orig": "/{city}",
-              "rename": {
-                "param": {
-                  "city": "id"
-                }
-              },
               "segments": [
                 {
                   "var": "id"
                 }
               ],
-              "select": {
-                "exist": [
-                  "id"
-                ]
+              "parts": [
+                "{id}"
+              ],
+              "rename": {
+                "param": {
+                  "city": "id"
+                }
               },
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body.lots`"
               },
-              "parts": [
-                "{id}"
-              ]
+              "args": {
+                "params": [
+                  {
+                    "name": "id",
+                    "orig": "city",
+                    "type": "`$STRING`",
+                    "kind": "param",
+                    "reqd": true
+                  }
+                ]
+              },
+              "select": {
+                "exist": [
+                  "id"
+                ]
+              }
             }
           ]
         }

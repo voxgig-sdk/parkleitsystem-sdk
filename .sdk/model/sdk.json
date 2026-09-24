@@ -24,34 +24,103 @@
         "repr": "auto"
       },
       "contributor": {},
+      "doc": {
+        "active": true,
+        "assets": {
+          "path": ".sdk/doc/assets"
+        },
+        "brand": {
+          "label": "",
+          "notice": "",
+          "shortNotice": "",
+          "url": ""
+        },
+        "ci": {
+          "active": true,
+          "branch": "main"
+        },
+        "content": {
+          "path": ".sdk/doc/content"
+        },
+        "edition": {
+          "summary": {
+            "active": true,
+            "base": "node_modules/@voxgig/docgen/project/.sdk",
+            "brand": {},
+            "filter": {
+              "entities": [],
+              "features": [],
+              "targets": []
+            },
+            "kind": "summary",
+            "name": "summary",
+            "origname": "",
+            "output": {
+              "path": "SUMMARY.md"
+            },
+            "package": "@voxgig/docgen",
+            "published": false,
+            "site": {
+              "active": true
+            },
+            "style": {},
+            "title": ""
+          }
+        },
+        "qa": {
+          "vocabulary": []
+        },
+        "style": {
+          "color": {
+            "accent": "#00c6d8",
+            "background": "#f5f5f9",
+            "darkBackground": "#0f1117",
+            "darkText": "#e6edf3",
+            "primary": "#e70042",
+            "text": "#0a0a0a"
+          },
+          "font": "Nunito, system-ui, sans-serif",
+          "fontFile": "",
+          "headingFont": "Nunito, system-ui, sans-serif",
+          "headingFontFile": "",
+          "logo": "",
+          "mode": "light",
+          "mono": "ui-monospace, monospace",
+          "monoFile": ""
+        },
+        "target": {}
+      },
       "entity": {
         "get_all_city": {
           "active": true,
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "coords",
-              "req": false,
-              "type": "`$OBJECT`"
+          "fields": {
+            "coords": {
+              "a": true,
+              "h": "Coords",
+              "n": "coords",
+              "r": false,
+              "t": "`$OBJECT`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "short": "City identifier",
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "sh": "City identifier",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "name",
-              "req": false,
-              "short": "Name of the city",
-              "type": "`$STRING`"
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
+              "r": false,
+              "sh": "Name of the city",
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -63,20 +132,20 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {},
-                  "contract": {
+                  "a": true,
+                  "co": {
                     "id": "GET /",
-                    "json": "{\"operationId\":\"getAllCities\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"example\":[{\"coords\":{\"lat\":47.5584,\"lng\":7.5733},\"id\":\"Basel\",\"name\":\"Basel\"},{\"coords\":{\"lat\":47.3769,\"lng\":8.5417},\"id\":\"Zurich\",\"name\":\"Zürich\"}],\"schema\":{\"items\":{\"properties\":{\"coords\":{\"properties\":{\"lat\":{\"description\":\"Latitude coordinate\",\"format\":\"double\",\"type\":\"number\"},\"lng\":{\"description\":\"Longitude coordinate\",\"format\":\"double\",\"type\":\"number\"}},\"type\":\"object\"},\"id\":{\"description\":\"City identifier\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the city\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}}},\"description\":\"Successful response with list of cities\"}},\"securitySource\":\"unspecified\"}",
                     "source": "openapi3",
-                    "version": 1
+                    "version": 2
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/",
-                  "segments": [],
-                  "select": {},
-                  "transform": {
+                  "g": {},
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/",
+                  "q": {},
+                  "r": {},
+                  "s": [],
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -93,63 +162,71 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "address",
-              "req": false,
-              "short": "Street address of the parking garage",
-              "type": "`$STRING`"
+          "fields": {
+            "address": {
+              "a": true,
+              "h": "Address",
+              "n": "address",
+              "r": false,
+              "sh": "Street address of the parking garage",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "coords",
-              "req": false,
-              "type": "`$OBJECT`"
+            "coords": {
+              "a": true,
+              "h": "Coords",
+              "n": "coords",
+              "r": false,
+              "t": "`$OBJECT`"
             },
-            {
-              "active": true,
-              "name": "free",
-              "req": false,
-              "short": "Number of available parking spaces",
-              "type": "`$INTEGER`"
+            "free": {
+              "a": true,
+              "h": "Free",
+              "n": "free",
+              "r": false,
+              "sh": "Number of available parking spaces",
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "short": "Unique identifier for the parking lot",
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "sh": "Unique identifier for the parking lot",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "lot_type",
-              "req": false,
-              "short": "Type of parking lot",
-              "type": "`$STRING`"
+            "lot_type": {
+              "a": true,
+              "h": "Lot Type",
+              "n": "lot_type",
+              "r": false,
+              "sh": "Type of parking lot",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "name",
-              "req": false,
-              "short": "Name of the parking garage",
-              "type": "`$STRING`"
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
+              "r": false,
+              "sh": "Name of the parking garage",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "state",
-              "req": false,
-              "short": "Current state of the parking lot",
-              "type": "`$STRING`"
+            "state": {
+              "a": true,
+              "h": "State",
+              "n": "state",
+              "r": false,
+              "sh": "Current state of the parking lot",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "total",
-              "req": false,
-              "short": "Total number of parking spaces",
-              "type": "`$INTEGER`"
+            "total": {
+              "a": true,
+              "h": "Total",
+              "n": "total",
+              "r": false,
+              "sh": "Total number of parking spaces",
+              "t": "`$INTEGER`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -161,44 +238,43 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /{city}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "city",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "city",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /{city}",
-                    "json": "{\"operationId\":\"getCityParkingInfo\",\"parameters\":[{\"description\":\"Name of the city (Basel, Zurich, Bern, Luzern, St.Gallen, or Zug)\",\"in\":\"path\",\"name\":\"city\",\"required\":true,\"schema\":{\"enum\":[\"Basel\",\"Zurich\",\"Bern\",\"Luzern\",\"StGallen\",\"Zug\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"example\":{\"last_updated\":\"2023-10-15T14:30:00Z\",\"lots\":[{\"address\":\"Beethovenstrasse 33\",\"coords\":{\"lat\":47.3769,\"lng\":8.5417},\"free\":145,\"id\":\"zurich_citygarage\",\"lot_type\":\"Parkhaus\",\"name\":\"City Parking\",\"state\":\"open\",\"total\":500}]},\"schema\":{\"properties\":{\"last_updated\":{\"description\":\"Timestamp of last data update\",\"format\":\"date-time\",\"type\":\"string\"},\"lots\":{\"items\":{\"properties\":{\"address\":{\"description\":\"Street address of the parking garage\",\"type\":\"string\"},\"coords\":{\"properties\":{\"lat\":{\"description\":\"Latitude coordinate\",\"format\":\"double\",\"type\":\"number\"},\"lng\":{\"description\":\"Longitude coordinate\",\"format\":\"double\",\"type\":\"number\"}},\"type\":\"object\"},\"free\":{\"description\":\"Number of available parking spaces\",\"type\":\"integer\"},\"id\":{\"description\":\"Unique identifier for the parking lot\",\"type\":\"string\"},\"lot_type\":{\"description\":\"Type of parking lot\",\"enum\":[\"Parkhaus\",\"Tiefgarage\",\"Parkplatz\"],\"type\":\"string\"},\"name\":{\"description\":\"Name of the parking garage\",\"type\":\"string\"},\"state\":{\"description\":\"Current state of the parking lot\",\"enum\":[\"open\",\"closed\",\"unknown\"],\"type\":\"string\"},\"total\":{\"description\":\"Total number of parking spaces\",\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response with parking information\"},\"404\":{\"content\":{\"application/json\":{\"example\":{\"error\":\"City not found\"},\"schema\":{\"properties\":{\"error\":{\"description\":\"Error message\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"City not found\"}},\"securitySource\":\"unspecified\"}",
-                    "source": "openapi3",
-                    "version": 1
-                  },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/{city}",
-                  "rename": {
-                    "param": {
-                      "city": "id"
-                    }
-                  },
-                  "segments": [
-                    {
-                      "var": "id"
-                    }
-                  ],
-                  "select": {
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/{city}",
+                  "q": {
                     "exist": [
                       "id"
                     ]
                   },
-                  "transform": {
+                  "r": {
+                    "param": {
+                      "city": "id"
+                    }
+                  },
+                  "s": [
+                    {
+                      "var": "id"
+                    }
+                  ],
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.lots`"
                   }
@@ -627,13 +703,13 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {},
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {},
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -653,15 +729,15 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {
                 "city": "city01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {

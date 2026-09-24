@@ -92,17 +92,20 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "coords",
+						"title": "Coords",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "City identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "City identifier",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Name of the city",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Name of the city",
 					},
 				},
 				"id": map[string]any{
@@ -116,17 +119,18 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/",
 								"segments": []any{},
-								"select": map[string]any{},
+								"parts": []any{},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},
@@ -139,42 +143,50 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "address",
-						"short": "Street address of the parking garage",
+						"title": "Address",
 						"type": "`$STRING`",
+						"short": "Street address of the parking garage",
 					},
 					map[string]any{
 						"name": "coords",
+						"title": "Coords",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "free",
-						"short": "Number of available parking spaces",
+						"title": "Free",
 						"type": "`$INTEGER`",
+						"short": "Number of available parking spaces",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Unique identifier for the parking lot",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Unique identifier for the parking lot",
 					},
 					map[string]any{
 						"name": "lot_type",
-						"short": "Type of parking lot",
+						"title": "Lot Type",
 						"type": "`$STRING`",
+						"short": "Type of parking lot",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Name of the parking garage",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Name of the parking garage",
 					},
 					map[string]any{
 						"name": "state",
-						"short": "Current state of the parking lot",
+						"title": "State",
 						"type": "`$STRING`",
+						"short": "Current state of the parking lot",
 					},
 					map[string]any{
 						"name": "total",
-						"short": "Total number of parking spaces",
+						"title": "Total",
 						"type": "`$INTEGER`",
+						"short": "Total number of parking spaces",
 					},
 				},
 				"id": map[string]any{
@@ -188,41 +200,41 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "city",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/{city}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"city": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"city": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.lots`",
 								},
-								"parts": []any{
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "city",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},

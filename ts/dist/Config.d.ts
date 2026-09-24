@@ -77,12 +77,14 @@ declare class Config {
         get_all_city: {
             fields: ({
                 name: string;
+                title: string;
                 type: string;
                 short?: undefined;
             } | {
                 name: string;
-                short: string;
+                title: string;
                 type: string;
+                short: string;
             })[];
             id: {
                 field: string;
@@ -94,17 +96,18 @@ declare class Config {
                     input: string;
                     name: string;
                     points: {
-                        args: {};
                         kind: string;
                         method: string;
                         orig: string;
                         segments: never[];
-                        select: {};
+                        parts: never[];
+                        rename: {};
                         transform: {
                             req: string;
                             res: string;
                         };
-                        parts: never[];
+                        args: {};
+                        select: {};
                     }[];
                 };
             };
@@ -115,10 +118,12 @@ declare class Config {
         get_city_parking_info: {
             fields: ({
                 name: string;
-                short: string;
+                title: string;
                 type: string;
+                short: string;
             } | {
                 name: string;
+                title: string;
                 type: string;
                 short?: undefined;
             })[];
@@ -132,34 +137,34 @@ declare class Config {
                     input: string;
                     name: string;
                     points: {
-                        args: {
-                            params: {
-                                kind: string;
-                                name: string;
-                                orig: string;
-                                reqd: boolean;
-                                type: string;
-                            }[];
-                        };
                         kind: string;
                         method: string;
                         orig: string;
+                        segments: {
+                            var: string;
+                        }[];
+                        parts: string[];
                         rename: {
                             param: {
                                 city: string;
                             };
                         };
-                        segments: {
-                            var: string;
-                        }[];
-                        select: {
-                            exist: string[];
-                        };
                         transform: {
                             req: string;
                             res: string;
                         };
-                        parts: string[];
+                        args: {
+                            params: {
+                                name: string;
+                                orig: string;
+                                type: string;
+                                kind: string;
+                                reqd: boolean;
+                            }[];
+                        };
+                        select: {
+                            exist: string[];
+                        };
                     }[];
                 };
             };

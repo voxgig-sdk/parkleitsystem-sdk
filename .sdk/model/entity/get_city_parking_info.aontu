@@ -1,0 +1,120 @@
+# Entity: get_city_parking_info
+
+main: kit: entity: get_city_parking_info: {
+
+  alias: field: {}
+
+  fields: {
+    address: {
+      h: "Address"
+      n: "address"
+      r: false
+      sh: "Street address of the parking garage"
+      t: "`$STRING`"
+    }
+    coords: {
+      h: "Coords"
+      n: "coords"
+      r: false
+      t: "`$OBJECT`"
+    }
+    free: {
+      h: "Free"
+      n: "free"
+      r: false
+      sh: "Number of available parking spaces"
+      t: "`$INTEGER`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Unique identifier for the parking lot"
+      t: "`$STRING`"
+    }
+    lot_type: {
+      h: "Lot Type"
+      n: "lot_type"
+      r: false
+      sh: "Type of parking lot"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Name of the parking garage"
+      t: "`$STRING`"
+    }
+    state: {
+      h: "State"
+      n: "state"
+      r: false
+      sh: "Current state of the parking lot"
+      t: "`$STRING`"
+    }
+    total: {
+      h: "Total"
+      n: "total"
+      r: false
+      sh: "Total number of parking spaces"
+      t: "`$INTEGER`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "get_city_parking_info"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /{city}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "city"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/{city}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              city: "id"
+            }
+          }
+          s: [
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.lots`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

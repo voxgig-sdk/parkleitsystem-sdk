@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetCityParkingInfoEntity = void 0;
 const ParkleitsystemEntityBase_1 = require("../ParkleitsystemEntityBase");
-// TODO: needs Entity superclass
 class GetCityParkingInfoEntity extends ParkleitsystemEntityBase_1.ParkleitsystemEntityBase {
     constructor(client, entopts) {
         super(client, entopts);

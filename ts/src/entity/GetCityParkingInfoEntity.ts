@@ -19,7 +19,6 @@ import type {
   GetCityParkingInfoListMatch,
 } from '../ParkleitsystemTypes'
 
-// TODO: needs Entity superclass
 class GetCityParkingInfoEntity extends ParkleitsystemEntityBase<GetCityParkingInfo> {
 
   constructor(client: ParkleitsystemSDK, entopts: any) {
