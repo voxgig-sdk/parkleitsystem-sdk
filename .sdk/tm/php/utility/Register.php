@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 ParkleitsystemUtility::setRegistrar(function (ParkleitsystemUtility $u): void {
     $u->clean = [ParkleitsystemClean::class, 'call'];
+    $u->clean_add = [ParkleitsystemClean::class, 'add'];
+    $u->clean_explain = [ParkleitsystemDone::class, 'clean_explain'];
     $u->done = [ParkleitsystemDone::class, 'call'];
     $u->make_error = [ParkleitsystemMakeError::class, 'call'];
     $u->feature_add = [ParkleitsystemFeatureAdd::class, 'call'];

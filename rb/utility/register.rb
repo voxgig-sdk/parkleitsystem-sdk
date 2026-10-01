@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 ParkleitsystemUtility.registrar = ->(u) {
   u.clean = ParkleitsystemUtilities::Clean
+  u.clean_add = ParkleitsystemUtilities::CleanAdd
+  u.clean_explain = ParkleitsystemUtilities::CleanExplain
   u.done = ParkleitsystemUtilities::Done
   u.make_error = ParkleitsystemUtilities::MakeError
   u.feature_add = ParkleitsystemUtilities::FeatureAdd
