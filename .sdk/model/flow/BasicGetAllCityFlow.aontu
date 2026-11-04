@@ -7,12 +7,18 @@ main: kit: flow: BasicGetAllCityFlow:
   name: "BasicGetAllCityFlow",
   step: [
     {
-      o: "list",
+      i: {
+        ref: "get_all_city_ref01",
+        srcdatavar: "get_all_city_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
       v: [
         {
-          apply: "ItemExists",
+          apply: "TextFieldMark",
           def: {
-            ref: "get_all_city_ref01"
+            mark: "Mark01-get_all_city_ref01"
           }
         }
       ]

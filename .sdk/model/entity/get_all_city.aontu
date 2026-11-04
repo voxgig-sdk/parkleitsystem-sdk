@@ -5,37 +5,37 @@ main: kit: entity: get_all_city: {
   alias: field: {}
 
   fields: {
-    coords: {
-      h: "Coords"
-      n: "coords"
+    api_version: {
+      h: "Api Version"
+      n: "api_version"
       r: false
+      t: "`$STRING`"
+    }
+    cities: {
+      h: "Cities"
+      n: "cities"
+      r: false
+      sh: "Supported cities keyed by the city id used in /{city}"
       t: "`$OBJECT`"
     }
-    id: {
-      h: "Id"
-      n: "id"
+    reference: {
+      h: "Reference"
+      n: "reference"
       r: false
-      sh: "City identifier"
       t: "`$STRING`"
     }
-    name: {
-      h: "Name"
-      n: "name"
+    server_version: {
+      h: "Server Version"
+      n: "server_version"
       r: false
-      sh: "Name of the city"
       t: "`$STRING`"
     }
-  }
-
-  id: {
-    field: "id"
-    name: "id"
   }
 
   name: "get_all_city"
   op: {
-    list: {
-      name: "list"
+    load: {
+      name: "load"
       points: [
         {
           co: {
@@ -45,6 +45,10 @@ main: kit: entity: get_all_city: {
           }
           m: "GET"
           o: "/"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           t: {
             req: "`reqdata`"
             res: "`body`"

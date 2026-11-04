@@ -13,7 +13,12 @@ type Context = core.Context
 type Utility = core.Utility
 type Feature = core.Feature
 type Entity = core.Entity
-type ParkleitsystemEntity = core.ParkleitsystemEntity
+type ParkleitsystemEntityBase = core.ParkleitsystemEntityBase
+
+// Deprecated: use ParkleitsystemEntityBase.
+type ParkleitsystemEntity = core.ParkleitsystemEntityBase
+
+type StreamItem = core.StreamItem
 type FetcherFunc = core.FetcherFunc
 type Spec = core.Spec
 type Result = core.Result
@@ -41,10 +46,10 @@ func init() {
 	core.NewTimeoutFeatureFunc = func() core.Feature {
 		return feature.NewTimeoutFeature()
 	}
-	core.NewGetAllCityEntityFunc = func(client *core.ParkleitsystemSDK, entopts map[string]any) core.ParkleitsystemEntity {
+	core.NewGetAllCityEntityFunc = func(client *core.ParkleitsystemSDK, entopts map[string]any) core.ParkleitsystemEntityBase {
 		return entity.NewGetAllCityEntity(client, entopts)
 	}
-	core.NewGetCityParkingInfoEntityFunc = func(client *core.ParkleitsystemSDK, entopts map[string]any) core.ParkleitsystemEntity {
+	core.NewGetCityParkingInfoEntityFunc = func(client *core.ParkleitsystemSDK, entopts map[string]any) core.ParkleitsystemEntityBase {
 		return entity.NewGetCityParkingInfoEntity(client, entopts)
 	}
 }

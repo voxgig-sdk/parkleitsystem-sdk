@@ -7,27 +7,31 @@
 -- edit by hand.
 
 ---@class GetAllCity
----@field coords? table
----@field id? string
----@field name? string
+---@field api_version? string
+---@field cities? table
+---@field reference? string
+---@field server_version? string
 
----@class GetAllCityListMatch
----@field coords? table
----@field id? string
----@field name? string
+---@class GetAllCityLoadMatch
+---@field api_version? string
+---@field cities? table
+---@field reference? string
+---@field server_version? string
 
 ---@class GetCityParkingInfo
 ---@field address? string
 ---@field coords? table
+---@field forecast? boolean
 ---@field free? number
 ---@field id? string
 ---@field lot_type? string
 ---@field name? string
+---@field region? string
 ---@field state? string
 ---@field total? number
 
 ---@class GetCityParkingInfoListMatch
----@field id string
+---@field city string
 
 local M = {}
 

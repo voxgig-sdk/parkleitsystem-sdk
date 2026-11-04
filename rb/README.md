@@ -4,7 +4,7 @@
 
 The Ruby SDK for the Parkleitsystem API — an entity-oriented client using idiomatic Ruby conventions.
 
-The SDK exposes the API as capitalised, semantic **Entities** — for example `client.GetAllCity` — with named operations (`list`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+The SDK exposes the API as capitalised, semantic **Entities** — for example `client.GetAllCity` — with named operations (`list`/`load`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
 
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
@@ -12,7 +12,7 @@ The SDK exposes the API as capitalised, semantic **Entities** — for example `c
 
 ## Install
 This package is not yet published to RubyGems. Install it from the
-GitHub release tag (`rb/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases)), or
+GitHub release tag (`rb/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags)), or
 from a clone:
 
 ```bash
@@ -39,17 +39,15 @@ require_relative "Parkleitsystem_sdk"
 client = ParkleitsystemSDK.new
 ```
 
-### 2. List getallcity records
+### 3. Load a getallcity
 
 ```ruby
 begin
-  # list returns an Array of GetAllCity records — iterate directly.
-  getallcitys = client.GetAllCity.list
-  getallcitys.each do |item|
-    puts "#{item["id"]} #{item["coords"]}"
-  end
+  # load returns the ENTITY — call data_get for the GetAllCity record (raises on error).
+  getallcity = client.GetAllCity.load()
+  puts getallcity.data_get
 rescue => err
-  warn "list failed: #{err}"
+  warn "load failed: #{err}"
 end
 ```
 
@@ -60,9 +58,9 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  getallcitys = client.GetAllCity.list()
+  getallcity = client.GetAllCity.load()
 rescue => err
-  warn "list failed: #{err}"
+  warn "load failed: #{err}"
 end
 ```
 
@@ -129,9 +127,9 @@ Create a mock client for unit testing — no server required:
 client = ParkleitsystemSDK.test
 
 # Entity ops return the ENTITY (raises on error);
-# call data_get for the mock record.
-getallcity = client.GetAllCity.list()
-puts getallcity
+# data_get reads its mock record.
+getallcity = client.GetAllCity.load()
+puts getallcity.data_get
 ```
 
 ### Use a custom fetch function
@@ -216,7 +214,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `list` | `(reqmatch = nil, ctrl) -> Array` | List entities matching the criteria (call with no argument to list all). Raises on error. |
+| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
+| `list` | `(reqmatch = nil, ctrl) -> Array` | List entities matching the criteria (call with no argument to list all), one per record. Raises on error. |
 | `data_get` | `() -> Hash` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> Hash` | Get entity match criteria. |
@@ -226,9 +225,10 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the result data directly. On failure they
-raise a `ParkleitsystemError` (a `StandardError` subclass), so wrap
-calls in `begin`/`rescue` where you need to handle errors.
+Entity operations return the entity, and `list` an `Array` of entities, one
+per record; an entity's `data_get` reads its record. On failure they raise a
+`ParkleitsystemError` (a `StandardError` subclass), so wrap calls in
+`begin`/`rescue` where you need to handle errors.
 
 The `direct` escape hatch is the exception: it never raises and instead
 returns a result `Hash` with these keys:
@@ -247,11 +247,12 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `coords` |  |
-| `id` | City identifier |
-| `name` | Name of the city |
+| `api_version` |  |
+| `cities` | Supported cities keyed by the city id used in /{city} |
+| `reference` |  |
+| `server_version` |  |
 
-Operations: List.
+Operations: Load.
 
 API path: `/`
 
@@ -259,14 +260,16 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` | Street address of the parking garage |
+| `address` |  |
 | `coords` |  |
-| `free` | Number of available parking spaces |
-| `id` | Unique identifier for the parking lot |
-| `lot_type` | Type of parking lot |
-| `name` | Name of the parking garage |
-| `state` | Current state of the parking lot |
-| `total` | Total number of parking spaces |
+| `forecast` |  |
+| `free` |  |
+| `id` |  |
+| `lot_type` |  |
+| `name` |  |
+| `region` |  |
+| `state` |  |
+| `total` |  |
 
 Operations: List.
 
@@ -285,21 +288,22 @@ Create an instance: `get_all_city = client.GetAllCity`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coords` | `Hash` |  |
-| `id` | `String` | City identifier |
-| `name` | `String` | Name of the city |
+| `api_version` | `String` |  |
+| `cities` | `Hash` | Supported cities keyed by the city id used in /{city} |
+| `reference` | `String` |  |
+| `server_version` | `String` |  |
 
-#### Example: List
+#### Example: Load
 
 ```ruby
-# list returns an Array of GetAllCity records (raises on error).
-get_all_citys = client.GetAllCity.list
+# load returns the ENTITY — call data_get for the GetAllCity record (raises on error).
+get_all_city = client.GetAllCity.load()
 ```
 
 
@@ -317,20 +321,23 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `String` | Street address of the parking garage |
+| `address` | `String` |  |
 | `coords` | `Hash` |  |
-| `free` | `Integer` | Number of available parking spaces |
-| `id` | `String` | Unique identifier for the parking lot |
-| `lot_type` | `String` | Type of parking lot |
-| `name` | `String` | Name of the parking garage |
-| `state` | `String` | Current state of the parking lot |
-| `total` | `Integer` | Total number of parking spaces |
+| `forecast` | `Boolean` |  |
+| `free` | `Integer` |  |
+| `id` | `String` |  |
+| `lot_type` | `String` |  |
+| `name` | `String` |  |
+| `region` | `String` |  |
+| `state` | `String` |  |
+| `total` | `Integer` |  |
 
 #### Example: List
 
 ```ruby
-# list returns an Array of GetCityParkingInfo records (raises on error).
-get_city_parking_infos = client.GetCityParkingInfo.list
+# list returns an Array of GetCityParkingInfo entities, one per record (raises on error).
+get_city_parking_infos = client.GetCityParkingInfo.list({ "city" => "example" })
+get_city_parking_infos.each { |item| puts item.data_get }
 ```
 
 ## Features
@@ -491,14 +498,14 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
 getallcity = client.GetAllCity
-getallcity.list()
+getallcity.load()
 
-# getallcity.data_get now returns the getallcity data from the last list
+# getallcity.data_get now returns the getallcity data from the last load
 # getallcity.match_get returns the last match criteria
 ```
 

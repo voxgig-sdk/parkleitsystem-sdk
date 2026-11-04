@@ -96,6 +96,7 @@ def make_config():
         },
         "optspec": {
           "clearTimer": "`$FUNCTION`",
+          "now": "`$FUNCTION`",
           "setTimer": "`$FUNCTION`",
         },
         "strict": False,
@@ -116,32 +117,32 @@ def make_config():
       "get_all_city": {
         "fields": [
           {
-            "name": "coords",
-            "title": "Coords",
+            "name": "api_version",
+            "title": "Api Version",
+            "type": "`$STRING`",
+          },
+          {
+            "name": "cities",
+            "title": "Cities",
             "type": "`$OBJECT`",
+            "short": "Supported cities keyed by the city id used in /{city}",
           },
           {
-            "name": "id",
-            "title": "Id",
+            "name": "reference",
+            "title": "Reference",
             "type": "`$STRING`",
-            "short": "City identifier",
           },
           {
-            "name": "name",
-            "title": "Name",
+            "name": "server_version",
+            "title": "Server Version",
             "type": "`$STRING`",
-            "short": "Name of the city",
           },
         ],
-        "id": {
-          "field": "id",
-          "name": "id",
-        },
         "name": "get_all_city",
         "op": {
-          "list": {
+          "load": {
             "input": "data",
-            "name": "list",
+            "name": "load",
             "points": [
               {
                 "kind": "http",
@@ -156,6 +157,10 @@ def make_config():
                 },
                 "args": {},
                 "select": {},
+                "response": {
+                  "kind": "json",
+                  "media": "application/json",
+                },
               },
             ],
           },
@@ -170,7 +175,6 @@ def make_config():
             "name": "address",
             "title": "Address",
             "type": "`$STRING`",
-            "short": "Street address of the parking garage",
           },
           {
             "name": "coords",
@@ -178,40 +182,44 @@ def make_config():
             "type": "`$OBJECT`",
           },
           {
+            "name": "forecast",
+            "title": "Forecast",
+            "type": "`$BOOLEAN`",
+          },
+          {
             "name": "free",
             "title": "Free",
             "type": "`$INTEGER`",
-            "short": "Number of available parking spaces",
           },
           {
             "name": "id",
             "title": "Id",
             "type": "`$STRING`",
-            "short": "Unique identifier for the parking lot",
           },
           {
             "name": "lot_type",
             "title": "Lot Type",
             "type": "`$STRING`",
-            "short": "Type of parking lot",
           },
           {
             "name": "name",
             "title": "Name",
             "type": "`$STRING`",
-            "short": "Name of the parking garage",
+          },
+          {
+            "name": "region",
+            "title": "Region",
+            "type": "`$STRING`",
           },
           {
             "name": "state",
             "title": "State",
             "type": "`$STRING`",
-            "short": "Current state of the parking lot",
           },
           {
             "name": "total",
             "title": "Total",
             "type": "`$INTEGER`",
-            "short": "Total number of parking spaces",
           },
         ],
         "id": {
@@ -230,17 +238,13 @@ def make_config():
                 "orig": "/{city}",
                 "segments": [
                   {
-                    "var": "id",
+                    "var": "city",
                   },
                 ],
                 "parts": [
-                  "{id}",
+                  "{city}",
                 ],
-                "rename": {
-                  "param": {
-                    "city": "id",
-                  },
-                },
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body.lots`",
@@ -248,18 +252,23 @@ def make_config():
                 "args": {
                   "params": [
                     {
-                      "name": "id",
+                      "name": "city",
                       "orig": "city",
                       "type": "`$STRING`",
                       "kind": "param",
                       "reqd": True,
+                      "example": "Basel",
                     },
                   ],
                 },
                 "select": {
                   "exist": [
-                    "id",
+                    "city",
                   ],
+                },
+                "response": {
+                  "kind": "json",
+                  "media": "application/json",
                 },
               },
             ],

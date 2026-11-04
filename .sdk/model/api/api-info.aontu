@@ -9,7 +9,7 @@ main: {
         name: "API Documentation"
         url: "https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html"
       }
-      description: "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App."
+      description: "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App. 2026-11-03: response schemas rewritten from a live probe: / answers {api_version, server_version, reference, cities} with cities a MAP keyed by city id (not an array), and /{city} answers {last_updated, last_downloaded, lots}; city example Basel (probed 200)."
       servers: [
         {
           description: "Production server"

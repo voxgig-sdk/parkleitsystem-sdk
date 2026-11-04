@@ -184,6 +184,130 @@ class ParkleitsystemTestRunner
         }
         return 500;
     }
+
+    /**
+     * A live check that did not pass, as main.kit.test.live.strict decides:
+     * strict fails the test, lenient skips it with the same reason.
+     */
+    public static function live_miss(bool $strict, string $reason): void
+    {
+        if ($strict) {
+            \PHPUnit\Framework\Assert::fail($reason);
+        }
+        \PHPUnit\Framework\Assert::markTestSkipped($reason);
+    }
+
+    /** An account holding no record for the test to read skips either way. */
+    public static function live_empty(string $reason): void
+    {
+        \PHPUnit\Framework\Assert::markTestSkipped($reason);
+    }
+
+    /** A live list response's records: the body, or the first list an envelope holds. */
+    public static function live_list($data): ?array
+    {
+        if (is_array($data) && array_is_list($data)) {
+            return $data;
+        }
+        if (is_array($data)) {
+            foreach ($data as $value) {
+                if (is_array($value) && array_is_list($value)) {
+                    return $value;
+                }
+            }
+        }
+        return null;
+    }
+
+    /** A live response for a message: the SDK's error, or its status and content type. */
+    public static function live_describe(array $result): string
+    {
+        $err = $result["err"] ?? null;
+        if ($err instanceof \Throwable) {
+            return $err->getMessage();
+        }
+        if (!empty($err)) {
+            return is_string($err) ? $err : json_encode($err);
+        }
+        $type = null;
+        foreach (($result["headers"] ?? []) as $k => $v) {
+            if (strtolower((string)$k) === "content-type") {
+                $type = trim(explode(";", (string)$v)[0]);
+            }
+        }
+        return "HTTP " . ($result["status"] ?? "none") . ($type ? " " . $type : "");
+    }
+
+    /**
+     * The record a create-less flow reads live: the first its list returns,
+     * put where the flow reads the fixture's existing records. A record with
+     * no value in the identity field takes the fallback identity.
+     */
+    public static function live_existing(array &$setup, bool $strict, string $name, callable $list,
+        string $field, $fallback): void
+    {
+        $found = null;
+        try {
+            $found = $list();
+        } catch (\Throwable $e) {
+            self::live_miss($strict, "Live list discovery failed: " . $e->getMessage());
+        }
+        if (!is_array($found)) {
+            self::live_miss($strict, "Live list discovery returned no list");
+        }
+        if (0 === count($found)) {
+            self::live_empty("The account has no $name record to load");
+        }
+        $first = $found[0];
+        $record = (is_object($first) && method_exists($first, 'data_get')) ? $first->data_get() : $first;
+        if (!is_array($record) || null === ($record[$field] ?? null)) {
+            if (null === $fallback) {
+                self::live_miss($strict, "Live entity test blocked: the listed $name record has no $field, "
+                    . "and neither *_ENTID nor the load route's example gives one");
+            }
+            $record = is_array($record) ? $record : [];
+            $record[$field] = $fallback;
+        }
+        $setup["data"]["existing"][$name] = ["live01" => $record];
+    }
+
+    /**
+     * Identities compared by their string forms: a route parameter's
+     * value is a string where the record may hold a number.
+     */
+    public static function live_same_id($a, $b): bool
+    {
+        if (null === $a || null === $b) {
+            return null === $a && null === $b;
+        }
+        return self::live_id_str($a) === self::live_id_str($b);
+    }
+
+    private static function live_id_str($v): string
+    {
+        if (is_bool($v)) {
+            return $v ? 'true' : 'false';
+        }
+        if (is_float($v) && is_finite($v) && floor($v) == $v && abs($v) < PHP_INT_MAX) {
+            return (string)(int)$v;
+        }
+        return is_scalar($v) ? (string)$v : json_encode($v);
+    }
+
+    /** Sleeps test.live.delayMs before a live request. */
+    public static function live_pace(): void
+    {
+        usleep(self::live_delay_ms() * 1000);
+    }
+
+    /** In a lenient live run a failing check skips, observing the live API. */
+    public static function live_observe(\Throwable $e, array $setup, bool $strict): void
+    {
+        if ($strict || empty($setup["live"]) || $e instanceof \PHPUnit\Framework\SkippedTest) {
+            throw $e;
+        }
+        \PHPUnit\Framework\Assert::markTestSkipped("live run, main.kit.test.live.strict is false: " . $e->getMessage());
+    }
 }
 
 // Aliases for test convenience.

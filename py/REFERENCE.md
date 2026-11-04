@@ -91,20 +91,19 @@ get_all_city = client.GetAllCity()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coords` | `dict` | No |  |
-| `id` | `str` | No | City identifier |
-| `name` | `str` | No | Name of the city |
+| `api_version` | `str` | No |  |
+| `cities` | `dict` | No | Supported cities keyed by the city id used in /{city} |
+| `reference` | `str` | No |  |
+| `server_version` | `str` | No |  |
 
 ### Operations
 
-#### `list(reqmatch=None, ctrl=None) -> list`
+#### `load(reqmatch, ctrl=None) -> GetAllCityEntity`
 
-List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
 
 ```python
-results = client.GetAllCity().list()
-for get_all_city in results:
-    print(get_all_city)
+result = client.GetAllCity().load()
 ```
 
 ### Common Methods
@@ -146,25 +145,27 @@ get_city_parking_info = client.GetCityParkingInfo()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `str` | No | Street address of the parking garage |
+| `address` | `str` | No |  |
 | `coords` | `dict` | No |  |
-| `free` | `int` | No | Number of available parking spaces |
-| `id` | `str` | No | Unique identifier for the parking lot |
-| `lot_type` | `str` | No | Type of parking lot |
-| `name` | `str` | No | Name of the parking garage |
-| `state` | `str` | No | Current state of the parking lot |
-| `total` | `int` | No | Total number of parking spaces |
+| `forecast` | `bool` | No |  |
+| `free` | `int` | No |  |
+| `id` | `str` | No |  |
+| `lot_type` | `str` | No |  |
+| `name` | `str` | No |  |
+| `region` | `str` | No |  |
+| `state` | `str` | No |  |
+| `total` | `int` | No |  |
 
 ### Operations
 
-#### `list(reqmatch=None, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list[GetCityParkingInfoEntity]`
 
-List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.GetCityParkingInfo().list({"id": "example"})
+results = client.GetCityParkingInfo().list({"city": "example"})
 for get_city_parking_info in results:
-    print(get_city_parking_info)
+    print(get_city_parking_info.data_get())
 ```
 
 ### Common Methods
@@ -353,6 +354,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

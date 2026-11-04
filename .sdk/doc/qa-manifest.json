@@ -3,5 +3,14 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "Production server",
+      "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App. 2026-11-03: response schemas rewritten from a live probe: / answers &#123;`api_version`, `server_version`, reference, cities&#125; with cities a MAP keyed by city id (not an array), and /&#123;city&#125; answers &#123;`last_updated`, `last_downloaded`, lots&#125;; city example Basel (probed 200).",
+      "Successful response with list of cities",
+      "Successful response with parking information",
+      "Supported cities keyed by the city id used in /&#123;city&#125;"
+    ]
+  }
 }

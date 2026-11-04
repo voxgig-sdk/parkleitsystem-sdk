@@ -15,17 +15,19 @@ declare(strict_types=1);
 /** GetAllCity entity data model. */
 class GetAllCity
 {
-    public ?array $coords = null;
-    public ?string $id = null;
-    public ?string $name = null;
+    public ?string $api_version = null;
+    public ?array $cities = null;
+    public ?string $reference = null;
+    public ?string $server_version = null;
 }
 
-/** Request payload for GetAllCity#list. */
-class GetAllCityListMatch
+/** Request payload for GetAllCity#load. */
+class GetAllCityLoadMatch
 {
-    public ?array $coords = null;
-    public ?string $id = null;
-    public ?string $name = null;
+    public ?string $api_version = null;
+    public ?array $cities = null;
+    public ?string $reference = null;
+    public ?string $server_version = null;
 }
 
 /** GetCityParkingInfo entity data model. */
@@ -33,10 +35,12 @@ class GetCityParkingInfo
 {
     public ?string $address = null;
     public ?array $coords = null;
+    public ?bool $forecast = null;
     public ?int $free = null;
     public ?string $id = null;
     public ?string $lot_type = null;
     public ?string $name = null;
+    public ?string $region = null;
     public ?string $state = null;
     public ?int $total = null;
 }
@@ -44,6 +48,6 @@ class GetCityParkingInfo
 /** Request payload for GetCityParkingInfo#list. */
 class GetCityParkingInfoListMatch
 {
-    public string $id;
+    public string $city;
 }
 

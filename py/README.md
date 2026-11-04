@@ -5,7 +5,7 @@
 The Python SDK for the Parkleitsystem API — an entity-oriented client following Pythonic conventions.
 
 The SDK exposes the API as capitalised, semantic **Entities** — for example `client.GetAllCity()` — each
-carrying a small, uniform set of operations (`list`) instead of raw URL
+carrying a small, uniform set of operations (`list`, `load`) instead of raw URL
 paths and query strings. You work with named resources and verbs, which
 keeps the cognitive load low.
 
@@ -15,7 +15,7 @@ keeps the cognitive load low.
 
 ## Install
 This package is not yet published to PyPI. Install it from the GitHub
-release tag (`py/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases)) or
+release tag (`py/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags)) or
 from a source checkout:
 
 ```bash
@@ -36,18 +36,16 @@ from parkleitsystem_sdk import ParkleitsystemSDK
 client = ParkleitsystemSDK()
 ```
 
-### 2. List getallcity records
+### 3. Load a getallcity
 
-`list()` returns a `list` of records (each a `dict`) and raises on
-error — iterate it directly.
+`load()` returns the ENTITY — call data_get() for the record — and raises on error.
 
 ```python
 try:
-    getallcitys = client.GetAllCity().list()
-    for getallcity in getallcitys:
-        print(getallcity)
+    getallcity = client.GetAllCity().load()
+    print(getallcity.data_get())
 except Exception as err:
-    print(f"list failed: {err}")
+    print(f"load failed: {err}")
 ```
 
 
@@ -57,10 +55,10 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    getallcitys = client.GetAllCity().list()
-    print(getallcitys)
+    getallcity = client.GetAllCity().load()
+    print(getallcity.data_get())
 except Exception as err:
-    print(f"list failed: {err}")
+    print(f"load failed: {err}")
 ```
 
 `direct()` does **not** raise — it returns the result envelope. Branch
@@ -124,10 +122,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = ParkleitsystemSDK.test()
 
-# Entity ops return the ENTITY and raises on error;
-# call data_get() for the record.
-getallcity = client.GetAllCity().list()
-# getallcity contains the mock response record
+# Entity ops return the entity, and list one per record; they raise on error.
+getallcity = client.GetAllCity().load()
+# data_get() on an entity reads its mock response record
 ```
 
 ### Use a custom fetch function
@@ -212,7 +209,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `list` | `(reqmatch, ctrl) -> list` | List entities matching the criteria. Raises on error. |
+| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
+| `list` | `(reqmatch, ctrl) -> list` | List entities matching the criteria, one per record. Raises on error. |
 | `data_get` | `() -> dict` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> dict` | Get entity match criteria. |
@@ -222,9 +220,9 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
-ops, a `list` for `list`) and raise on error. Wrap calls in
-`try`/`except` to handle failures.
+Entity operations return the entity, and `list` a `list` of entities, one
+per record; an entity's `data_get()` reads its record (a `dict`). They raise
+on error, so wrap calls in `try`/`except` to handle failures.
 
 The `direct()` escape hatch never raises — it returns a result `dict`
 you branch on via `result["ok"]`:
@@ -244,11 +242,12 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `coords` |  |
-| `id` | City identifier |
-| `name` | Name of the city |
+| `api_version` |  |
+| `cities` | Supported cities keyed by the city id used in /{city} |
+| `reference` |  |
+| `server_version` |  |
 
-Operations: List.
+Operations: Load.
 
 API path: `/`
 
@@ -256,14 +255,16 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` | Street address of the parking garage |
+| `address` |  |
 | `coords` |  |
-| `free` | Number of available parking spaces |
-| `id` | Unique identifier for the parking lot |
-| `lot_type` | Type of parking lot |
-| `name` | Name of the parking garage |
-| `state` | Current state of the parking lot |
-| `total` | Total number of parking spaces |
+| `forecast` |  |
+| `free` |  |
+| `id` |  |
+| `lot_type` |  |
+| `name` |  |
+| `region` |  |
+| `state` |  |
+| `total` |  |
 
 Operations: List.
 
@@ -282,20 +283,21 @@ Create an instance: `get_all_city = client.GetAllCity()`
 
 | Method | Description |
 | --- | --- |
-| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coords` | `dict` |  |
-| `id` | `str` | City identifier |
-| `name` | `str` | Name of the city |
+| `api_version` | `str` |  |
+| `cities` | `dict` | Supported cities keyed by the city id used in /{city} |
+| `reference` | `str` |  |
+| `server_version` | `str` |  |
 
-#### Example: List
+#### Example: Load
 
 ```python
-get_all_citys = client.GetAllCity().list()
+get_all_city = client.GetAllCity().load()
 ```
 
 
@@ -313,19 +315,21 @@ Create an instance: `get_city_parking_info = client.GetCityParkingInfo()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `str` | Street address of the parking garage |
+| `address` | `str` |  |
 | `coords` | `dict` |  |
-| `free` | `int` | Number of available parking spaces |
-| `id` | `str` | Unique identifier for the parking lot |
-| `lot_type` | `str` | Type of parking lot |
-| `name` | `str` | Name of the parking garage |
-| `state` | `str` | Current state of the parking lot |
-| `total` | `int` | Total number of parking spaces |
+| `forecast` | `bool` |  |
+| `free` | `int` |  |
+| `id` | `str` |  |
+| `lot_type` | `str` |  |
+| `name` | `str` |  |
+| `region` | `str` |  |
+| `state` | `str` |  |
+| `total` | `int` |  |
 
 #### Example: List
 
 ```python
-get_city_parking_infos = client.GetCityParkingInfo().list({"id": "example"})
+get_city_parking_infos = client.GetCityParkingInfo().list({"city": "example"})
 ```
 
 ## Features
@@ -485,14 +489,14 @@ Import entity or utility modules directly only when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
 getallcity = client.GetAllCity()
-getallcity.list()
+getallcity.load()
 
-# getallcity.data_get() now returns the getallcity data from the last list
+# getallcity.data_get() now returns the getallcity data from the last load
 # getallcity.match_get() returns the last match criteria
 ```
 

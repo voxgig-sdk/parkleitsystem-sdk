@@ -12,7 +12,7 @@ var NewTestFeatureFunc func() Feature
 
 var NewTimeoutFeatureFunc func() Feature
 
-var NewGetAllCityEntityFunc func(client *ParkleitsystemSDK, entopts map[string]any) ParkleitsystemEntity
+var NewGetAllCityEntityFunc func(client *ParkleitsystemSDK, entopts map[string]any) ParkleitsystemEntityBase
 
-var NewGetCityParkingInfoEntityFunc func(client *ParkleitsystemSDK, entopts map[string]any) ParkleitsystemEntity
+var NewGetCityParkingInfoEntityFunc func(client *ParkleitsystemSDK, entopts map[string]any) ParkleitsystemEntityBase
 

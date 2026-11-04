@@ -10,6 +10,12 @@ import (
 	"github.com/voxgig-sdk/parkleitsystem-sdk/go/core"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const get_city_parking_infoDirectLiveStrict = true
+
 func TestGetCityParkingInfoDirect(t *testing.T) {
 	t.Run("direct-list-get_city_parking_info", func(t *testing.T) {
 		setup := get_city_parking_infoDirectSetup([]any{
@@ -28,41 +34,41 @@ func TestGetCityParkingInfoDirect(t *testing.T) {
 			return
 		}
 		if setup.live {
-			for _, _liveKey := range []string{"get_city_parking_info01"} {
+			for _, _liveKey := range []string{"city01"} {
 				if v := setup.idmap[_liveKey]; v == nil {
-					t.Skipf("live test needs %s via *_ENTID env var (synthetic IDs only)", _liveKey)
+					liveMiss(t, get_city_parking_infoDirectLiveStrict, "Live test blocked: needs %s via PARKLEITSYSTEM_TEST_GET_CITY_PARKING_INFO_ENTID", _liveKey)
 					return
 				}
 			}
 		}
+		if setup.live {
+			livePace()
+		}
 		client := setup.client
 
 		params := map[string]any{}
+		query := map[string]any{}
 		if setup.live {
-			params["id"] = setup.idmap["get_city_parking_info01"]
+			params["city"] = setup.idmap["city01"]
 		} else {
-			params["id"] = "direct01"
+			params["city"] = "direct01"
 		}
 
 		result, err := client.Direct(map[string]any{
-			"path":   "{id}",
+			"path":   "{city}",
 			"method": "GET",
 			"params": params,
+			"query":  query,
 		})
 		if setup.live {
-			// Live-mode leniency is a model decision
-			// (main.kit.test.live.strict): synthetic IDs 4xx constantly
-			// against an arbitrary public API, so the default SKIPS here.
-			// A project that owns its test server sets strict and FAILS.
 			if err != nil {
-				t.Fatalf("list call failed (likely synthetic IDs against live API): %v", err)
+				liveMiss(t, get_city_parking_infoDirectLiveStrict, "Live list failed: %v", err)
 			}
-			if result["ok"] != true {
-				t.Fatalf("list call not ok (likely synthetic IDs against live API): %v", result)
+			if status := core.ToInt(result["status"]); result["ok"] != true || status < 200 || status >= 300 {
+				liveMiss(t, get_city_parking_infoDirectLiveStrict, "Live list failed: %s", liveDescribe(result))
 			}
-			status := core.ToInt(result["status"])
-			if status < 200 || status >= 300 {
-				t.Fatalf("expected 2xx status, got %v", result["status"])
+			if _, ok := liveList(result["data"]); !ok {
+				liveMiss(t, get_city_parking_infoDirectLiveStrict, "Live list returned no list: %s", liveDescribe(result))
 			}
 		} else {
 			if err != nil {
@@ -142,6 +148,12 @@ func get_city_parking_infoDirectSetup(mockres any) *get_city_parking_infoDirectS
 				json.Unmarshal([]byte(entidStr), &idmap)
 			} else if entidMap, ok := entidRaw.(map[string]any); ok {
 				idmap = entidMap
+			}
+		}
+		// A path parameter's example stands in for an id *_ENTID does not give.
+		for k, v := range map[string]any{"city01": "Basel"} {
+			if idmap[k] == nil {
+				idmap[k] = v
 			}
 		}
 

@@ -75,7 +75,7 @@ func runOp(client *sdk.ParkleitsystemSDK, op string, query *eng.Value, entityAto
 
 // entityFor dispatches on the lowercase entity name. The generator
 // emits one `case "<name>":` per entity defined in the SDK model.
-func entityFor(client *sdk.ParkleitsystemSDK, name string) (sdk.ParkleitsystemEntity, error) {
+func entityFor(client *sdk.ParkleitsystemSDK, name string) (sdk.ParkleitsystemEntityBase, error) {
 	switch strings.ToLower(name) {
 	case "get_all_city":
 		return client.GetAllCity(nil), nil

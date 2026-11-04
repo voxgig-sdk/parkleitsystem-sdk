@@ -71,6 +71,7 @@ func MakeConfig() map[string]any {
 				},
 				"optspec": map[string]any{
 					"clearTimer": "`$FUNCTION`",
+					"now": "`$FUNCTION`",
 					"setTimer": "`$FUNCTION`",
 				},
 				"strict": false,
@@ -91,32 +92,32 @@ func MakeConfig() map[string]any {
 			"get_all_city": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"name": "coords",
-						"title": "Coords",
+						"name": "api_version",
+						"title": "Api Version",
+						"type": "`$STRING`",
+					},
+					map[string]any{
+						"name": "cities",
+						"title": "Cities",
 						"type": "`$OBJECT`",
+						"short": "Supported cities keyed by the city id used in /{city}",
 					},
 					map[string]any{
-						"name": "id",
-						"title": "Id",
+						"name": "reference",
+						"title": "Reference",
 						"type": "`$STRING`",
-						"short": "City identifier",
 					},
 					map[string]any{
-						"name": "name",
-						"title": "Name",
+						"name": "server_version",
+						"title": "Server Version",
 						"type": "`$STRING`",
-						"short": "Name of the city",
 					},
-				},
-				"id": map[string]any{
-					"field": "id",
-					"name": "id",
 				},
 				"name": "get_all_city",
 				"op": map[string]any{
-					"list": map[string]any{
+					"load": map[string]any{
 						"input": "data",
-						"name": "list",
+						"name": "load",
 						"points": []any{
 							map[string]any{
 								"kind": "http",
@@ -131,6 +132,10 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 						},
 					},
@@ -145,7 +150,6 @@ func MakeConfig() map[string]any {
 						"name": "address",
 						"title": "Address",
 						"type": "`$STRING`",
-						"short": "Street address of the parking garage",
 					},
 					map[string]any{
 						"name": "coords",
@@ -153,40 +157,44 @@ func MakeConfig() map[string]any {
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
+						"name": "forecast",
+						"title": "Forecast",
+						"type": "`$BOOLEAN`",
+					},
+					map[string]any{
 						"name": "free",
 						"title": "Free",
 						"type": "`$INTEGER`",
-						"short": "Number of available parking spaces",
 					},
 					map[string]any{
 						"name": "id",
 						"title": "Id",
 						"type": "`$STRING`",
-						"short": "Unique identifier for the parking lot",
 					},
 					map[string]any{
 						"name": "lot_type",
 						"title": "Lot Type",
 						"type": "`$STRING`",
-						"short": "Type of parking lot",
 					},
 					map[string]any{
 						"name": "name",
 						"title": "Name",
 						"type": "`$STRING`",
-						"short": "Name of the parking garage",
+					},
+					map[string]any{
+						"name": "region",
+						"title": "Region",
+						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "state",
 						"title": "State",
 						"type": "`$STRING`",
-						"short": "Current state of the parking lot",
 					},
 					map[string]any{
 						"name": "total",
 						"title": "Total",
 						"type": "`$INTEGER`",
-						"short": "Total number of parking spaces",
 					},
 				},
 				"id": map[string]any{
@@ -205,17 +213,13 @@ func MakeConfig() map[string]any {
 								"orig": "/{city}",
 								"segments": []any{
 									map[string]any{
-										"var": "id",
+										"var": "city",
 									},
 								},
 								"parts": []any{
-									"{id}",
+									"{city}",
 								},
-								"rename": map[string]any{
-									"param": map[string]any{
-										"city": "id",
-									},
-								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.lots`",
@@ -223,18 +227,23 @@ func MakeConfig() map[string]any {
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"name": "id",
+											"name": "city",
 											"orig": "city",
 											"type": "`$STRING`",
 											"kind": "param",
 											"reqd": true,
+											"example": "Basel",
 										},
 									},
 								},
 								"select": map[string]any{
 									"exist": []any{
-										"id",
+										"city",
 									},
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
 								},
 							},
 						},

@@ -16,11 +16,12 @@ import (
 type GetAllCity struct {
 }
 
-// GetAllCityListMatch is the typed request payload for GetAllCity.ListTyped.
-type GetAllCityListMatch struct {
-	Coords *map[string]any `json:"coords,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+// GetAllCityLoadMatch is the typed request payload for GetAllCity.LoadTyped.
+type GetAllCityLoadMatch struct {
+	ApiVersion *string `json:"api_version,omitempty"`
+	Cities *map[string]any `json:"cities,omitempty"`
+	Reference *string `json:"reference,omitempty"`
+	ServerVersion *string `json:"server_version,omitempty"`
 }
 
 // GetCityParkingInfo is the typed data model for the get_city_parking_info entity.
@@ -29,7 +30,7 @@ type GetCityParkingInfo struct {
 
 // GetCityParkingInfoListMatch is the typed request payload for GetCityParkingInfo.ListTyped.
 type GetCityParkingInfoListMatch struct {
-	Id string `json:"id"`
+	City string `json:"city"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the

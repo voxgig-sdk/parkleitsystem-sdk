@@ -9,7 +9,6 @@ main: kit: entity: get_city_parking_info: {
       h: "Address"
       n: "address"
       r: false
-      sh: "Street address of the parking garage"
       t: "`$STRING`"
     }
     coords: {
@@ -18,46 +17,52 @@ main: kit: entity: get_city_parking_info: {
       r: false
       t: "`$OBJECT`"
     }
+    forecast: {
+      h: "Forecast"
+      n: "forecast"
+      r: false
+      t: "`$BOOLEAN`"
+    }
     free: {
       h: "Free"
       n: "free"
       r: false
-      sh: "Number of available parking spaces"
       t: "`$INTEGER`"
     }
     id: {
       h: "Id"
       n: "id"
       r: false
-      sh: "Unique identifier for the parking lot"
       t: "`$STRING`"
     }
     lot_type: {
       h: "Lot Type"
       n: "lot_type"
       r: false
-      sh: "Type of parking lot"
       t: "`$STRING`"
     }
     name: {
       h: "Name"
       n: "name"
       r: false
-      sh: "Name of the parking garage"
+      t: "`$STRING`"
+    }
+    region: {
+      h: "Region"
+      n: "region"
+      r: false
       t: "`$STRING`"
     }
     state: {
       h: "State"
       n: "state"
       r: false
-      sh: "Current state of the parking lot"
       t: "`$STRING`"
     }
     total: {
       h: "Total"
       n: "total"
       r: false
-      sh: "Total number of parking spaces"
       t: "`$INTEGER`"
     }
   }
@@ -81,8 +86,9 @@ main: kit: entity: get_city_parking_info: {
           g: {
             params: [
               {
+                ex: "Basel"
                 k: "param"
-                n: "id"
+                n: "city"
                 or: "city"
                 r: true
                 t: "`$STRING`"
@@ -93,17 +99,16 @@ main: kit: entity: get_city_parking_info: {
           o: "/{city}"
           q: {
             exist: [
-              "id"
+              "city"
             ]
           }
-          r: {
-            param: {
-              city: "id"
-            }
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {
-              var: "id"
+              var: "city"
             }
           ]
           t: {

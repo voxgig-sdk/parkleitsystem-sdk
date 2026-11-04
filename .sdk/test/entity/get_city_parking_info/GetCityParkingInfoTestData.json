@@ -2,47 +2,58 @@
   "existing": {
     "get_city_parking_info": {
       "GET_CITY_PARKING_INFO00": {
-        "address": "s50",
+        "address": "s64",
         "coords": {},
-        "free": 82,
+        "forecast": true,
+        "free": 103,
         "id": "GET_CITY_PARKING_INFO00",
-        "lot_type": "s54",
-        "name": "s55",
-        "state": "s56",
-        "total": 87
+        "lot_type": "s69",
+        "name": "s6a",
+        "region": "s6b",
+        "state": "s6c",
+        "total": 109,
+        "city": "CITY01"
       },
       "GET_CITY_PARKING_INFO01": {
-        "address": "sa0",
+        "address": "sc8",
         "coords": {},
-        "free": 162,
+        "forecast": true,
+        "free": 203,
         "id": "GET_CITY_PARKING_INFO01",
-        "lot_type": "sa4",
-        "name": "sa5",
-        "state": "sa6",
-        "total": 167
+        "lot_type": "scd",
+        "name": "sce",
+        "region": "scf",
+        "state": "sd0",
+        "total": 209,
+        "city": "CITY01"
       },
       "GET_CITY_PARKING_INFO02": {
-        "address": "sf0",
+        "address": "s12c",
         "coords": {},
-        "free": 242,
+        "forecast": true,
+        "free": 303,
         "id": "GET_CITY_PARKING_INFO02",
-        "lot_type": "sf4",
-        "name": "sf5",
-        "state": "sf6",
-        "total": 247
+        "lot_type": "s131",
+        "name": "s132",
+        "region": "s133",
+        "state": "s134",
+        "total": 309,
+        "city": "CITY01"
       }
     }
   },
   "new": {
     "get_city_parking_info": {
       "get_city_parking_info_ref01": {
-        "address": "s140",
+        "address": "s190",
         "coords": {},
-        "free": 322,
-        "lot_type": "s144",
-        "name": "s145",
-        "state": "s146",
-        "total": 327
+        "forecast": true,
+        "free": 403,
+        "lot_type": "s195",
+        "name": "s196",
+        "region": "s197",
+        "state": "s198",
+        "total": 409
       }
     }
   },

@@ -17,27 +17,31 @@ from typing import TypedDict, Any
 
 
 class GetAllCity(TypedDict, total=False):
-    coords: dict
-    id: str
-    name: str
+    api_version: str
+    cities: dict
+    reference: str
+    server_version: str
 
 
-class GetAllCityListMatch(TypedDict, total=False):
-    coords: dict
-    id: str
-    name: str
+class GetAllCityLoadMatch(TypedDict, total=False):
+    api_version: str
+    cities: dict
+    reference: str
+    server_version: str
 
 
 class GetCityParkingInfo(TypedDict, total=False):
     address: str
     coords: dict
+    forecast: bool
     free: int
     id: str
     lot_type: str
     name: str
+    region: str
     state: str
     total: int
 
 
 class GetCityParkingInfoListMatch(TypedDict):
-    id: str
+    city: str

@@ -4,7 +4,7 @@
 
 The Lua SDK for the Parkleitsystem API — an entity-oriented client using Lua conventions.
 
-It exposes the API as capitalised, semantic **Entities** — e.g. `client:GetAllCity()` — each with the same small set of operations (`list`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
+It exposes the API as capitalised, semantic **Entities** — e.g. `client:GetAllCity()` — each with the same small set of operations (`list`, `load`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
@@ -12,7 +12,7 @@ It exposes the API as capitalised, semantic **Entities** — e.g. `client:GetAll
 
 ## Install
 This package is not yet published to LuaRocks. Install it from the
-GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases)),
+GitHub release tag (`lua/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags)),
 or add the source directory to your `LUA_PATH`:
 
 ```bash
@@ -33,18 +33,14 @@ local sdk = require("parkleitsystem_sdk")
 local client = sdk.new()
 ```
 
-### 2. List getallcity records
+### 3. Load a getallcity
 
-Entity operations return `(value, err)`. For `list`, `value` is the
-array of records itself — iterate it directly (there is no wrapper).
+`load` returns the entity; `data_get()` reads its record.
 
 ```lua
-local getallcitys, err = client:GetAllCity():list()
+local getallcity, err = client:GetAllCity():load()
 if err then error(err) end
-
-for _, item in ipairs(getallcitys) do
-  print(item["id"])
-end
+for k, val in pairs(getallcity:data_get()) do print(k, val) end
 ```
 
 
@@ -54,7 +50,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local getallcitys, err = client:GetAllCity():list()
+local getallcity, err = client:GetAllCity():load()
 if err then error(err) end
 ```
 
@@ -112,8 +108,8 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:GetAllCity():list()
--- result is the returned data; err is set on failure
+local result, err = client:GetAllCity():load()
+-- result is the entity; data_get() reads its mock record; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -200,7 +196,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `list` | `(reqmatch, ctrl) -> any, err` | List entities matching the criteria. |
+| `load` | `(reqmatch, ctrl) -> any, err` | Load a single entity by match criteria, and return it. |
+| `list` | `(reqmatch, ctrl) -> any, err` | List entities matching the criteria, one per record. |
 | `data_get` | `() -> table` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> table` | Get entity match criteria. |
@@ -210,18 +207,19 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(value, err)`. The `value` is the operation's
-data **directly** — there is no wrapper:
+Entity operations return `(value, err)`. The `value` is the entity
+itself — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `list` | an array (`table`) of entity records |
+| `load` | the entity, whose `data_get()` reads its record (a `table`) |
+| `list` | an array (`table`) of entities, one per record |
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local get_all_city, err = client:GetAllCity():list()
+    local get_all_city, err = client:GetAllCity():load()
     if err then error(err) end
-    -- get_all_city is the record list
+    -- get_all_city is the loaded entity
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -232,11 +230,12 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
-| `coords` |  |
-| `id` | City identifier |
-| `name` | Name of the city |
+| `api_version` |  |
+| `cities` | Supported cities keyed by the city id used in /{city} |
+| `reference` |  |
+| `server_version` |  |
 
-Operations: List.
+Operations: Load.
 
 API path: `/`
 
@@ -244,14 +243,16 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` | Street address of the parking garage |
+| `address` |  |
 | `coords` |  |
-| `free` | Number of available parking spaces |
-| `id` | Unique identifier for the parking lot |
-| `lot_type` | Type of parking lot |
-| `name` | Name of the parking garage |
-| `state` | Current state of the parking lot |
-| `total` | Total number of parking spaces |
+| `forecast` |  |
+| `free` |  |
+| `id` |  |
+| `lot_type` |  |
+| `name` |  |
+| `region` |  |
+| `state` |  |
+| `total` |  |
 
 Operations: List.
 
@@ -270,20 +271,21 @@ Create an instance: `local get_all_city = client:GetAllCity(nil)`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coords` | `table` |  |
-| `id` | `string` | City identifier |
-| `name` | `string` | Name of the city |
+| `api_version` | `string` |  |
+| `cities` | `table` | Supported cities keyed by the city id used in /{city} |
+| `reference` | `string` |  |
+| `server_version` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```lua
-local get_all_citys, err = client:GetAllCity():list()
+local get_all_city, err = client:GetAllCity():load()
 ```
 
 
@@ -301,19 +303,21 @@ Create an instance: `local get_city_parking_info = client:GetCityParkingInfo(nil
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `string` | Street address of the parking garage |
+| `address` | `string` |  |
 | `coords` | `table` |  |
-| `free` | `number` | Number of available parking spaces |
-| `id` | `string` | Unique identifier for the parking lot |
-| `lot_type` | `string` | Type of parking lot |
-| `name` | `string` | Name of the parking garage |
-| `state` | `string` | Current state of the parking lot |
-| `total` | `number` | Total number of parking spaces |
+| `forecast` | `boolean` |  |
+| `free` | `number` |  |
+| `id` | `string` |  |
+| `lot_type` | `string` |  |
+| `name` | `string` |  |
+| `region` | `string` |  |
+| `state` | `string` |  |
+| `total` | `number` |  |
 
 #### Example: List
 
 ```lua
-local get_city_parking_infos, err = client:GetCityParkingInfo():list()
+local get_city_parking_infos, err = client:GetCityParkingInfo():list({ city = "example" })
 ```
 
 ## Features
@@ -474,14 +478,14 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
 local getallcity = client:GetAllCity()
-getallcity:list()
+getallcity:load()
 
--- getallcity:data_get() now returns the getallcity data from the last list
+-- getallcity:data_get() now returns the getallcity data from the last load
 -- getallcity:match_get() returns the last match criteria
 ```
 

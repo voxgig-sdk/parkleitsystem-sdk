@@ -1,6 +1,6 @@
 # Parkleitsystem API
 
-Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App.
+Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App. 2026-11-03: response schemas rewritten from a live probe: / answers &#123;`api_version`, `server_version`, reference, cities&#125; with cities a MAP keyed by city id (not an array), and /&#123;city&#125; answers &#123;`last_updated`, `last_downloaded`, lots&#125;; city example Basel (probed 200).
 
 ## Start here
 
@@ -16,12 +16,11 @@ An entity groups related API operations. An operation can have several routes wi
 
 Results: Successful response with list of cities.
 
-SDK operations: `list`.
+SDK operations: `load`.
 
 Key fields to recognise:
 
-- `id`: City identifier
-- `name`: Name of the city
+- `cities`: Supported cities keyed by the city id used in /&#123;city&#125;
 
 ### GetCityParkingInfo
 
@@ -29,21 +28,13 @@ Results: Successful response with parking information.
 
 SDK operations: `list`.
 
-Key fields to recognise:
-
-- `address`: Street address of the parking garage
-- `free`: Number of available parking spaces
-- `id`: Unique identifier for the parking lot
-- `lot_type`: Type of parking lot
-- `name`: Name of the parking garage
-
 ### Route map
 
 Use this map to locate a capability. Consult the entity reference before supplying request data; routes for the same operation can require different fields.
 
 | Entity | SDK operation | HTTP route | Authentication |
 | --- | --- | --- | --- |
-| GetAllCity | `list` | `GET /` | See reference |
+| GetAllCity | `load` | `GET /` | See reference |
 | GetCityParkingInfo | `list` | `GET /{city}` | See reference |
 
 ## Connect to the API
@@ -92,8 +83,8 @@ Use the MCP server to expose supported API operations to an MCP client.
 
 Repository directory: `go-mcp/`. Not published. Build from the go-mcp directory.
 
-- `parkleitsystem_list`: List records for an entity. Supported entities: `get_all_city`, `get_city_parking_info`.
-- `parkleitsystem_load`: Load one record for an entity. No active entity supports this operation.
+- `parkleitsystem_list`: List records for an entity. Supported entities: `get_city_parking_info`.
+- `parkleitsystem_load`: Load one record for an entity. Supported entities: `get_all_city`.
 
 ## Operational features
 

@@ -11,33 +11,21 @@ const PLAN = [
     {
         "entity": "get_all_city",
         "accessor": "GetAllCity",
-        "op": "list",
+        "op": "load",
         "method": "GET",
         "path": "/",
         "args": [],
         "select": {},
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [],
+        "queryArgs": [],
         "auth": null,
         "status": 200,
-        "sample": [
-            {
-                "id": "Basel",
-                "name": "Basel",
-                "coords": {
-                    "lat": 47.5584,
-                    "lng": 7.5733
-                }
-            },
-            {
-                "id": "Zurich",
-                "name": "Zürich",
-                "coords": {
-                    "lat": 47.3769,
-                    "lng": 8.5417
-                }
-            }
-        ],
+        "sample": null,
         "idField": "id"
     },
     {
@@ -48,14 +36,19 @@ const PLAN = [
         "path": "/{city}",
         "args": [
             {
-                "name": "id",
+                "name": "city",
                 "wire": "city",
-                "value": "p1"
+                "value": "Basel"
             }
         ],
         "select": {},
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [],
+        "queryArgs": [],
         "auth": null,
         "status": 200,
         "sample": {

@@ -9,7 +9,7 @@ import { createLiveTransport } from '../../live-runner'
 import { runLiveEntity } from '../../live-entity'
 
 
-import { ParkleitsystemSDK, BaseFeature, stdutil } from '../../..'
+import { ParkleitsystemSDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
@@ -41,6 +41,18 @@ describe('GetCityParkingInfoEntity', async () => {
   })
 
 
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = ParkleitsystemSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.GetCityParkingInfo().list({"city":1} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.PARKLEITSYSTEM_TEST_LIVE
@@ -51,7 +63,7 @@ describe('GetCityParkingInfoEntity', async () => {
     
     const setup = basicSetup()
     if (setup.live) {
-      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"address":{"a":true,"h":"Address","n":"address","r":false,"sh":"Street address of the parking garage","t":"`$STRING`","key$":"address","index$":0},"coords":{"a":true,"h":"Coords","n":"coords","r":false,"t":"`$OBJECT`","key$":"coords","index$":1},"free":{"a":true,"h":"Free","n":"free","r":false,"sh":"Number of available parking spaces","t":"`$INTEGER`","key$":"free","index$":2},"id":{"a":true,"h":"Id","n":"id","r":false,"sh":"Unique identifier for the parking lot","t":"`$STRING`","key$":"id","index$":3},"lot_type":{"a":true,"h":"Lot Type","n":"lot_type","r":false,"sh":"Type of parking lot","t":"`$STRING`","key$":"lot_type","index$":4},"name":{"a":true,"h":"Name","n":"name","r":false,"sh":"Name of the parking garage","t":"`$STRING`","key$":"name","index$":5},"state":{"a":true,"h":"State","n":"state","r":false,"sh":"Current state of the parking lot","t":"`$STRING`","key$":"state","index$":6},"total":{"a":true,"h":"Total","n":"total","r":false,"sh":"Total number of parking spaces","t":"`$INTEGER`","key$":"total","index$":7}},"id":{"field":"id","name":"id"},"name":"get_city_parking_info","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /{city}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"id","or":"city","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/{city}","q":{"exist":["id"]},"r":{"param":{"city":"id"}},"s":[{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.lots`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"get_city_parking_info","name__orig":"get_city_parking_info","Name":"GetCityParkingInfo","name_":"get_city_parking_info","name-":"get-city-parking-info","NAME":"GET_CITY_PARKING_INFO","index$":1}, {"active":true,"entity":"get_city_parking_info","key$":"BasicGetCityParkingInfoFlow","kind":"basic","name":"BasicGetCityParkingInfoFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{"city":"city01"},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"get_city_parking_info_ref01"}}],"index$":0}]}, 'GetCityParkingInfo', {"GET /{city}":{"protocol":"http","parameters":[{"name":"city","in":"path","required":true,"description":"Name of the city (Basel, Zurich, Bern, Luzern, St.Gallen, or Zug)","schema":{"type":"string","enum":["Basel","Zurich","Bern","Luzern","StGallen","Zug"]},"index$":0}]}})
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"address":{"a":true,"h":"Address","n":"address","r":false,"t":"`$STRING`","key$":"address","index$":0},"coords":{"a":true,"h":"Coords","n":"coords","r":false,"t":"`$OBJECT`","key$":"coords","index$":1},"forecast":{"a":true,"h":"Forecast","n":"forecast","r":false,"t":"`$BOOLEAN`","key$":"forecast","index$":2},"free":{"a":true,"h":"Free","n":"free","r":false,"t":"`$INTEGER`","key$":"free","index$":3},"id":{"a":true,"h":"Id","n":"id","r":false,"t":"`$STRING`","key$":"id","index$":4},"lot_type":{"a":true,"h":"Lot Type","n":"lot_type","r":false,"t":"`$STRING`","key$":"lot_type","index$":5},"name":{"a":true,"h":"Name","n":"name","r":false,"t":"`$STRING`","key$":"name","index$":6},"region":{"a":true,"h":"Region","n":"region","r":false,"t":"`$STRING`","key$":"region","index$":7},"state":{"a":true,"h":"State","n":"state","r":false,"t":"`$STRING`","key$":"state","index$":8},"total":{"a":true,"h":"Total","n":"total","r":false,"t":"`$INTEGER`","key$":"total","index$":9}},"id":{"field":"id","name":"id"},"name":"get_city_parking_info","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /{city}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"Basel","k":"param","n":"city","or":"city","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/{city}","q":{"exist":["city"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"var":"city"}],"t":{"req":"`reqdata`","res":"`body.lots`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"get_city_parking_info","name__orig":"get_city_parking_info","Name":"GetCityParkingInfo","name_":"get_city_parking_info","name-":"get-city-parking-info","NAME":"GET_CITY_PARKING_INFO","index$":1}, {"active":true,"entity":"get_city_parking_info","key$":"BasicGetCityParkingInfoFlow","kind":"basic","name":"BasicGetCityParkingInfoFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{"city":"city01"},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"get_city_parking_info_ref01"}}],"index$":0}]}, 'GetCityParkingInfo', {"GET /{city}":{"protocol":"http","parameters":[{"name":"city","in":"path","required":true,"description":"Name of the city (Basel, Zurich, Bern, Luzern, St.Gallen, or Zug)","schema":{"type":"string","enum":["Basel","Zurich","Bern","Luzern","StGallen","Zug"]},"example":"Basel","index$":0}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -73,6 +85,12 @@ describe('GetCityParkingInfoEntity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options

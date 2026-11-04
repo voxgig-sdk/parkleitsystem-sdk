@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Parkleitsystem API",
-    "description": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App.",
+    "description": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App. 2026-11-03: response schemas rewritten from a live probe: / answers {api_version, server_version, reference, cities} with cities a MAP keyed by city id (not an array), and /{city} answers {last_updated, last_downloaded, lots}; city example Basel (probed 200).",
     "version": "1.0.0",
     "contact": {
       "name": "API Documentation",
@@ -27,30 +27,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "City identifier"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Name of the city"
-                      },
-                      "coords": {
+                  "type": "object",
+                  "properties": {
+                    "api_version": {
+                      "type": "string"
+                    },
+                    "server_version": {
+                      "type": "string"
+                    },
+                    "reference": {
+                      "type": "string"
+                    },
+                    "cities": {
+                      "type": "object",
+                      "description": "Supported cities keyed by the city id used in /{city}",
+                      "additionalProperties": {
                         "type": "object",
                         "properties": {
-                          "lat": {
-                            "type": "number",
-                            "format": "double",
-                            "description": "Latitude coordinate"
+                          "name": {
+                            "type": "string"
                           },
-                          "lng": {
-                            "type": "number",
-                            "format": "double",
-                            "description": "Longitude coordinate"
+                          "coords": {
+                            "type": "object",
+                            "properties": {
+                              "lat": {
+                                "type": "number"
+                              },
+                              "lng": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "source": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "active_support": {
+                            "type": "boolean"
+                          },
+                          "attribution": {
+                            "type": "object",
+                            "nullable": true
                           }
                         }
                       }
@@ -102,7 +121,8 @@
                 "StGallen",
                 "Zug"
               ]
-            }
+            },
+            "example": "Basel"
           }
         ],
         "responses": {
@@ -115,8 +135,11 @@
                   "properties": {
                     "last_updated": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": "Timestamp of last data update"
+                      "format": "date-time"
+                    },
+                    "last_downloaded": {
+                      "type": "string",
+                      "format": "date-time"
                     },
                     "lots": {
                       "type": "array",
@@ -124,57 +147,42 @@
                         "type": "object",
                         "properties": {
                           "id": {
-                            "type": "string",
-                            "description": "Unique identifier for the parking lot"
+                            "type": "string"
                           },
                           "name": {
-                            "type": "string",
-                            "description": "Name of the parking garage"
+                            "type": "string"
                           },
-                          "free": {
-                            "type": "integer",
-                            "description": "Number of available parking spaces"
+                          "address": {
+                            "type": "string"
                           },
-                          "total": {
-                            "type": "integer",
-                            "description": "Total number of parking spaces"
+                          "region": {
+                            "type": "string"
                           },
                           "state": {
-                            "type": "string",
-                            "description": "Current state of the parking lot",
-                            "enum": [
-                              "open",
-                              "closed",
-                              "unknown"
-                            ]
+                            "type": "string"
+                          },
+                          "lot_type": {
+                            "type": "string"
+                          },
+                          "free": {
+                            "type": "integer"
+                          },
+                          "total": {
+                            "type": "integer"
+                          },
+                          "forecast": {
+                            "type": "boolean"
                           },
                           "coords": {
                             "type": "object",
                             "properties": {
                               "lat": {
-                                "type": "number",
-                                "format": "double",
-                                "description": "Latitude coordinate"
+                                "type": "number"
                               },
                               "lng": {
-                                "type": "number",
-                                "format": "double",
-                                "description": "Longitude coordinate"
+                                "type": "number"
                               }
                             }
-                          },
-                          "address": {
-                            "type": "string",
-                            "description": "Street address of the parking garage"
-                          },
-                          "lot_type": {
-                            "type": "string",
-                            "description": "Type of parking lot",
-                            "enum": [
-                              "Parkhaus",
-                              "Tiefgarage",
-                              "Parkplatz"
-                            ]
                           }
                         }
                       }

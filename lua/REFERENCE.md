@@ -94,18 +94,19 @@ local get_all_city = client:GetAllCity(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coords` | `table` | No |  |
-| `id` | `string` | No | City identifier |
-| `name` | `string` | No | Name of the city |
+| `api_version` | `string` | No |  |
+| `cities` | `table` | No | Supported cities keyed by the city id used in /{city} |
+| `reference` | `string` | No |  |
+| `server_version` | `string` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl) -> any, err`
+#### `load(reqmatch, ctrl) -> any, err`
 
-List entities matching the given criteria. Returns an array.
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:GetAllCity():list()
+local result, err = client:GetAllCity():load()
 ```
 
 ### Common Methods
@@ -148,23 +149,25 @@ local get_city_parking_info = client:GetCityParkingInfo(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `string` | No | Street address of the parking garage |
+| `address` | `string` | No |  |
 | `coords` | `table` | No |  |
-| `free` | `number` | No | Number of available parking spaces |
-| `id` | `string` | No | Unique identifier for the parking lot |
-| `lot_type` | `string` | No | Type of parking lot |
-| `name` | `string` | No | Name of the parking garage |
-| `state` | `string` | No | Current state of the parking lot |
-| `total` | `number` | No | Total number of parking spaces |
+| `forecast` | `boolean` | No |  |
+| `free` | `number` | No |  |
+| `id` | `string` | No |  |
+| `lot_type` | `string` | No |  |
+| `name` | `string` | No |  |
+| `region` | `string` | No |  |
+| `state` | `string` | No |  |
+| `total` | `number` | No |  |
 
 ### Operations
 
 #### `list(reqmatch, ctrl) -> any, err`
 
-List entities matching the given criteria. Returns an array.
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:GetCityParkingInfo():list()
+local results, err = client:GetCityParkingInfo():list({ city = "example" })
 ```
 
 ### Common Methods
@@ -354,6 +357,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

@@ -57,6 +57,7 @@ declare class Config {
             };
             optspec: {
                 clearTimer: string;
+                now: string;
                 setTimer: string;
             };
             strict: boolean;
@@ -86,13 +87,9 @@ declare class Config {
                 type: string;
                 short: string;
             })[];
-            id: {
-                field: string;
-                name: string;
-            };
             name: string;
             op: {
-                list: {
+                load: {
                     input: string;
                     name: string;
                     points: {
@@ -108,6 +105,10 @@ declare class Config {
                         };
                         args: {};
                         select: {};
+                        response: {
+                            kind: string;
+                            media: string;
+                        };
                     }[];
                 };
             };
@@ -116,17 +117,11 @@ declare class Config {
             };
         };
         get_city_parking_info: {
-            fields: ({
+            fields: {
                 name: string;
                 title: string;
                 type: string;
-                short: string;
-            } | {
-                name: string;
-                title: string;
-                type: string;
-                short?: undefined;
-            })[];
+            }[];
             id: {
                 field: string;
                 name: string;
@@ -144,11 +139,7 @@ declare class Config {
                             var: string;
                         }[];
                         parts: string[];
-                        rename: {
-                            param: {
-                                city: string;
-                            };
-                        };
+                        rename: {};
                         transform: {
                             req: string;
                             res: string;
@@ -160,10 +151,15 @@ declare class Config {
                                 type: string;
                                 kind: string;
                                 reqd: boolean;
+                                example: string;
                             }[];
                         };
                         select: {
                             exist: string[];
+                        };
+                        response: {
+                            kind: string;
+                            media: string;
                         };
                     }[];
                 };

@@ -47,11 +47,11 @@ client := sdk.TestSDK(testopts, sdkopts)
 
 ### Instance Methods
 
-#### `GetAllCity(data map[string]any) ParkleitsystemEntity`
+#### `GetAllCity(data map[string]any) ParkleitsystemEntityBase`
 
 Create a new `GetAllCity` entity instance. Pass `nil` for no initial data.
 
-#### `GetCityParkingInfo(data map[string]any) ParkleitsystemEntity`
+#### `GetCityParkingInfo(data map[string]any) ParkleitsystemEntityBase`
 
 Create a new `GetCityParkingInfo` entity instance. Pass `nil` for no initial data.
 
@@ -102,22 +102,23 @@ fmt.Println(getAllCity.GetName()) // "get_all_city"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coords` | `map[string]any` | No |  |
-| `id` | `string` | No | City identifier |
-| `name` | `string` | No | Name of the city |
+| `api_version` | `string` | No |  |
+| `cities` | `map[string]any` | No | Supported cities keyed by the city id used in /{city} |
+| `reference` | `string` | No |  |
+| `server_version` | `string` | No |  |
 
 ### Operations
 
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
 
-List entities matching the given criteria. Returns an array.
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
 
 ```go
-results, err := client.GetAllCity(nil).List(nil, nil)
+result, err := client.GetAllCity(nil).Load(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(results)
+fmt.Println(result.(sdk.Entity).Data())
 ```
 
 ### Common Methods
@@ -137,6 +138,14 @@ Get or set the entity match criteria. Works the same as `Data()`.
 Create a new `GetAllCityEntity` instance with the same client and
 options.
 
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
 #### `GetName() string`
 
 Return the entity name.
@@ -155,27 +164,31 @@ fmt.Println(getCityParkingInfo.GetName()) // "get_city_parking_info"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `string` | No | Street address of the parking garage |
+| `address` | `string` | No |  |
 | `coords` | `map[string]any` | No |  |
-| `free` | `int` | No | Number of available parking spaces |
-| `id` | `string` | No | Unique identifier for the parking lot |
-| `lot_type` | `string` | No | Type of parking lot |
-| `name` | `string` | No | Name of the parking garage |
-| `state` | `string` | No | Current state of the parking lot |
-| `total` | `int` | No | Total number of parking spaces |
+| `forecast` | `bool` | No |  |
+| `free` | `int` | No |  |
+| `id` | `string` | No |  |
+| `lot_type` | `string` | No |  |
+| `name` | `string` | No |  |
+| `region` | `string` | No |  |
+| `state` | `string` | No |  |
+| `total` | `int` | No |  |
 
 ### Operations
 
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
-List entities matching the given criteria. Returns an array.
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
 
 ```go
-results, err := client.GetCityParkingInfo(nil).List(nil, nil)
+results, err := client.GetCityParkingInfo(nil).List(map[string]any{"city": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(results)
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 ### Common Methods
@@ -194,6 +207,14 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 Create a new `GetCityParkingInfoEntity` instance with the same client and
 options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
 
 #### `GetName() string`
 
@@ -359,6 +380,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

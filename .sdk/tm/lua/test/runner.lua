@@ -197,4 +197,158 @@ function runner.live_delay_ms()
 end
 
 
+
+-- A live check that did not pass, as main.kit.test.live.strict decides:
+-- strict fails the test, lenient skips it with the same reason. A test
+-- passes in busted's pending, which skips only from inside the test.
+function runner.live_miss(pending, strict, reason)
+  if strict then
+    error(reason, 0)
+  end
+  pending(reason)
+end
+
+
+-- An account holding no record for the test to read skips either way.
+function runner.live_empty(pending, reason)
+  pending(reason)
+end
+
+
+local function is_list(t)
+  if type(t) ~= "table" then
+    return false
+  end
+  local mt = getmetatable(t)
+  return t[1] ~= nil or (mt ~= nil and mt.__jsontype == "array") or next(t) == nil
+end
+
+
+-- A live list response's records: the body, or the first list an
+-- envelope holds.
+function runner.live_list(data)
+  if is_list(data) then
+    return data
+  end
+  if type(data) ~= "table" then
+    return nil
+  end
+  local keys = {}
+  for k, _ in pairs(data) do
+    keys[#keys + 1] = tostring(k)
+  end
+  table.sort(keys)
+  for _, k in ipairs(keys) do
+    if type(data[k]) == "table" and is_list(data[k]) then
+      return data[k]
+    end
+  end
+  return nil
+end
+
+
+-- A live response for a message: the SDK's error, or else its status and
+-- content type, never its body.
+function runner.live_describe(result, err)
+  if err ~= nil then
+    return tostring(err)
+  end
+  if type(result) ~= "table" then
+    return "no response"
+  end
+  if result["err"] ~= nil then
+    return tostring(result["err"])
+  end
+  local ctype = nil
+  for k, v in pairs(result["headers"] or {}) do
+    if string.lower(tostring(k)) == "content-type" then
+      ctype = (tostring(v):match("^[^;]*"):gsub("%s+$", ""))
+    end
+  end
+  return "HTTP " .. tostring(result["status"]) .. (ctype and (" " .. ctype) or "")
+end
+
+
+-- The record a create-less flow reads live: the first its list returns,
+-- put where the flow reads the fixture's existing records. A record with no
+-- value in the identity field takes the fallback identity.
+function runner.live_existing(pending, setup, strict, name, list, field, fallback)
+  local ok, found, err = pcall(list)
+  if not ok then
+    runner.live_miss(pending, strict, "Live list discovery failed: " .. tostring(found))
+  end
+  if err ~= nil then
+    runner.live_miss(pending, strict, "Live list discovery failed: " .. tostring(err))
+  end
+  if type(found) ~= "table" then
+    runner.live_miss(pending, strict, "Live list discovery returned no list")
+  end
+  if found[1] == nil then
+    runner.live_empty(pending, "The account has no " .. name .. " record to load")
+  end
+  local record = found[1]
+  if type(record) == "table" and type(record.data_get) == "function" then
+    record = record:data_get()
+  end
+  if type(record) ~= "table" or record[field] == nil then
+    if fallback == nil then
+      runner.live_miss(pending, strict, "Live entity test blocked: the listed " .. name ..
+        " record has no " .. field .. ", and neither *_ENTID nor the load route's example gives one")
+    end
+    local filled = {}
+    if type(record) == "table" then
+      for k, v in pairs(record) do
+        filled[k] = v
+      end
+    end
+    filled[field] = fallback
+    record = filled
+  end
+  setup.data.existing = setup.data.existing or {}
+  setup.data.existing[name] = { live01 = record }
+end
+
+
+local function live_id_str(v)
+  local whole = math.type(v) == "float" and math.tointeger(v)
+  return tostring(whole or v)
+end
+
+
+-- Identities compared by their string forms: a route parameter's value
+-- is a string where the record may hold a number.
+function runner.live_same_id(a, b)
+  if a == nil or b == nil then
+    return a == nil and b == nil
+  end
+  return live_id_str(a) == live_id_str(b)
+end
+
+
+-- Sleeps test.live.delayMs before a live request.
+function runner.live_pace()
+  local ms = runner.live_delay_ms()
+  if ms <= 0 then
+    return
+  end
+  local ok, socket = pcall(require, "socket")
+  if ok and type(socket) == "table" and type(socket.sleep) == "function" then
+    socket.sleep(ms / 1000)
+    return
+  end
+  local target = os.clock() + (ms / 1000)
+  while os.clock() < target do end
+end
+
+
+-- In a lenient live run a failing check skips, observing the live API.
+function runner.live_observe(pending, err, setup, strict)
+  local mt = getmetatable(err)
+  if strict or type(setup) ~= "table" or not setup.live or (mt ~= nil and mt.__type == "pending") then
+    error(err, 0)
+  end
+  pending("live run, main.kit.test.live.strict is false: " .. tostring(err))
+end
+
+
 return runner

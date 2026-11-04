@@ -4,7 +4,7 @@
 
 The PHP SDK for the Parkleitsystem API — an entity-oriented client using PHP conventions.
 
-The SDK exposes the API as capitalised, semantic **Entities** — for example `$client->GetAllCity()` — with named operations (`list`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+The SDK exposes the API as capitalised, semantic **Entities** — for example `$client->GetAllCity()` — with named operations (`list`/`load`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
 
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
@@ -12,7 +12,7 @@ The SDK exposes the API as capitalised, semantic **Entities** — for example `$
 
 ## Install
 This package is not yet published to Packagist. Install it from the
-GitHub release tag (`php/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases)), or
+GitHub release tag (`php/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags)), or
 from a clone as a Composer path repository:
 
 ```bash
@@ -36,16 +36,13 @@ require_once 'parkleitsystem_sdk.php';
 $client = new ParkleitsystemSDK();
 ```
 
-### 2. List getallcity records
+### 3. Load a getallcity
 
 ```php
 try {
-    // list() returns entity instances; data_get() reads each record.
-    $getallcitys = $client->GetAllCity()->list();
-    foreach ($getallcitys as $record) {
-        $item = $record->data_get();
-        echo $item["id"] . " " . $item["coords"] . "\n";
-    }
+    // load() returns the ENTITY — call data_get() for the GetAllCity record (throws on error).
+    $getallcity = $client->GetAllCity()->load();
+    print_r($getallcity->data_get());
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -59,7 +56,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $getallcitys = $client->GetAllCity()->list();
+    $getallcity = $client->GetAllCity()->load();
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -131,10 +128,10 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = ParkleitsystemSDK::test();
 
-// list() returns entity instances (throws on error);
+// Entity ops return the ENTITY (throws on error);
 // call data_get() for the mock record.
-$getallcity = $client->GetAllCity()->list();
-print_r(array_map(fn($item) => $item->data_get(), $getallcity));
+$getallcity = $client->GetAllCity()->load();
+print_r($getallcity->data_get());
 ```
 
 ### Use a custom fetch function
@@ -222,7 +219,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `list` | `(?array $reqmatch = null, $ctrl): array` | List entities matching the criteria (call with no argument to list all). |
+| `load` | `($reqmatch, $ctrl): mixed` | Load a single entity by match criteria, and return it. |
+| `list` | `(?array $reqmatch = null, $ctrl): mixed` | List entities matching the criteria (call with no argument to list all), one per record. |
 | `data_get` | `(): array` | Get entity data. |
 | `data_set` | `($data): void` | Set entity data. |
 | `match_get` | `(): array` | Get entity match criteria. |
@@ -232,9 +230,9 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
-ops, a `list` for `list`) and throw on error. Wrap calls in
-`try`/`catch` to handle failures.
+Entity operations return the entity, and `list` an `array` of entities, one
+per record; an entity's `data_get()` reads its record (an `array`). They
+throw on error, so wrap calls in `try`/`catch` to handle failures.
 
 The `direct()` escape hatch never throws — it returns a result `array`
 you branch on via `$result["ok"]`:
@@ -254,11 +252,12 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `coords` |  |
-| `id` | City identifier |
-| `name` | Name of the city |
+| `api_version` |  |
+| `cities` | Supported cities keyed by the city id used in /{city} |
+| `reference` |  |
+| `server_version` |  |
 
-Operations: List.
+Operations: Load.
 
 API path: `/`
 
@@ -266,14 +265,16 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` | Street address of the parking garage |
+| `address` |  |
 | `coords` |  |
-| `free` | Number of available parking spaces |
-| `id` | Unique identifier for the parking lot |
-| `lot_type` | Type of parking lot |
-| `name` | Name of the parking garage |
-| `state` | Current state of the parking lot |
-| `total` | Total number of parking spaces |
+| `forecast` |  |
+| `free` |  |
+| `id` |  |
+| `lot_type` |  |
+| `name` |  |
+| `region` |  |
+| `state` |  |
+| `total` |  |
 
 Operations: List.
 
@@ -292,21 +293,22 @@ Create an instance: `$get_all_city = $client->GetAllCity();`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coords` | `array` |  |
-| `id` | `string` | City identifier |
-| `name` | `string` | Name of the city |
+| `api_version` | `string` |  |
+| `cities` | `array` | Supported cities keyed by the city id used in /{city} |
+| `reference` | `string` |  |
+| `server_version` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```php
-// list() returns an array of GetAllCity records (throws on error).
-$get_all_citys = $client->GetAllCity()->list();
+// load() returns the ENTITY — call data_get() for the GetAllCity record (throws on error).
+$get_all_city = $client->GetAllCity()->load();
 ```
 
 
@@ -324,20 +326,22 @@ Create an instance: `$get_city_parking_info = $client->GetCityParkingInfo();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `string` | Street address of the parking garage |
+| `address` | `string` |  |
 | `coords` | `array` |  |
-| `free` | `int` | Number of available parking spaces |
-| `id` | `string` | Unique identifier for the parking lot |
-| `lot_type` | `string` | Type of parking lot |
-| `name` | `string` | Name of the parking garage |
-| `state` | `string` | Current state of the parking lot |
-| `total` | `int` | Total number of parking spaces |
+| `forecast` | `bool` |  |
+| `free` | `int` |  |
+| `id` | `string` |  |
+| `lot_type` | `string` |  |
+| `name` | `string` |  |
+| `region` | `string` |  |
+| `state` | `string` |  |
+| `total` | `int` |  |
 
 #### Example: List
 
 ```php
-// list() returns an array of GetCityParkingInfo records (throws on error).
-$get_city_parking_infos = $client->GetCityParkingInfo()->list();
+// list() returns an array of GetCityParkingInfo entities, one per record (throws on error).
+$get_city_parking_infos = $client->GetCityParkingInfo()->list(["city" => "example"]);
 ```
 
 ## Features
@@ -498,14 +502,14 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
 $getallcity = $client->GetAllCity();
-$getallcity->list();
+$getallcity->load();
 
-// $getallcity->data_get() now returns the getallcity data from the last list
+// $getallcity->data_get() now returns the getallcity data from the last load
 // $getallcity->match_get() returns the last match criteria
 ```
 

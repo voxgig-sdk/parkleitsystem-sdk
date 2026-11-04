@@ -54,27 +54,41 @@ const utility_1 = require("../../utility");
         const ent = testsdk.GetAllCity();
         (0, node_assert_1.default)(null != ent);
     });
+    (0, node_test_1.test)('validate', async (t) => {
+        if (null == __1.config.feature?.validate) {
+            t.skip('feature not present in this SDK: validate');
+            return;
+        }
+        const client = __1.ParkleitsystemSDK.test(undefined, { feature: { validate: { active: true } } });
+        await node_assert_1.default.rejects(client.GetAllCity().load({ "api_version": 1 }), (err) => 'validate_failed' === err.code);
+    });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.PARKLEITSYSTEM_TEST_LIVE;
-        for (const op of ['list']) {
+        for (const op of ['load']) {
             if (!live && (0, utility_1.maybeSkipControl)(t, 'entityOp', 'get_all_city.' + op, live))
                 return;
         }
         const setup = basicSetup();
         if (setup.live) {
-            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": { "coords": { "a": true, "h": "Coords", "n": "coords", "r": false, "t": "`$OBJECT`", "key$": "coords", "index$": 0 }, "id": { "a": true, "h": "Id", "n": "id", "r": false, "sh": "City identifier", "t": "`$STRING`", "key$": "id", "index$": 1 }, "name": { "a": true, "h": "Name", "n": "name", "r": false, "sh": "Name of the city", "t": "`$STRING`", "key$": "name", "index$": 2 } }, "id": { "field": "id", "name": "id" }, "name": "get_all_city", "op": { "list": { "input": "data", "name": "list", "points": [{ "a": true, "co": { "id": "GET /", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "GET", "o": "/", "q": {}, "r": {}, "s": [], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "list" } }, "relations": { "ancestors": [] }, "key$": "get_all_city", "name__orig": "get_all_city", "Name": "GetAllCity", "name_": "get_all_city", "name-": "get-all-city", "NAME": "GET_ALL_CITY", "index$": 0 }, { "active": true, "entity": "get_all_city", "key$": "BasicGetAllCityFlow", "kind": "basic", "name": "BasicGetAllCityFlow", "param": {}, "step": [{ "a": true, "d": {}, "i": {}, "m": {}, "o": "list", "s": [], "v": [{ "apply": "ItemExists", "def": { "ref": "get_all_city_ref01" } }], "index$": 0 }] }, 'GetAllCity', { "GET /": { "protocol": "http", "parameters": [] } });
+            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": { "api_version": { "a": true, "h": "Api Version", "n": "api_version", "r": false, "t": "`$STRING`", "key$": "api_version", "index$": 0 }, "cities": { "a": true, "h": "Cities", "n": "cities", "r": false, "sh": "Supported cities keyed by the city id used in /{city}", "t": "`$OBJECT`", "key$": "cities", "index$": 1 }, "reference": { "a": true, "h": "Reference", "n": "reference", "r": false, "t": "`$STRING`", "key$": "reference", "index$": 2 }, "server_version": { "a": true, "h": "Server Version", "n": "server_version", "r": false, "t": "`$STRING`", "key$": "server_version", "index$": 3 } }, "name": "get_all_city", "op": { "load": { "input": "data", "name": "load", "points": [{ "a": true, "co": { "id": "GET /", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "GET", "o": "/", "q": {}, "r": {}, "rs": { "kind": "json", "media": "application/json" }, "s": [], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "load" } }, "relations": { "ancestors": [] }, "key$": "get_all_city", "name__orig": "get_all_city", "Name": "GetAllCity", "name_": "get_all_city", "name-": "get-all-city", "NAME": "GET_ALL_CITY", "index$": 0 }, { "active": true, "entity": "get_all_city", "key$": "BasicGetAllCityFlow", "kind": "basic", "name": "BasicGetAllCityFlow", "param": {}, "step": [{ "a": true, "d": {}, "i": { "ref": "get_all_city_ref01", "srcdatavar": "get_all_city_ref01_data", "suffix": "_dt0" }, "m": {}, "o": "load", "s": [], "v": [{ "apply": "TextFieldMark", "def": { "mark": "Mark01-get_all_city_ref01" } }], "index$": 0 }] }, 'GetAllCity', { "GET /": { "protocol": "http", "parameters": [] } }, { strict: LIVE_STRICT, t });
         }
         const client = setup.client;
         const struct = setup.struct;
         const isempty = struct.isempty;
         const select = struct.select;
         let get_all_city_ref01_data = Object.values(setup.data.existing.get_all_city)[0];
-        // LIST
+        // LOAD
         const get_all_city_ref01_ent = client.GetAllCity();
-        const get_all_city_ref01_match = {};
-        const get_all_city_ref01_list = (await get_all_city_ref01_ent.list(get_all_city_ref01_match)).map((e) => e.data());
+        const get_all_city_ref01_match_dt0 = {};
+        const get_all_city_ref01_data_dt0 = (await get_all_city_ref01_ent.load(get_all_city_ref01_match_dt0)).data();
+        (0, node_assert_1.default)(null != get_all_city_ref01_data_dt0);
     });
 });
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true;
 function basicSetup(extra) {
     // TODO: fix test def options
     const options = {}; // null

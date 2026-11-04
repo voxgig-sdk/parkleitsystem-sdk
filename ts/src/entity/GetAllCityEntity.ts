@@ -16,7 +16,7 @@ import type {
 
 import type {
   GetAllCity,
-  GetAllCityListMatch,
+  GetAllCityLoadMatch,
 } from '../ParkleitsystemTypes'
 
 class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
@@ -35,8 +35,7 @@ class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
 
 
 
-
-  async list(this: any, reqmatch?: GetAllCityListMatch, ctrl?: Control): Promise<GetAllCityEntity[]> {
+  async load(this: any, reqmatch?: GetAllCityLoadMatch, ctrl?: Control): Promise<GetAllCityEntity> {
 
     const utility = this._utility
 
@@ -56,7 +55,7 @@ class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
     let fres: Promise<any> | undefined = undefined
 
     let ctx: Context = makeContext({
-      opname: 'list',
+      opname: 'load',
       ctrl,
       match: this._match,
       data: this._data,
@@ -122,16 +121,25 @@ class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
         if (null != ctx.result.resmatch) {
           this._match = ctx.result.resmatch
         }
+
+        if (null != ctx.result.resdata) {
+          this._data = ctx.result.resdata
+        }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
       // What a hook throws here must not escape the cleaning below.
       try {
+        // Once per operation: makeError fires it for its own error.
+        if (!ctx.unexpectedFired) {
 
-        fres = featureHook(ctx, 'PreUnexpected')
-        if (fres instanceof Promise) { await fres }
+          fres = featureHook(ctx, 'PreUnexpected')
+          if (fres instanceof Promise) { await fres }
+        }
       }
       catch (hookerr: any) {
         err = hookerr
@@ -144,11 +152,13 @@ class GetAllCityEntity extends ParkleitsystemEntityBase<GetAllCity> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<GetAllCity[]> return stays clean under strict null checks.
+        // Promise<GetAllCityEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
+
 
 
 

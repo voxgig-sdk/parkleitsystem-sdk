@@ -19,15 +19,16 @@ make build
 export PARKLEITSYSTEM_APIKEY=sk_live_xxx
 
 # 4. Each command line is ONE boru expression, run against the API:
-./parkleitsystem-cli list get_all_city
+./parkleitsystem-cli load 1 get_all_city            # {id:1} shorthand
+./parkleitsystem-cli load '{id:1}' get_all_city       # explicit match map
 ./parkleitsystem-cli list get_city_parking_info
 
 # 5. Override the API base URL for a single call
-PARKLEITSYSTEM_BASE=https://api.example.com ./parkleitsystem-cli list get_all_city
+PARKLEITSYSTEM_BASE=https://api.example.com ./parkleitsystem-cli load 1 get_all_city
 
 # 6. No arguments -> interactive REPL
 ./parkleitsystem-cli
-parkleitsystem> list get_all_city
+parkleitsystem> load 1 get_all_city
 parkleitsystem> /quit
 ```
 
@@ -53,7 +54,7 @@ parkleitsystem> /quit
    arguments to open the REPL):
 
    ```sh
-   ./dist/*/parkleitsystem-cli list get_all_city
+   ./dist/*/parkleitsystem-cli load 1 get_all_city
    ```
 
 4. **Go interactive.** Run the binary with no arguments to open the REPL, then
@@ -63,14 +64,15 @@ That is the whole loop: *build → set key → evaluate boru expressions*.
 
 ## How-to guides
 
-### List the records of an entity
+### Load a single record
 
 ```sh
-./parkleitsystem-cli list get_all_city
+./parkleitsystem-cli load 1 get_all_city          # scalar shorthand for {id:1}
+./parkleitsystem-cli load '{id:1}' get_all_city     # explicit match map
 ```
 
-`list <entity>` returns the first page of records. `<entity>` is a bareword —
-it is auto-quoted as an boru atom, so no quotes are needed.
+The query is either a **scalar** (`1`, treated as `{id:1}`) or a **match map**
+(`{id:1}`, `{slug:"acme"}`). Quote the map so your shell passes it through intact.
 
 ### Authenticate and choose an environment
 
@@ -79,7 +81,7 @@ Configuration is read from the environment — nothing is written to disk:
 ```sh
 export PARKLEITSYSTEM_APIKEY=sk_live_xxx            # API key
 export PARKLEITSYSTEM_BASE=https://api.example.com  # optional: override the API base URL
-./parkleitsystem-cli list get_all_city
+./parkleitsystem-cli load 1 get_all_city
 ```
 
 Both are injectable by a secrets vault, so the key never has to be typed inline.
@@ -91,7 +93,7 @@ evaluated as its own boru expression:
 
 ```text
 $ ./parkleitsystem-cli
-parkleitsystem> list get_all_city
+parkleitsystem> load 1 get_all_city
 parkleitsystem> /help
 parkleitsystem> /quit
 ```
@@ -117,6 +119,7 @@ The CLI registers these boru words, each bound to the SDK:
 | Word     | Signatures                                    | Returns                        |
 |----------|-----------------------------------------------|--------------------------------|
 | `list`   | `list <entity>` · `list <query> <entity>`     | First page of records          |
+| `load`   | `load <entity>` · `load <query> <entity>`     | A single record                |
 
 - `<entity>` is a bareword, auto-quoted as an boru atom (e.g. `get_all_city`).
 - `<query>` is either a **Map** (`{id:1}`) or a **Scalar** (`1`, treated as

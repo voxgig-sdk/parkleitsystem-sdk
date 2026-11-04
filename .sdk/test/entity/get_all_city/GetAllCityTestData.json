@@ -2,27 +2,35 @@
   "existing": {
     "get_all_city": {
       "GET_ALL_CITY00": {
-        "coords": {},
-        "id": "GET_ALL_CITY00",
-        "name": "s20"
+        "api_version": "s28",
+        "cities": {},
+        "reference": "s2a",
+        "server_version": "s2b",
+        "id": "GET_ALL_CITY00"
       },
       "GET_ALL_CITY01": {
-        "coords": {},
-        "id": "GET_ALL_CITY01",
-        "name": "s3e"
+        "api_version": "s50",
+        "cities": {},
+        "reference": "s52",
+        "server_version": "s53",
+        "id": "GET_ALL_CITY01"
       },
       "GET_ALL_CITY02": {
-        "coords": {},
-        "id": "GET_ALL_CITY02",
-        "name": "s5c"
+        "api_version": "s78",
+        "cities": {},
+        "reference": "s7a",
+        "server_version": "s7b",
+        "id": "GET_ALL_CITY02"
       }
     }
   },
   "new": {
     "get_all_city": {
       "get_all_city_ref01": {
-        "coords": {},
-        "name": "s7a"
+        "api_version": "sa0",
+        "cities": {},
+        "reference": "sa2",
+        "server_version": "sa3"
       }
     }
   },

@@ -10,13 +10,12 @@ guide: {
 
   entity: get_all_city: {
     path: "/": {
-      op: list: method: *GET
+      op: load: method: *GET
     }
   }
 
   entity: get_city_parking_info: {
     path: "/{city}": {
-      rename: param: "city": *"id"
       op: list: method: *GET
       op: list: transform: res: *("`body.lots`")|top
     }

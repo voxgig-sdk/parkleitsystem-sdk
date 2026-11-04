@@ -24,6 +24,7 @@
         "repr": "auto"
       },
       "contributor": {},
+      "copies": "merge",
       "doc": {
         "active": true,
         "assets": {
@@ -97,39 +98,41 @@
             "field": {}
           },
           "fields": {
-            "coords": {
+            "api_version": {
               "a": true,
-              "h": "Coords",
-              "n": "coords",
+              "h": "Api Version",
+              "n": "api_version",
               "r": false,
-              "t": "`$OBJECT`"
-            },
-            "id": {
-              "a": true,
-              "h": "Id",
-              "n": "id",
-              "r": false,
-              "sh": "City identifier",
               "t": "`$STRING`"
             },
-            "name": {
+            "cities": {
               "a": true,
-              "h": "Name",
-              "n": "name",
+              "h": "Cities",
+              "n": "cities",
               "r": false,
-              "sh": "Name of the city",
+              "sh": "Supported cities keyed by the city id used in /{city}",
+              "t": "`$OBJECT`"
+            },
+            "reference": {
+              "a": true,
+              "h": "Reference",
+              "n": "reference",
+              "r": false,
+              "t": "`$STRING`"
+            },
+            "server_version": {
+              "a": true,
+              "h": "Server Version",
+              "n": "server_version",
+              "r": false,
               "t": "`$STRING`"
             }
           },
-          "id": {
-            "field": "id",
-            "name": "id"
-          },
           "name": "get_all_city",
           "op": {
-            "list": {
+            "load": {
               "input": "data",
-              "name": "list",
+              "name": "load",
               "points": [
                 {
                   "a": true,
@@ -144,6 +147,10 @@
                   "o": "/",
                   "q": {},
                   "r": {},
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [],
                   "t": {
                     "req": "`reqdata`",
@@ -168,7 +175,6 @@
               "h": "Address",
               "n": "address",
               "r": false,
-              "sh": "Street address of the parking garage",
               "t": "`$STRING`"
             },
             "coords": {
@@ -178,12 +184,18 @@
               "r": false,
               "t": "`$OBJECT`"
             },
+            "forecast": {
+              "a": true,
+              "h": "Forecast",
+              "n": "forecast",
+              "r": false,
+              "t": "`$BOOLEAN`"
+            },
             "free": {
               "a": true,
               "h": "Free",
               "n": "free",
               "r": false,
-              "sh": "Number of available parking spaces",
               "t": "`$INTEGER`"
             },
             "id": {
@@ -191,7 +203,6 @@
               "h": "Id",
               "n": "id",
               "r": false,
-              "sh": "Unique identifier for the parking lot",
               "t": "`$STRING`"
             },
             "lot_type": {
@@ -199,7 +210,6 @@
               "h": "Lot Type",
               "n": "lot_type",
               "r": false,
-              "sh": "Type of parking lot",
               "t": "`$STRING`"
             },
             "name": {
@@ -207,7 +217,13 @@
               "h": "Name",
               "n": "name",
               "r": false,
-              "sh": "Name of the parking garage",
+              "t": "`$STRING`"
+            },
+            "region": {
+              "a": true,
+              "h": "Region",
+              "n": "region",
+              "r": false,
               "t": "`$STRING`"
             },
             "state": {
@@ -215,7 +231,6 @@
               "h": "State",
               "n": "state",
               "r": false,
-              "sh": "Current state of the parking lot",
               "t": "`$STRING`"
             },
             "total": {
@@ -223,7 +238,6 @@
               "h": "Total",
               "n": "total",
               "r": false,
-              "sh": "Total number of parking spaces",
               "t": "`$INTEGER`"
             }
           },
@@ -248,8 +262,9 @@
                     "params": [
                       {
                         "a": true,
+                        "ex": "Basel",
                         "k": "param",
-                        "n": "id",
+                        "n": "city",
                         "or": "city",
                         "r": true,
                         "t": "`$STRING`"
@@ -261,17 +276,17 @@
                   "o": "/{city}",
                   "q": {
                     "exist": [
-                      "id"
+                      "city"
                     ]
                   },
-                  "r": {
-                    "param": {
-                      "city": "id"
-                    }
+                  "r": {},
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
                   },
                   "s": [
                     {
-                      "var": "id"
+                      "var": "city"
                     }
                   ],
                   "t": {
@@ -609,6 +624,7 @@
             },
             "optspec": {
               "clearTimer": "`$FUNCTION`",
+              "now": "`$FUNCTION`",
               "setTimer": "`$FUNCTION`"
             },
             "strict": false
@@ -709,15 +725,19 @@
             {
               "a": true,
               "d": {},
-              "i": {},
+              "i": {
+                "ref": "get_all_city_ref01",
+                "srcdatavar": "get_all_city_ref01_data",
+                "suffix": "_dt0"
+              },
               "m": {},
-              "o": "list",
+              "o": "load",
               "s": [],
               "v": [
                 {
-                  "apply": "ItemExists",
+                  "apply": "TextFieldMark",
                   "def": {
-                    "ref": "get_all_city_ref01"
+                    "mark": "Mark01-get_all_city_ref01"
                   }
                 }
               ]
@@ -759,7 +779,7 @@
           "name": "API Documentation",
           "url": "https://www.stadt-zuerich.ch/portal/de/index/ogd/anwendungen/2015/parkleitsystem_api_ch.html"
         },
-        "description": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App.",
+        "description": "Provides real-time information on available parking spaces in connected parking garages in cities like Basel, Zurich, Bern, Luzern, St.Gallen, and Zug. Developed by Simon Jenny for the Pebble.Parking-App. 2026-11-03: response schemas rewritten from a live probe: / answers {api_version, server_version, reference, cities} with cities a MAP keyed by city id (not an array), and /{city} answers {last_updated, last_downloaded, lots}; city example Basel (probed 200).",
         "meta_source": "https://www.freepublicapis.com",
         "servers": [
           {
@@ -776,7 +796,7 @@
       "optspec": {
         "allow": {
           "method": "GET,PUT,POST,PATCH,DELETE,OPTIONS",
-          "op": "create,update,load,list,remove,command,direct,graphql"
+          "op": "create,update,patch,load,list,remove,command,direct,graphql"
         },
         "apikey": "",
         "auth": {
@@ -829,6 +849,11 @@
         "top": {
           "active": true
         }
+      },
+      "publisher": {
+        "name": "",
+        "security": "",
+        "url": ""
       },
       "repo": {
         "host": "github.com",
@@ -1059,7 +1084,10 @@
             "version": "0.0.1"
           },
           "superseded": [],
-          "title": "Go MCP server"
+          "title": "Go MCP server",
+          "tool": {
+            "write": false
+          }
         },
         "lua": {
           "active": true,
@@ -1436,6 +1464,17 @@
           "base": "",
           "strict": true
         }
+      },
+      "text": {
+        "about_md": "",
+        "docs_url": "",
+        "entity_desc": {},
+        "homepage": "",
+        "meta_source": "",
+        "summary": "",
+        "tagline": "",
+        "title": "",
+        "website": ""
       }
     }
   },

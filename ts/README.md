@@ -5,7 +5,7 @@
 The TypeScript SDK for the Parkleitsystem API — a type-safe, entity-oriented client with full async/await support.
 
 The API is exposed as capitalised, semantic **Entities** — e.g.
-`client.GetAllCity()` — each with a small set of operations (`list`)
+`client.GetAllCity()` — each with a small set of operations (`list`, `load`)
 instead of raw URL paths and query parameters. This keeps the surface
 predictable and low-friction for both humans and AI agents.
 
@@ -15,7 +15,7 @@ predictable and low-friction for both humans and AI agents.
 
 ## Install
 This package is not yet published to npm. Install it from the GitHub
-release tag (`ts/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/parkleitsystem-sdk/releases)), or from a
+release tag (`ts/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/parkleitsystem-sdk/tags)), or from a
 clone, which carries the compiled `dist/`:
 
 ```bash
@@ -37,17 +37,16 @@ import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem-sdk'
 const client = new ParkleitsystemSDK()
 ```
 
-### 2. List getallcity records
+### 3. Load a getallcity
 
-`list()` resolves to an array of GetAllCity ENTITIES — every operation
-resolves to entities, not raw records. Iterate them directly, and call
-`.data()` on one for the record it holds:
+`load()` returns the entity and throws on failure; `.data()` reads its record:
 
 ```ts
-const getallcitys = await client.GetAllCity().list()
-
-for (const getallcity of getallcitys) {
-  console.log(getallcity)
+try {
+  const getallcity = await client.GetAllCity().load()
+  console.log(getallcity.data())
+} catch (err) {
+  console.error('load failed:', err)
 }
 ```
 
@@ -58,15 +57,16 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const getallcitys = await client.GetAllCity().list()
-  console.log(getallcitys)
+  const getallcity = await client.GetAllCity().load()
+  console.log(getallcity.data())
 } catch (err) {
-  console.error('list failed:', err)
+  console.error('load failed:', err)
 }
 ```
 
 The low-level `direct()` method does **not** throw — it returns the
-value or an `Error`, so check the result before using it:
+result envelope. Branch on `ok`; on failure `status` holds the HTTP status
+(for error responses) and `err` holds the error:
 
 ```ts
 const result = await client.direct({
@@ -75,8 +75,8 @@ const result = await client.direct({
   params: { id: 'example_id' },
 })
 
-if (result instanceof Error) {
-  throw result
+if (!result.ok) {
+  console.error('request failed:', result.status, result.err)
 }
 ```
 
@@ -94,9 +94,6 @@ const result = await client.direct({
   params: { id: 'example' },
 })
 
-if (result instanceof Error) {
-  throw result
-}
 if (result.ok) {
   console.log(result.status)  // 200
   console.log(result.data)    // response body
@@ -125,10 +122,9 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = ParkleitsystemSDK.test()
 
-const getallcity = await client.GetAllCity().list()
-// getallcity is the entity, populated with mock response data
-// — call getallcity.data() for the record itself
-console.log(getallcity)
+const getallcity = await client.GetAllCity().load()
+// getallcity is the GetAllCity entity; .data() reads its mock record
+console.log(getallcity.data())
 ```
 
 You can also use the instance method:
@@ -146,11 +142,11 @@ Entity instances remember their last match and data:
 const entity = client.GetAllCity()
 
 // First call runs the operation and stores its result
-await entity.list()
+await entity.load()
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data.id)
+console.log(data)
 ```
 
 ### Add custom middleware
@@ -244,7 +240,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria. |
+| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria, and return it. |
+| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria, one per record. |
 | `data` | `data(data?: Partial<Entity>): Entity` | Get or set entity data. |
 | `match` | `match(match?: Partial<Entity>): Partial<Entity>` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
@@ -253,9 +250,10 @@ All entities share the same interface.
 
 #### Return values
 
-Entity operations resolve to the entity data directly — there is no
-result envelope:
+Entity operations resolve to the entity itself — there is no result
+envelope, and an entity's `data()` reads its record:
 
+- `load` resolves to a single entity object.
 - `list` resolves to an **array** of entity objects (iterate it directly;
   there is no `.data` and no `.ok`).
 
@@ -297,11 +295,12 @@ The `prepare()` method returns:
 
 | Field | Description |
 | --- | --- |
-| `coords` |  |
-| `id` | City identifier |
-| `name` | Name of the city |
+| `api_version` |  |
+| `cities` | Supported cities keyed by the city id used in /{city} |
+| `reference` |  |
+| `server_version` |  |
 
-Operations: list.
+Operations: load.
 
 API path: `/`
 
@@ -309,14 +308,16 @@ API path: `/`
 
 | Field | Description |
 | --- | --- |
-| `address` | Street address of the parking garage |
+| `address` |  |
 | `coords` |  |
-| `free` | Number of available parking spaces |
-| `id` | Unique identifier for the parking lot |
-| `lot_type` | Type of parking lot |
-| `name` | Name of the parking garage |
-| `state` | Current state of the parking lot |
-| `total` | Total number of parking spaces |
+| `forecast` |  |
+| `free` |  |
+| `id` |  |
+| `lot_type` |  |
+| `name` |  |
+| `region` |  |
+| `state` |  |
+| `total` |  |
 
 Operations: list.
 
@@ -335,20 +336,21 @@ Create an instance: `const get_all_city = client.GetAllCity()`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `coords` | `Record<string, any>` |  |
-| `id` | `string` | City identifier |
-| `name` | `string` | Name of the city |
+| `api_version` | `string` |  |
+| `cities` | `Record<string, any>` | Supported cities keyed by the city id used in /{city} |
+| `reference` | `string` |  |
+| `server_version` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```ts
-const get_all_citys = await client.GetAllCity().list()
+const get_all_city = await client.GetAllCity().load()
 ```
 
 
@@ -366,19 +368,21 @@ Create an instance: `const get_city_parking_info = client.GetCityParkingInfo()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `address` | `string` | Street address of the parking garage |
+| `address` | `string` |  |
 | `coords` | `Record<string, any>` |  |
-| `free` | `number` | Number of available parking spaces |
-| `id` | `string` | Unique identifier for the parking lot |
-| `lot_type` | `string` | Type of parking lot |
-| `name` | `string` | Name of the parking garage |
-| `state` | `string` | Current state of the parking lot |
-| `total` | `number` | Total number of parking spaces |
+| `forecast` | `boolean` |  |
+| `free` | `number` |  |
+| `id` | `string` |  |
+| `lot_type` | `string` |  |
+| `name` | `string` |  |
+| `region` | `string` |  |
+| `state` | `string` |  |
+| `total` | `number` |  |
 
 #### Example: List
 
 ```ts
-const get_city_parking_infos = await client.GetCityParkingInfo().list({ id: "example" })
+const get_city_parking_infos = await client.GetCityParkingInfo().list({ city: "example" })
 ```
 
 ## Features
@@ -530,15 +534,15 @@ import { ParkleitsystemSDK } from '@voxgig-sdk/parkleitsystem-sdk'
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
 const getallcity = client.GetAllCity()
-await getallcity.list()
+await getallcity.load()
 
-// getallcity.data() now returns the getallcity data from the last `list`
+// getallcity.data() now returns the getallcity data from the last `load`
 // getallcity.match() returns the last match criteria
 ```
 

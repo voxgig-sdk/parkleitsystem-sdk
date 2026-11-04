@@ -97,18 +97,19 @@ get_all_city = client.GetAllCity
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `coords` | `Hash` | No |  |
-| `id` | `String` | No | City identifier |
-| `name` | `String` | No | Name of the city |
+| `api_version` | `String` | No |  |
+| `cities` | `Hash` | No | Supported cities keyed by the city id used in /{city} |
+| `reference` | `String` | No |  |
+| `server_version` | `String` | No |  |
 
 ### Operations
 
-#### `list(reqmatch = nil, ctrl = nil) -> Array`
+#### `load(reqmatch, ctrl = nil) -> result`
 
-List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
 
 ```ruby
-results = client.GetAllCity.list
+result = client.GetAllCity.load()
 ```
 
 ### Common Methods
@@ -151,23 +152,26 @@ get_city_parking_info = client.GetCityParkingInfo
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `address` | `String` | No | Street address of the parking garage |
+| `address` | `String` | No |  |
 | `coords` | `Hash` | No |  |
-| `free` | `Integer` | No | Number of available parking spaces |
-| `id` | `String` | No | Unique identifier for the parking lot |
-| `lot_type` | `String` | No | Type of parking lot |
-| `name` | `String` | No | Name of the parking garage |
-| `state` | `String` | No | Current state of the parking lot |
-| `total` | `Integer` | No | Total number of parking spaces |
+| `forecast` | `Boolean` | No |  |
+| `free` | `Integer` | No |  |
+| `id` | `String` | No |  |
+| `lot_type` | `String` | No |  |
+| `name` | `String` | No |  |
+| `region` | `String` | No |  |
+| `state` | `String` | No |  |
+| `total` | `Integer` | No |  |
 
 ### Operations
 
 #### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.GetCityParkingInfo.list
+results = client.GetCityParkingInfo.list({ "city" => "example" })
+results.each { |item| puts item.data_get }
 ```
 
 ### Common Methods
@@ -357,6 +361,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and
